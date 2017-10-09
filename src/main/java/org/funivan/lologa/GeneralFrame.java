@@ -1,5 +1,7 @@
 package org.funivan.lologa;
 
+import org.funivan.lologa.tile.TilesPool.TilesPool;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -9,14 +11,13 @@ public class GeneralFrame extends JFrame {
         this.setTitle("Game Lolo GA");
         this.setSize(600, 600);
         this.setLayout(
-            new BorderLayout(50, 50)
+                new BorderLayout(0, 0)
         );
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.add(
-            new Board(colors)
+                new Board(new TilesPool(5, 5), colors)
         );
         this.setVisible(true);
-
     }
 
 }

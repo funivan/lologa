@@ -3,6 +3,11 @@ package org.funivan.lologa.tile;
 import java.awt.*;
 
 public class Tile implements TileInterface {
+    public static Tile DUMMY;
+
+    static {
+        DUMMY = new Tile(new Color(255, 255, 255), -100, -100);
+    }
 
     private final Color color;
     private final int index;
