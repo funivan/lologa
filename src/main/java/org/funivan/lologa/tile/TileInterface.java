@@ -10,7 +10,6 @@ public interface TileInterface {
 
     int score();
 
-    int index();
 
     PositionInterface position();
 

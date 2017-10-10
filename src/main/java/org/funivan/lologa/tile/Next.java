@@ -27,10 +27,6 @@ public class Next implements TileInterface {
         return this.find().score();
     }
 
-    @Override
-    public int index() {
-        return this.find().index();
-    }
 
     @Override
     public PositionInterface position() {

@@ -9,17 +9,15 @@ public class Tile implements TileInterface {
     public static Tile DUMMY;
 
     static {
-        DUMMY = new Tile(new Color(255, 255, 255), -100, -100, new Position(-100, -100));
+        DUMMY = new Tile(new Color(255, 255, 255), -100, new Position(-100, -100));
     }
 
     private final Color color;
-    private final int index;
     private int score;
     private PositionInterface position;
 
-    public Tile(Color color, int index, int score, PositionInterface position) {
+    public Tile(Color color, int score, PositionInterface position) {
         this.color = color;
-        this.index = index;
         this.score = score;
         this.position = position;
     }
@@ -33,10 +31,6 @@ public class Tile implements TileInterface {
         return this.score;
     }
 
-    @Override
-    public int index() {
-        return this.index;
-    }
 
     @Override
     public PositionInterface position() {

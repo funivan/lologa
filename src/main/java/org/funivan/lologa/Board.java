@@ -47,14 +47,9 @@ public class Board extends JPanel {
             int y = row * size;
             final Position position = new Position(row, col);
             if (new AtPosition(position, tiles).same(Tile.DUMMY)) {
-                System.out.println("withTile:" + position.row() + "x" + position.col());
+                System.out.println("withTile:" + position.toString());
                 tiles = tiles.withTile(
-                    new Tile(
-                        iterator.next(),
-                        index,
-                        1,
-                        position
-                    )
+                    new Tile(iterator.next(), 1, position)
                 );
                 this.tilesPool = this.tilesPool.withTiles(tiles);
                 this.addMouseListener(
@@ -66,9 +61,8 @@ public class Board extends JPanel {
             g.fillRect(x, y, size, size);
             g.setColor(Color.BLACK);
             g.drawRect(x, y, size, size);
-            g.drawString("position:" + String.valueOf(index), x + 10, y + 15);
+            g.drawString("position:" + tile.position().row() + "x" + tile.position().col(), x + 10, y + 15);
             g.drawString("score:" + String.valueOf(tile.score()), x + 10, y + 30);
-            g.drawString("position:" + tile.position().row() + "x" + tile.position().col(), x + 10, y + 45);
         }
 
 
@@ -126,8 +120,7 @@ public class Board extends JPanel {
                         }
                         bottom = next;
                     } while (true);
-                    System.out.println("Bottom");
-                    System.out.println(bottom.index());
+                    System.out.println("Bottom: " + bottom.position());
                     // Move items down
                     boolean moved = false;
                     Iterable<TileInterface> moveItems = connected.all();
@@ -135,11 +128,11 @@ public class Board extends JPanel {
                         moved = false;
                         for (TileInterface item : moveItems) {
                             if (!item.equals(bottom)) {
-                                System.out.println("Refresh: " + item.index());
+                                System.out.println("Refresh: " + item.position());
                             }
                         }
                     } while (moved);
-                    tiles = tiles.withTile(new Tile(bottom.color(), bottom.index(), score, bottom.position()));
+                    tiles = tiles.withTile(new Tile(bottom.color(), score, bottom.position()));
                     this.board.paint(
                         this.board.tilesPool.withTiles(tiles)
                     );

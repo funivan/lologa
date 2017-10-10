@@ -4,8 +4,6 @@ import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.list.ListOf;
-import org.funivan.lologa.tile.Position.PositionInterface;
-import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.Filter.WithoutPositionFilter;
 
