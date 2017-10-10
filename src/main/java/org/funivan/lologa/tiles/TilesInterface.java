@@ -6,8 +6,6 @@ import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.TileInterface;
 
 public interface TilesInterface {
-    @NotNull
-    TileInterface get(int index);
 
     TileInterface find(PositionInterface position);
 

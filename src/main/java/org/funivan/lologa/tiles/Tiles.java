@@ -24,19 +24,6 @@ public class Tiles implements TilesInterface {
 
 
     @Override
-    @NotNull
-    public TileInterface get(int index) {
-        TileInterface result = Tile.DUMMY;
-        for (TileInterface tile : this.items) {
-            if (tile.index() == index) {
-                result = tile;
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
     public TileInterface find(PositionInterface position) {
         TileInterface result = Tile.DUMMY;
         for (TileInterface tile : this.items) {

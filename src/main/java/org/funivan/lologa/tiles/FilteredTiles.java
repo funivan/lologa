@@ -16,17 +16,6 @@ public class FilteredTiles implements TilesInterface {
         this.origin = origin;
     }
 
-    @Override
-    public TileInterface get(int index) {
-        TileInterface result = Tile.DUMMY;
-        for (TileInterface tile : this.all()) {
-            if (tile.index() == index) {
-                result = tile;
-                break;
-            }
-        }
-        return result;
-    }
 
     @Override
     public TilesInterface set(TileInterface tile) {
