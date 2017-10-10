@@ -24,7 +24,7 @@ public class AllSameConnected implements CollectInterface {
                     done.add(check.position());
                     TilesInterface same = new SameConnected().collect(check, tiles);
                     for (TileInterface found : same.all()) {
-                        result = result.withTile(found);
+                        result = new Tiles(result, found);
                     }
                 }
             }

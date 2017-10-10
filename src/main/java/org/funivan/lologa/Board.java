@@ -1,5 +1,6 @@
 package org.funivan.lologa;
 
+import org.cactoos.iterable.LengthOf;
 import org.funivan.lologa.tile.AtPosition;
 import org.funivan.lologa.tile.Next;
 import org.funivan.lologa.tile.Position.Position;
@@ -9,6 +10,7 @@ import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tile.TilesPool.TilesPoolInterface;
 import org.funivan.lologa.tile.Visitor.Collect.AllSameConnected;
 import org.funivan.lologa.tile.Visitor.Navigation.Direction.Bottom;
+import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
 import javax.swing.*;
@@ -47,10 +49,7 @@ public class Board extends JPanel {
             int y = row * size;
             final Position position = new Position(row, col);
             if (new AtPosition(position, tiles).same(Tile.DUMMY)) {
-                System.out.println("withTile:" + position.toString());
-                tiles = tiles.withTile(
-                    new Tile(iterator.next(), 1, position)
-                );
+                tiles = new Tiles(tiles, new Tile(iterator.next(), 1, position));
                 this.tilesPool = this.tilesPool.withTiles(tiles);
                 this.addMouseListener(
                     new TileClickListener(this, position, new Point(x, y), new Point(x + size, y + size))
@@ -105,7 +104,7 @@ public class Board extends JPanel {
 
                 TileInterface tile = new AtPosition(this.position, tiles);
                 TilesInterface connected = new AllSameConnected().collect(tile, tiles);
-                if (new org.cactoos.iterable.LengthOf(connected.all()).value() >= 1) {
+                if (new LengthOf(connected.all()).value() >= 1) {
                     int score = 0;
                     for (TileInterface target : connected.all()) {
                         score = score + target.score();
@@ -132,7 +131,7 @@ public class Board extends JPanel {
                             }
                         }
                     } while (moved);
-                    tiles = tiles.withTile(new Tile(bottom.color(), score, bottom.position()));
+                    tiles = new Tiles(tiles, new Tile(bottom.color(), score, bottom.position()));
                     this.board.paint(
                         this.board.tilesPool.withTiles(tiles)
                     );

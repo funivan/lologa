@@ -17,12 +17,6 @@ public class FilteredTiles implements TilesInterface {
 
 
     @Override
-    public TilesInterface withTile(TileInterface tile) {
-        return this.origin.withTile(tile);
-    }
-
-
-    @Override
     public Iterable<TileInterface> all() {
         return new Filtered<>(this.origin.all(), this.filter);
     }

@@ -15,19 +15,18 @@ public class Tiles implements TilesInterface {
         this.items = items;
     }
 
-    public Tiles() {
-        this(new ListOf<>());
+    public Tiles(TilesInterface tiles, TileInterface additional) {
+        this(
+            new Joined<>(
+                new Filtered<>(tiles.all(), new WithoutPositionFilter(additional.position())),
+                new IterableOf<>(additional)
+            )
+        );
     }
 
 
-    @Override
-    public TilesInterface withTile(TileInterface tile) {
-        return new Tiles(
-            new Joined<>(
-                new Filtered<>(this.items, new WithoutPositionFilter(tile.position())),
-                new IterableOf<>(tile)
-            )
-        );
+    public Tiles() {
+        this(new ListOf<>());
     }
 
 
