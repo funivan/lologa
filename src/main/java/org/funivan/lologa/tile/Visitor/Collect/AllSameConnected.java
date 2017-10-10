@@ -1,17 +1,8 @@
 package org.funivan.lologa.tile.Visitor.Collect;
 
-import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterator.Filtered;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tile.TilesPool.TilesPoolInterface;
-import org.funivan.lologa.tile.Visitor.Navigation.Direction.Bottom;
-import org.funivan.lologa.tile.Visitor.Navigation.Direction.Left;
-import org.funivan.lologa.tile.Visitor.Navigation.Direction.Right;
-import org.funivan.lologa.tile.Visitor.Navigation.Direction.Top;
-import org.funivan.lologa.tiles.Filter.ColorFilter;
-import org.funivan.lologa.tiles.Filter.IndexFilter;
-import org.funivan.lologa.tiles.FilteredTiles;
 import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
@@ -33,7 +24,7 @@ public class AllSameConnected implements CollectInterface {
                     done.add(check.index());
                     TilesInterface same = new SameConnected().collect(check, pool);
                     for (TileInterface found : same.all()) {
-                        result.set(found);
+                        result = result.set(found);
                     }
                 }
             }

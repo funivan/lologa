@@ -1,11 +1,7 @@
 package org.funivan.lologa.tile.TilesPool;
 
-import org.cactoos.list.ListOf;
-import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
-
-import java.util.HashMap;
 
 public class TilesPool implements TilesPoolInterface {
     private final int cols;
@@ -42,4 +38,5 @@ public class TilesPool implements TilesPoolInterface {
     public TilesPoolInterface withTiles(TilesInterface tiles) {
         return new TilesPool(this.cols(), this.rows(), tiles);
     }
+
 }
