@@ -12,7 +12,7 @@ import java.util.List;
 public class AllSameConnected implements CollectInterface {
 
     @Override
-    public TilesInterface collect(TileInterface start, TilesPoolInterface pool) {
+    public TilesInterface collect(TileInterface start, TilesInterface tiles) {
         TilesInterface result = new Tiles(new IterableOf<>(start));
         List<Integer> done = new ArrayList<>();
         boolean touched;
@@ -22,7 +22,7 @@ public class AllSameConnected implements CollectInterface {
                 if (!done.contains(check.index())) {
                     touched = true;
                     done.add(check.index());
-                    TilesInterface same = new SameConnected().collect(check, pool);
+                    TilesInterface same = new SameConnected().collect(check, tiles);
                     for (TileInterface found : same.all()) {
                         result = result.set(found);
                     }

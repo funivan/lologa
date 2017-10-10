@@ -2,6 +2,8 @@ package org.funivan.lologa.tiles;
 
 import org.cactoos.Func;
 import org.cactoos.iterable.Filtered;
+import org.funivan.lologa.tile.Position.Position;
+import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
 
@@ -31,9 +33,17 @@ public class FilteredTiles implements TilesInterface {
         return this.origin.set(tile);
     }
 
+
     @Override
-    public boolean has(int index) {
-        return !this.get(index).equals(Tile.DUMMY);
+    public TileInterface find(PositionInterface position) {
+        TileInterface result = Tile.DUMMY;
+        for (TileInterface tile : this.all()) {
+            if (tile.position().same(position)) {
+                result = tile;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override

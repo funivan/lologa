@@ -1,22 +1,27 @@
 package org.funivan.lologa.tile;
 
+import org.funivan.lologa.tile.Position.Position;
+import org.funivan.lologa.tile.Position.PositionInterface;
+
 import java.awt.*;
 
 public class Tile implements TileInterface {
     public static Tile DUMMY;
 
     static {
-        DUMMY = new Tile(new Color(255, 255, 255), -100, -100);
+        DUMMY = new Tile(new Color(255, 255, 255), -100, -100, new Position(-100, -100));
     }
 
     private final Color color;
     private final int index;
     private int score;
+    private PositionInterface position;
 
-    public Tile(Color color, int index, int score) {
+    public Tile(Color color, int index, int score, PositionInterface position) {
         this.color = color;
         this.index = index;
         this.score = score;
+        this.position = position;
     }
 
     public Color color() {
@@ -31,5 +36,20 @@ public class Tile implements TileInterface {
     @Override
     public int index() {
         return this.index;
+    }
+
+    @Override
+    public PositionInterface position() {
+        return this.position;
+    }
+
+    @Override
+    public boolean same(TileInterface target) {
+        return (target.score() == this.score()
+            &&
+            target.color().equals(this.color())
+            &&
+            target.position().same(this.position())
+        );
     }
 }

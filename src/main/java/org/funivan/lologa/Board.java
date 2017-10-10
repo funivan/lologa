@@ -1,15 +1,14 @@
 package org.funivan.lologa;
 
-import org.cactoos.io.LengthOf;
-import org.cactoos.list.ListOf;
+import org.funivan.lologa.tile.Next;
+import org.funivan.lologa.tile.Position.Position;
+import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
-import org.funivan.lologa.tile.Visitor.Collect.SameConnected;
-import org.funivan.lologa.tiles.TilesInterface;
 import org.funivan.lologa.tile.TilesPool.TilesPoolInterface;
 import org.funivan.lologa.tile.Visitor.Collect.AllSameConnected;
 import org.funivan.lologa.tile.Visitor.Navigation.Direction.Bottom;
-import org.funivan.lologa.tile.Visitor.Navigation.NextLastSame;
+import org.funivan.lologa.tiles.TilesInterface;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -39,24 +38,36 @@ public class Board extends JPanel {
         final int size = 100;
         final int len = cols * rows;
         Iterator<Color> iterator = this.colors.iterator();
-        int y = 0;
+        int row = 0;
         for (int index = 0; index < len; index++) {
-            int x = (index % rows) * size;
-            y = y + ((index > 0 && index % cols == 0) ? size : 0);
-            if (!tiles.has(index)) {
-                tiles = tiles.set(new Tile(iterator.next(), index, 0));
+            int col = index % rows;
+            int x = col * size;
+            row = row + ((index > 0 && index % cols == 0) ? 1 : 0);
+            int y = row * size;
+            final Position position = new Position(row, col);
+            if (tiles.find(position).same(Tile.DUMMY)) {
+                System.out.println("set:" + position.row() + "x" + position.col());
+                tiles = tiles.set(
+                    new Tile(
+                        iterator.next(),
+                        index,
+                        1,
+                        position
+                    )
+                );
                 this.tilesPool = this.tilesPool.withTiles(tiles);
                 this.addMouseListener(
-                    new TileClickListener(this, index, new Point(x, y), new Point(x + size, y + size))
+                    new TileClickListener(this, position, new Point(x, y), new Point(x + size, y + size))
                 );
             }
-            TileInterface tile = tiles.get(index);
+            TileInterface tile = tiles.find(position);
             g.setColor(tile.color());
             g.fillRect(x, y, size, size);
             g.setColor(Color.BLACK);
             g.drawRect(x, y, size, size);
-            g.drawString("index:" + String.valueOf(index), x + 10, y + 15);
+            g.drawString("position:" + String.valueOf(index), x + 10, y + 15);
             g.drawString("score:" + String.valueOf(tile.score()), x + 10, y + 30);
+            g.drawString("position:" + tile.position().row() + "x" + tile.position().col(), x + 10, y + 45);
         }
 
 
@@ -69,13 +80,13 @@ public class Board extends JPanel {
 
     private static class TileClickListener implements MouseListener {
         private Board board;
-        private final int index;
+        private final PositionInterface position;
         private final Point start;
         private final Point end;
 
-        public TileClickListener(Board board, int index, Point start, Point end) {
+        public TileClickListener(Board board, PositionInterface position, Point start, Point end) {
             this.board = board;
-            this.index = index;
+            this.position = position;
             this.start = start;
             this.end = end;
         }
@@ -97,22 +108,42 @@ public class Board extends JPanel {
             TilesInterface tiles = this.board.tilesPool.tiles();
             if (this.start.getX() < x && this.start.getY() < y && this.end.getX() > x && this.end.getY() > y) {
 
-                TileInterface tile = tiles.get(this.index);
-                System.out.println("Clicked:" + tile.index());
-                TilesInterface connected = new AllSameConnected().collect(tile, this.board.tilesPool);
-                int score = 0;
-                System.out.println("Connected");
-                for (TileInterface target : connected.all()) {
-                    System.out.println("Connected: " + target.index());
-                    score = score + target.score();
-                }
-                System.out.println("/Connected");
-                TileInterface bottom = new NextLastSame(new Bottom()).navigate(tile, this.board.tilesPool);
+                TileInterface tile = tiles.find(this.position);
+                TilesInterface connected = new AllSameConnected().collect(tile, tiles);
+                if (new org.cactoos.iterable.LengthOf(connected.all()).value() >= 1) {
+                    int score = 0;
+                    for (TileInterface target : connected.all()) {
+                        score = score + target.score();
+                    }
 
-                tiles = tiles.set(new Tile(bottom.color(), bottom.index(), score));
-                this.board.paint(
-                    this.board.tilesPool.withTiles(tiles)
-                );
+                    TileInterface bottom = tile;
+                    do {
+                        TileInterface next = new Next(new Bottom(), tiles, bottom);
+                        boolean sameColor = next.color().equals(bottom.color());
+                        if (next.same(Tile.DUMMY) || !sameColor) {
+                            break;
+                        }
+                        bottom = next;
+                    } while (true);
+                    System.out.println("Bottom");
+                    System.out.println(bottom.index());
+                    // Move items down
+                    boolean moved = false;
+                    Iterable<TileInterface> moveItems = connected.all();
+                    do {
+                        moved = false;
+                        for (TileInterface item : moveItems) {
+                            if (!item.equals(bottom)) {
+                                System.out.println("Refresh: " + item.index());
+                            }
+                        }
+                    } while (moved);
+                    tiles = tiles.set(new Tile(bottom.color(), bottom.index(), score, bottom.position()));
+                    this.board.paint(
+                        this.board.tilesPool.withTiles(tiles)
+                    );
+                }
+
             }
         }
 

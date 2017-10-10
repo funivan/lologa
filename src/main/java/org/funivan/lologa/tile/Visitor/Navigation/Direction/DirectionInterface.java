@@ -1,7 +1,7 @@
 package org.funivan.lologa.tile.Visitor.Navigation.Direction;
 
-import org.funivan.lologa.tile.TilesPool.TilesPoolInterface;
+import org.funivan.lologa.tile.Position.PositionInterface;
 
 public interface DirectionInterface {
-    int index(int current, TilesPoolInterface titles);
+    PositionInterface next(PositionInterface current);
 }
