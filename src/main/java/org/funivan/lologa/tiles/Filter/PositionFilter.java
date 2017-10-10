@@ -15,9 +15,14 @@ public class PositionFilter implements Func<TileInterface, Boolean> {
 
 
     @Override
-    public Boolean apply(TileInterface tileInterface) throws Exception {
-        return this.positions.contains(
-            tileInterface.position()
-        );
+    final public Boolean apply(TileInterface target) throws Exception {
+        boolean result = false;
+        for (PositionInterface position : this.positions) {
+            if (position.same(target.position())) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }

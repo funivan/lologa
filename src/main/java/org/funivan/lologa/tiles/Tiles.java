@@ -1,5 +1,6 @@
 package org.funivan.lologa.tiles;
 
+import org.cactoos.Func;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
@@ -24,14 +25,23 @@ public class Tiles implements TilesInterface {
         );
     }
 
+    public Tiles(Func<TileInterface, Boolean> filter, TilesInterface tiles) {
+        this(
+            new Filtered<>(tiles.all(), filter)
+        );
+    }
+
 
     public Tiles() {
         this(new ListOf<>());
     }
+    public Tiles(TileInterface... tiles) {
+        this(new ListOf<>(tiles));
+    }
 
 
     @Override
-    public Iterable<TileInterface> all() {
+    final public Iterable<TileInterface> all() {
         return this.items;
     }
 }

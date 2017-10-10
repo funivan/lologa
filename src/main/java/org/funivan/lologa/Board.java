@@ -103,7 +103,7 @@ public class Board extends JPanel {
             if (this.start.getX() < x && this.start.getY() < y && this.end.getX() > x && this.end.getY() > y) {
 
                 TileInterface tile = new AtPosition(this.position, tiles);
-                TilesInterface connected = new AllSameConnected().collect(tile, tiles);
+                TilesInterface connected = new AllSameConnected(tile, tiles);
                 if (new LengthOf(connected.all()).value() >= 1) {
                     int score = 0;
                     for (TileInterface target : connected.all()) {
@@ -112,7 +112,7 @@ public class Board extends JPanel {
 
                     TileInterface bottom = tile;
                     do {
-                        TileInterface next = new Next(new Bottom(), tiles, bottom);
+                        TileInterface next = new Next(new Bottom(bottom), tiles);
                         boolean sameColor = next.color().equals(bottom.color());
                         if (next.same(Tile.DUMMY) || !sameColor) {
                             break;

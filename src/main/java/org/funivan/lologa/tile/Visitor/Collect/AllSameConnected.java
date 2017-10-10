@@ -9,11 +9,19 @@ import org.funivan.lologa.tiles.TilesInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllSameConnected implements CollectInterface {
+public class AllSameConnected implements TilesInterface {
+
+    private TileInterface start;
+    private TilesInterface tiles;
+
+    public AllSameConnected(TileInterface start, TilesInterface tiles) {
+        this.start = start;
+        this.tiles = tiles;
+    }
 
     @Override
-    public TilesInterface collect(TileInterface start, TilesInterface tiles) {
-        TilesInterface result = new Tiles(new IterableOf<>(start));
+    public Iterable<TileInterface> all() {
+        TilesInterface result = new Tiles(new IterableOf<>(this.start));
         List<PositionInterface> done = new ArrayList<>();
         boolean touched;
         do {
@@ -22,15 +30,13 @@ public class AllSameConnected implements CollectInterface {
                 if (!done.contains(check.position())) {
                     touched = true;
                     done.add(check.position());
-                    TilesInterface same = new SameConnected().collect(check, tiles);
+                    TilesInterface same = new SameConnected(check, this.tiles);
                     for (TileInterface found : same.all()) {
                         result = new Tiles(result, found);
                     }
                 }
             }
         } while (touched);
-        return result;
+        return result.all();
     }
-
-
 }

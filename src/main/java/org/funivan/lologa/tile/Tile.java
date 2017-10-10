@@ -22,6 +22,10 @@ public class Tile implements TileInterface {
         this.position = position;
     }
 
+    public Tile(Color color, PositionInterface position) {
+        this(color, 1, position);
+    }
+
     public Color color() {
         return this.color;
     }

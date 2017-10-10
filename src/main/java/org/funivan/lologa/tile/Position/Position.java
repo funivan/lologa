@@ -21,7 +21,7 @@ public class Position implements PositionInterface {
 
     @Override
     public String toString() {
-        return "Position{" + row + "x" + col + '}';
+        return "Position{" + this.row + "x" + this.col + '}';
     }
 
     @Override

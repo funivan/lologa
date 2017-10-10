@@ -9,12 +9,10 @@ import java.awt.*;
 public class Next implements TileInterface {
     private final DirectionInterface direction;
     private final TilesInterface tiles;
-    private final TileInterface original;
 
-    public Next(DirectionInterface direction, TilesInterface tiles, TileInterface original) {
+    public Next(DirectionInterface direction, TilesInterface tiles) {
         this.direction = direction;
         this.tiles = tiles;
-        this.original = original;
     }
 
     @Override
@@ -40,8 +38,8 @@ public class Next implements TileInterface {
 
     private TileInterface find() {
         return new AtPosition(
-            this.direction.next(this.original.position()),
-            tiles
+            this.direction.position(),
+            this.tiles
         );
     }
 }
