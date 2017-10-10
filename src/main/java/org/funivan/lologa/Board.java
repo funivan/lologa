@@ -8,7 +8,7 @@ import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tile.TilesPool.TilesPoolInterface;
-import org.funivan.lologa.tile.Visitor.Collect.AllSameConnected;
+import org.funivan.lologa.tiles.AllSameConnected;
 import org.funivan.lologa.tile.Visitor.Navigation.Direction.Bottom;
 import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
@@ -38,7 +38,7 @@ public class Board extends JPanel {
         final int cols = this.tilesPool.cols();
         final int rows = this.tilesPool.rows();
         TilesInterface tiles = this.tilesPool.tiles();
-        final int size = 100;
+        final int size = 80;
         final int len = cols * rows;
         Iterator<Color> iterator = this.colors.iterator();
         int row = 0;
@@ -60,8 +60,8 @@ public class Board extends JPanel {
             g.fillRect(x, y, size, size);
             g.setColor(Color.BLACK);
             g.drawRect(x, y, size, size);
-            g.drawString("position:" + tile.position().row() + "x" + tile.position().col(), x + 10, y + 15);
-            g.drawString("score:" + String.valueOf(tile.score()), x + 10, y + 30);
+            g.drawString("p:" + tile.position().row() + "x" + tile.position().col(), x + 10, y + 15);
+            g.drawString("s:" + String.valueOf(tile.score()), x + 10, y + 30);
         }
 
 
@@ -123,11 +123,12 @@ public class Board extends JPanel {
                     // Move items down
                     boolean moved = false;
                     Iterable<TileInterface> moveItems = connected.all();
+
                     do {
                         moved = false;
                         for (TileInterface item : moveItems) {
                             if (!item.equals(bottom)) {
-                                System.out.println("Refresh: " + item.position());
+                                tiles = new Tiles(tiles, new Tile(Color.WHITE, 0, item.position()));
                             }
                         }
                     } while (moved);

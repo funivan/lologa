@@ -17,7 +17,6 @@ public final class Shuffled<T> implements Iterable<T> {
      */
     public Shuffled(final Iterable<T> src) {
         this.iterable = src;
-
     }
 
     @Override

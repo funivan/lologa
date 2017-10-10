@@ -5,24 +5,20 @@ import org.funivan.lologa.tile.TileInterface;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-public class FilterMatcher extends TypeSafeDiagnosingMatcher<Func<TileInterface, Boolean>> {
+public class FilterMatcher extends TypeSafeDiagnosingMatcher<TileFilterInterface> {
 
     private final TileInterface tile;
-    private final RESULT expect;
+    private final TileFilterInterface.EXPECT expect;
 
-    public enum RESULT {
-        PASS, SKIP
-    }
-
-    public FilterMatcher(RESULT expect, TileInterface tile) {
+    public FilterMatcher(TileFilterInterface.EXPECT expect, TileInterface tile) {
         this.tile = tile;
         this.expect = expect;
     }
 
     @Override
-    protected boolean matchesSafely(Func<TileInterface, Boolean> filter, Description description) {
+    protected boolean matchesSafely(TileFilterInterface filter, Description description) {
         boolean result;
-        boolean expect = this.expect == RESULT.PASS;
+        boolean expect = this.expect == TileFilterInterface.EXPECT.Same;
         try {
             result = filter.apply(this.tile) == expect;
         } catch (Exception e) {
@@ -39,7 +35,7 @@ public class FilterMatcher extends TypeSafeDiagnosingMatcher<Func<TileInterface,
     @Override
     public void describeTo(Description description) {
         description.appendText("Tiles should be "
-            + (this.expect == RESULT.PASS ? "accepted" : "rejected")
+            + (this.expect == TileFilterInterface.EXPECT.Same ? "accepted" : "rejected")
         );
     }
 }

@@ -5,24 +5,25 @@ import org.cactoos.list.ListOf;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.TileInterface;
 
-public class PositionFilter implements Func<TileInterface, Boolean> {
+public class PositionFilter implements TileFilterInterface {
 
-    private final ListOf<PositionInterface> positions;
+    private final PositionInterface position;
+    private final TileFilterInterface.EXPECT expect;
 
-    public PositionFilter(ListOf<PositionInterface> positions) {
-        this.positions = positions;
+    public PositionFilter(PositionInterface positions, EXPECT expect) {
+        this.position = positions;
+        this.expect = expect;
+    }
+
+    public PositionFilter(PositionInterface positions) {
+        this(positions, EXPECT.Same);
     }
 
 
     @Override
     final public Boolean apply(TileInterface target) throws Exception {
-        boolean result = false;
-        for (PositionInterface position : this.positions) {
-            if (position.same(target.position())) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+        final boolean expectResult = this.expect == EXPECT.Same;
+        final boolean result = this.position.same(target.position());
+        return expectResult == result;
     }
 }

@@ -15,8 +15,8 @@ public class ApplicationInitializer {
                 new Shuffled<>(
                     new ListOf<>(
                         new Color(100, 200, 100),
-                        new Color(250, 50, 50),
-                        new Color(1, 90, 250)
+                        new Color(250, 50, 50)
+//                        new Color(1, 90, 250)
                     )
                 )
             )

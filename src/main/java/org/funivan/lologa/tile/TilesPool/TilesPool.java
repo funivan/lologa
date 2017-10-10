@@ -3,6 +3,7 @@ package org.funivan.lologa.tile.TilesPool;
 import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
+//@todo we can convert this class to the game play strategy
 public class TilesPool implements TilesPoolInterface {
     private final int cols;
     private final int rows;

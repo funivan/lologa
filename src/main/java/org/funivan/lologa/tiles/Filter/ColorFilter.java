@@ -5,7 +5,7 @@ import org.funivan.lologa.tile.TileInterface;
 
 import java.awt.*;
 
-public class ColorFilter implements Func<TileInterface, Boolean> {
+public class ColorFilter implements TileFilterInterface{
     private Color color;
 
     public ColorFilter(Color color) {

@@ -1,10 +1,8 @@
-package org.funivan.lologa.tile.Visitor.Collect;
+package org.funivan.lologa.tiles;
 
 import org.cactoos.iterable.IterableOf;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.TileInterface;
-import org.funivan.lologa.tiles.Tiles;
-import org.funivan.lologa.tiles.TilesInterface;
 
 import java.util.ArrayList;
 import java.util.List;

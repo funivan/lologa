@@ -1,9 +1,8 @@
-package org.funivan.lologa.tile.Visitor.Collect;
+package org.funivan.lologa.tiles;
 
 import org.cactoos.list.ListOf;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.TilesInterface;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
@@ -22,8 +21,6 @@ public class TilesMatcher extends TypeSafeDiagnosingMatcher<TilesInterface> {
         if (compared.size() != this.original.size()) {
             result = false;
             description.appendText("size of tiles is different. Expect " + this.original.size() + " but current size is " + compared.size());
-        } else {
-
         }
         return result;
     }

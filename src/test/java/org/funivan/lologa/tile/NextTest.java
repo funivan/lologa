@@ -1,16 +1,12 @@
 package org.funivan.lologa.tile;
 
 import org.funivan.lologa.tile.Position.Position;
-import org.funivan.lologa.tile.Visitor.Collect.SameConnected;
-import org.funivan.lologa.tile.Visitor.Collect.TilesMatcher;
 import org.funivan.lologa.tile.Visitor.Navigation.Direction.Right;
 import org.funivan.lologa.tiles.Tiles;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.awt.*;
-
-import static org.junit.Assert.*;
 
 public class NextTest {
     @Test
