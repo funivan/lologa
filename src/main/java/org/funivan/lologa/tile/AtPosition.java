@@ -1,20 +1,19 @@
 package org.funivan.lologa.tile;
 
 import org.funivan.lologa.tile.Position.PositionInterface;
-import org.funivan.lologa.tile.Visitor.Navigation.Direction.DirectionInterface;
 import org.funivan.lologa.tiles.TilesInterface;
 
 import java.awt.*;
 
-public class Next implements TileInterface {
-    private final DirectionInterface direction;
+public class AtPosition implements TileInterface {
+    private final PositionInterface position;
     private final TilesInterface tiles;
-    private final TileInterface original;
+    private final Tile fallback;
 
-    public Next(DirectionInterface direction, TilesInterface tiles, TileInterface original) {
-        this.direction = direction;
+    public AtPosition(PositionInterface position, TilesInterface tiles) {
+        this.position = position;
         this.tiles = tiles;
-        this.original = original;
+        this.fallback = Tile.DUMMY;
     }
 
     @Override
@@ -43,9 +42,13 @@ public class Next implements TileInterface {
     }
 
     private TileInterface find() {
-        return new AtPosition(
-            this.direction.next(this.original.position()),
-            tiles
-        );
+        TileInterface result = this.fallback;
+        for (TileInterface tile : this.tiles.all()) {
+            if (tile.position().same(this.position)) {
+                result = tile;
+                break;
+            }
+        }
+        return result;
     }
 }

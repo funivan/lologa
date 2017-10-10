@@ -2,7 +2,6 @@ package org.funivan.lologa.tile.Visitor.Collect;
 
 import org.cactoos.iterable.IterableOf;
 import org.funivan.lologa.tile.TileInterface;
-import org.funivan.lologa.tile.TilesPool.TilesPoolInterface;
 import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
@@ -24,7 +23,7 @@ public class AllSameConnected implements CollectInterface {
                     done.add(check.index());
                     TilesInterface same = new SameConnected().collect(check, tiles);
                     for (TileInterface found : same.all()) {
-                        result = result.set(found);
+                        result = result.withTile(found);
                     }
                 }
             }

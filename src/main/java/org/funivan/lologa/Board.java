@@ -1,5 +1,6 @@
 package org.funivan.lologa;
 
+import org.funivan.lologa.tile.AtPosition;
 import org.funivan.lologa.tile.Next;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
@@ -45,9 +46,9 @@ public class Board extends JPanel {
             row = row + ((index > 0 && index % cols == 0) ? 1 : 0);
             int y = row * size;
             final Position position = new Position(row, col);
-            if (tiles.find(position).same(Tile.DUMMY)) {
-                System.out.println("set:" + position.row() + "x" + position.col());
-                tiles = tiles.set(
+            if (new AtPosition(position, tiles).same(Tile.DUMMY)) {
+                System.out.println("withTile:" + position.row() + "x" + position.col());
+                tiles = tiles.withTile(
                     new Tile(
                         iterator.next(),
                         index,
@@ -60,7 +61,7 @@ public class Board extends JPanel {
                     new TileClickListener(this, position, new Point(x, y), new Point(x + size, y + size))
                 );
             }
-            TileInterface tile = tiles.find(position);
+            TileInterface tile = new AtPosition(position, tiles);
             g.setColor(tile.color());
             g.fillRect(x, y, size, size);
             g.setColor(Color.BLACK);
@@ -108,7 +109,7 @@ public class Board extends JPanel {
             TilesInterface tiles = this.board.tilesPool.tiles();
             if (this.start.getX() < x && this.start.getY() < y && this.end.getX() > x && this.end.getY() > y) {
 
-                TileInterface tile = tiles.find(this.position);
+                TileInterface tile = new AtPosition(this.position, tiles);
                 TilesInterface connected = new AllSameConnected().collect(tile, tiles);
                 if (new org.cactoos.iterable.LengthOf(connected.all()).value() >= 1) {
                     int score = 0;
@@ -138,7 +139,7 @@ public class Board extends JPanel {
                             }
                         }
                     } while (moved);
-                    tiles = tiles.set(new Tile(bottom.color(), bottom.index(), score, bottom.position()));
+                    tiles = tiles.withTile(new Tile(bottom.color(), bottom.index(), score, bottom.position()));
                     this.board.paint(
                         this.board.tilesPool.withTiles(tiles)
                     );

@@ -7,9 +7,7 @@ import org.funivan.lologa.tile.TileInterface;
 
 public interface TilesInterface {
 
-    TileInterface find(PositionInterface position);
-
-    TilesInterface set(TileInterface tile);
+    TilesInterface withTile(TileInterface tile);
 
     Iterable<TileInterface> all();
 }

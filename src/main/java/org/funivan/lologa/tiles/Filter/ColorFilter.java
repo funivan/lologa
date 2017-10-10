@@ -13,7 +13,7 @@ public class ColorFilter implements Func<TileInterface, Boolean> {
     }
 
     @Override
-    public Boolean apply(TileInterface tileInterface) throws Exception {
+    public Boolean apply(TileInterface tileInterface) {
         return this.color.equals(tileInterface.color());
     }
 }
