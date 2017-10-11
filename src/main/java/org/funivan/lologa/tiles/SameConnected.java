@@ -8,16 +8,25 @@ import org.funivan.lologa.tile.Visitor.Navigation.Direction.Right;
 import org.funivan.lologa.tile.Visitor.Navigation.Direction.Top;
 import org.funivan.lologa.tiles.Filter.ColorFilter;
 
-public class SameConnected extends Tiles {
+import java.util.Iterator;
+
+public class SameConnected implements TilesInterface {
+    private final TilesInterface iterator;
+
     public SameConnected(TileInterface start, TilesInterface tiles) {
-        super(
-            new ColorFilter(start.color()),
+        this.iterator = new FilteredTiles(
             new Tiles(
                 new Next(new Top(start), tiles),
                 new Next(new Right(start), tiles),
                 new Next(new Bottom(start), tiles),
                 new Next(new Left(start), tiles)
-            )
+            ),
+            new ColorFilter(start.color())
         );
+    }
+
+    @Override
+    public Iterator<TileInterface> iterator() {
+        return this.iterator.iterator();
     }
 }

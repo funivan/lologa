@@ -1,6 +1,5 @@
 package org.funivan.lologa.tiles.Filter;
 
-import org.cactoos.Func;
 import org.funivan.lologa.tile.TileInterface;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -18,7 +17,7 @@ public class FilterMatcher extends TypeSafeDiagnosingMatcher<TileFilterInterface
     @Override
     protected boolean matchesSafely(TileFilterInterface filter, Description description) {
         boolean result;
-        boolean expect = this.expect == TileFilterInterface.EXPECT.Same;
+        boolean expect = this.expect == TileFilterInterface.EXPECT.Positive;
         try {
             result = filter.apply(this.tile) == expect;
         } catch (Exception e) {
@@ -35,7 +34,7 @@ public class FilterMatcher extends TypeSafeDiagnosingMatcher<TileFilterInterface
     @Override
     public void describeTo(Description description) {
         description.appendText("Tiles should be "
-            + (this.expect == TileFilterInterface.EXPECT.Same ? "accepted" : "rejected")
+            + (this.expect == TileFilterInterface.EXPECT.Positive ? "accepted" : "rejected")
         );
     }
 }

@@ -2,16 +2,15 @@ package org.funivan.lologa;
 
 import org.cactoos.iterable.LengthOf;
 import org.funivan.lologa.tile.AtPosition;
-import org.funivan.lologa.tile.Next;
+import org.funivan.lologa.tile.MaxNextBottom;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
+import org.funivan.lologa.tile.Score.Score;
+import org.funivan.lologa.tile.Score.TilesScore;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tile.TilesPool.TilesPoolInterface;
-import org.funivan.lologa.tiles.AllSameConnected;
-import org.funivan.lologa.tile.Visitor.Navigation.Direction.Bottom;
-import org.funivan.lologa.tiles.Tiles;
-import org.funivan.lologa.tiles.TilesInterface;
+import org.funivan.lologa.tiles.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -25,6 +24,8 @@ public class Board extends JPanel {
     private TilesPoolInterface tilesPool;
     private final Iterable<Color> colors;
 
+    private int a = 0;
+
     public Board(TilesPoolInterface tilesPool, Iterable<Color> colors) {
         this.tilesPool = tilesPool;
         this.colors = colors;
@@ -35,6 +36,7 @@ public class Board extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        this.a++;
         final int cols = this.tilesPool.cols();
         final int rows = this.tilesPool.rows();
         TilesInterface tiles = this.tilesPool.tiles();
@@ -49,7 +51,7 @@ public class Board extends JPanel {
             int y = row * size;
             final Position position = new Position(row, col);
             if (new AtPosition(position, tiles).same(Tile.DUMMY)) {
-                tiles = new Tiles(tiles, new Tile(iterator.next(), 1, position));
+                tiles = new JoinedTiles(tiles, new Tile(iterator.next(), new Score(1), position));
                 this.tilesPool = this.tilesPool.withTiles(tiles);
                 this.addMouseListener(
                     new TileClickListener(this, position, new Point(x, y), new Point(x + size, y + size))
@@ -61,15 +63,14 @@ public class Board extends JPanel {
             g.setColor(Color.BLACK);
             g.drawRect(x, y, size, size);
             g.drawString("p:" + tile.position().row() + "x" + tile.position().col(), x + 10, y + 15);
-            g.drawString("s:" + String.valueOf(tile.score()), x + 10, y + 30);
+            g.drawString("s:" + String.valueOf(tile.score().value()), x + 10, y + 30);
         }
-
-
     }
 
     public void paint(TilesPoolInterface tiles) {
         this.tilesPool = tiles;
         this.repaint();
+        System.out.println("Paint done");
     }
 
     private static class TileClickListener implements MouseListener {
@@ -104,35 +105,17 @@ public class Board extends JPanel {
 
                 TileInterface tile = new AtPosition(this.position, tiles);
                 TilesInterface connected = new AllSameConnected(tile, tiles);
-                if (new LengthOf(connected.all()).value() >= 1) {
-                    int score = 0;
-                    for (TileInterface target : connected.all()) {
-                        score = score + target.score();
-                    }
-
-                    TileInterface bottom = tile;
-                    do {
-                        TileInterface next = new Next(new Bottom(bottom), tiles);
-                        boolean sameColor = next.color().equals(bottom.color());
-                        if (next.same(Tile.DUMMY) || !sameColor) {
-                            break;
-                        }
-                        bottom = next;
-                    } while (true);
+                if (new LengthOf(connected).value() >= 2) {
+                    TileInterface bottom = new MaxNextBottom(tile, tiles);
                     System.out.println("Bottom: " + bottom.position());
                     // Move items down
-                    boolean moved = false;
-                    Iterable<TileInterface> moveItems = connected.all();
 
-                    do {
-                        moved = false;
-                        for (TileInterface item : moveItems) {
-                            if (!item.equals(bottom)) {
-                                tiles = new Tiles(tiles, new Tile(Color.WHITE, 0, item.position()));
-                            }
-                        }
-                    } while (moved);
-                    tiles = new Tiles(tiles, new Tile(bottom.color(), score, bottom.position()));
+                    tiles = new SkippedTiles(tiles, connected);
+                    tiles = new MovedDown(tiles, this.board.tilesPool.rows());
+                    tiles = new JoinedTiles(tiles, new Tile(bottom.color(), new TilesScore(connected), bottom.position()));
+                    for (TileInterface tileInterface : tiles) {
+                        System.out.println("toDraw:" + tileInterface.position());
+                    }
                     this.board.paint(
                         this.board.tilesPool.withTiles(tiles)
                     );

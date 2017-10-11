@@ -1,15 +1,11 @@
 package org.funivan.lologa.tiles.Filter;
 
-import org.cactoos.list.ListOf;
 import org.funivan.lologa.tile.Position.Position;
-import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Tile;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.awt.*;
-
-import static org.junit.Assert.*;
 
 public class PositionFilterTest {
     @Test
@@ -18,7 +14,7 @@ public class PositionFilterTest {
             "Tile located at the same position",
             new PositionFilter(new Position(0, 1)),
             new FilterMatcher(
-                TileFilterInterface.EXPECT.Same,
+                TileFilterInterface.EXPECT.Positive,
                 new Tile(Color.BLACK, new Position(0, 1))
             )
         );
@@ -30,7 +26,7 @@ public class PositionFilterTest {
             "Tile located at another position",
             new PositionFilter(new Position(5, 6)),
             new FilterMatcher(
-                TileFilterInterface.EXPECT.Different,
+                TileFilterInterface.EXPECT.Negative,
                 new Tile(Color.BLUE, new Position(0, 0))
             )
         );

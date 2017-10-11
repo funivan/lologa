@@ -15,7 +15,7 @@ public class GeneralFrame extends JFrame {
         );
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.add(
-            new Board(new TilesPool(6, 6), colors)
+            new Board(new TilesPool(3, 3), colors)
         );
         this.setVisible(true);
     }

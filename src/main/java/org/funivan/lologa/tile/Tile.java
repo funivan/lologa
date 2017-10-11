@@ -2,6 +2,8 @@ package org.funivan.lologa.tile;
 
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
+import org.funivan.lologa.tile.Score.Score;
+import org.funivan.lologa.tile.Score.ScoreInterface;
 
 import java.awt.*;
 
@@ -9,21 +11,21 @@ public class Tile implements TileInterface {
     public static Tile DUMMY;
 
     static {
-        DUMMY = new Tile(new Color(255, 255, 255), -100, new Position(-100, -100));
+        DUMMY = new Tile(new Color(255, 255, 255), new Score(-100), new Position(-100, -100));
     }
 
     private final Color color;
-    private int score;
+    private ScoreInterface score;
     private PositionInterface position;
 
-    public Tile(Color color, int score, PositionInterface position) {
+    public Tile(Color color, ScoreInterface score, PositionInterface position) {
         this.color = color;
         this.score = score;
         this.position = position;
     }
 
     public Tile(Color color, PositionInterface position) {
-        this(color, 1, position);
+        this(color, new Score(1), position);
     }
 
     public Color color() {
@@ -31,7 +33,7 @@ public class Tile implements TileInterface {
     }
 
     @Override
-    public int score() {
+    public ScoreInterface score() {
         return this.score;
     }
 
@@ -43,7 +45,7 @@ public class Tile implements TileInterface {
 
     @Override
     public boolean same(TileInterface target) {
-        return (target.score() == this.score()
+        return (target.score().value() == this.score().value()
             &&
             target.color().equals(this.color())
             &&

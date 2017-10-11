@@ -1,12 +1,14 @@
 package org.funivan.lologa.tile;
 
 import org.funivan.lologa.tile.Position.PositionInterface;
+import org.funivan.lologa.tile.Score.ScoreInterface;
 import org.funivan.lologa.tile.Visitor.Navigation.Direction.DirectionInterface;
 import org.funivan.lologa.tiles.TilesInterface;
 
 import java.awt.*;
 
 public class Next implements TileInterface {
+    private TileInterface found = null;
     private final DirectionInterface direction;
     private final TilesInterface tiles;
 
@@ -21,7 +23,7 @@ public class Next implements TileInterface {
     }
 
     @Override
-    public int score() {
+    public ScoreInterface score() {
         return this.find().score();
     }
 
@@ -37,9 +39,12 @@ public class Next implements TileInterface {
     }
 
     private TileInterface find() {
-        return new AtPosition(
-            this.direction.position(),
-            this.tiles
-        );
+        if (this.found == null) {
+            this.found = new AtPosition(
+                this.direction.position(),
+                this.tiles
+            );
+        }
+        return this.found;
     }
 }

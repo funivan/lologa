@@ -5,6 +5,7 @@ import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.TileInterface;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AllSameConnected implements TilesInterface {
@@ -17,24 +18,25 @@ public class AllSameConnected implements TilesInterface {
         this.tiles = tiles;
     }
 
+
     @Override
-    public Iterable<TileInterface> all() {
+    public Iterator<TileInterface> iterator() {
         TilesInterface result = new Tiles(new IterableOf<>(this.start));
         List<PositionInterface> done = new ArrayList<>();
         boolean touched;
         do {
             touched = false;
-            for (TileInterface check : result.all()) {
+            for (TileInterface check : result) {
                 if (!done.contains(check.position())) {
                     touched = true;
                     done.add(check.position());
                     TilesInterface same = new SameConnected(check, this.tiles);
-                    for (TileInterface found : same.all()) {
-                        result = new Tiles(result, found);
+                    for (TileInterface found : same) {
+                        result = new JoinedTiles(result, found);
                     }
                 }
             }
         } while (touched);
-        return result.all();
+        return result.iterator();
     }
 }

@@ -11,13 +11,13 @@ public class TilesMatcher extends TypeSafeDiagnosingMatcher<TilesInterface> {
     private ListOf<TileInterface> original;
 
     public TilesMatcher(TilesInterface original) {
-        this.original = new ListOf<>(original.all());
+        this.original = new ListOf<>(original);
     }
 
     @Override
     protected boolean matchesSafely(TilesInterface tiles, Description description) {
         boolean result = true;
-        final ListOf<TileInterface> compared = new ListOf<>(tiles.all());
+        final ListOf<TileInterface> compared = new ListOf<>(tiles);
         if (compared.size() != this.original.size()) {
             result = false;
             description.appendText("size of tiles is different. Expect " + this.original.size() + " but current size is " + compared.size());

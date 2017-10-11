@@ -5,6 +5,6 @@ import org.funivan.lologa.tile.TileInterface;
 
 public interface TileFilterInterface extends Func<TileInterface, Boolean> {
     enum EXPECT {
-        Same, Different
+        Positive, Negative
     }
 }

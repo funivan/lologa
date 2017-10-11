@@ -1,7 +1,5 @@
 package org.funivan.lologa.tiles.Filter;
 
-import org.cactoos.Func;
-import org.cactoos.list.ListOf;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.TileInterface;
 
@@ -16,13 +14,13 @@ public class PositionFilter implements TileFilterInterface {
     }
 
     public PositionFilter(PositionInterface positions) {
-        this(positions, EXPECT.Same);
+        this(positions, EXPECT.Positive);
     }
 
 
     @Override
     final public Boolean apply(TileInterface target) throws Exception {
-        final boolean expectResult = this.expect == EXPECT.Same;
+        final boolean expectResult = this.expect == EXPECT.Positive;
         final boolean result = this.position.same(target.position());
         return expectResult == result;
     }

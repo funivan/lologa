@@ -15,7 +15,7 @@ public class ColorFilterTest {
             "Tile contains the same color",
             new ColorFilter(Color.BLACK),
             new FilterMatcher(
-                TileFilterInterface.EXPECT.Same,
+                TileFilterInterface.EXPECT.Positive,
                 new Tile(Color.BLACK, new Position(0, 0))
             )
         );
@@ -27,7 +27,7 @@ public class ColorFilterTest {
             "Tile contains different color",
             new ColorFilter(Color.BLACK),
             new FilterMatcher(
-                TileFilterInterface.EXPECT.Different,
+                TileFilterInterface.EXPECT.Negative,
                 new Tile(Color.RED, new Position(0, 0))
             )
         );
