@@ -111,7 +111,7 @@ public class Board extends JPanel {
                     // Move items down
 
                     tiles = new SkippedTiles(tiles, connected);
-                    tiles = new MovedDown(tiles, this.board.tilesPool.rows());
+                    tiles = new MovedDown(tiles);
                     tiles = new JoinedTiles(tiles, new Tile(bottom.color(), new TilesScore(connected), bottom.position()));
                     for (TileInterface tileInterface : tiles) {
                         System.out.println("toDraw:" + tileInterface.position());

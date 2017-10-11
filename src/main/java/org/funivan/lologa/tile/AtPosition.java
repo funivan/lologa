@@ -2,17 +2,16 @@ package org.funivan.lologa.tile;
 
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Score.ScoreInterface;
-import org.funivan.lologa.tiles.TilesInterface;
 
 import java.awt.*;
 
 public class AtPosition implements TileInterface {
     private TileInterface found = null;
     private final PositionInterface position;
-    private final TilesInterface tiles;
+    private final Iterable<TileInterface> tiles;
     private final TileInterface fallback;
 
-    public AtPosition(PositionInterface position, TilesInterface tiles) {
+    public AtPosition(PositionInterface position, Iterable<TileInterface> tiles) {
         this.position = position;
         this.tiles = tiles;
         this.fallback = Tile.DUMMY;
