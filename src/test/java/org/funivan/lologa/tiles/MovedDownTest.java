@@ -9,19 +9,42 @@ import java.awt.*;
 
 public class MovedDownTest {
     @Test
-    public void positive() {
+    public void replaceSingleTile() {
         MatcherAssert.assertThat(
-            "Can not move tiles down",
+            "Can not remove 1x0 tile",
             new MovedDown(
                 new Tiles(
-                    new Tile(Color.RED, new Position(0, 0)), new Tile(Color.GRAY, new Position(0, 1)),
-                    /*    should be placed here        */     new Tile(Color.BLACK, new Position(1, 1))
+                    new Tile(Color.BLACK, new Position(0, 0)), new Tile(Color.BLACK, new Position(0, 1)),
+                    new Tile(Color.GREEN, new Position(1, 0)), new Tile(Color.RED, new Position(1, 1))
+                ),
+                new Tiles(
+                    new Tile(Color.GREEN, new Position(1, 0)) // Should be replaced
                 )
             ),
             new TilesMatcher(
                 new Tiles(
-                    /*    empty cel                     */     new Tile(Color.GRAY, new Position(0, 1)),
-                    new Tile(Color.RED, new Position(1, 0)), new Tile(Color.BLACK, new Position(1, 1))
+                    /*  should be removed     */               new Tile(Color.BLACK, new Position(0, 1)),
+                    new Tile(Color.GREEN, new Position(1, 0)), new Tile(Color.RED, new Position(1, 1))
+                )
+            )
+        );
+    }
+    @Test
+    public void replaceWholeRowTile() {
+        MatcherAssert.assertThat(
+            "Can not remove 1x0 tile",
+            new MovedDown(
+                new Tiles(
+                    new Tile(Color.BLUE, new Position(0, 0)), new Tile(Color.BLACK, new Position(0, 1)),
+                    new Tile(Color.GREEN, new Position(1, 0)), new Tile(Color.RED, new Position(1, 1))
+                ),
+                new Tiles(
+                    new Tile(Color.GREEN, new Position(1, 0)), new Tile(Color.RED, new Position(1, 1))
+                )
+            ),
+            new TilesMatcher(
+                new Tiles(
+                    new Tile(Color.BLUE, new Position(1, 1)), new Tile(Color.BLACK, new Position(1, 1))
                 )
             )
         );

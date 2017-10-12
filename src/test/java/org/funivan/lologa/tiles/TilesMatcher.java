@@ -31,7 +31,7 @@ public class TilesMatcher extends TypeSafeDiagnosingMatcher<TilesInterface> {
             }
             if (!hasSameTile) {
                 result = false;
-                description.appendText("does not contain tile " + originTile.position());
+                description.appendText(" does not match tile " + originTile.position());
                 break;
             }
         }
