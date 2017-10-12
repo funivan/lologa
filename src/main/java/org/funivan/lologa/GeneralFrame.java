@@ -1,10 +1,9 @@
 package org.funivan.lologa;
 
-import org.funivan.lologa.tile.TilesPool.TilesPool;
+import org.funivan.lologa.tiles.Tiles;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class GeneralFrame extends JFrame {
     public GeneralFrame(Iterable<Color> colors) {
@@ -15,7 +14,7 @@ public class GeneralFrame extends JFrame {
         );
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.add(
-            new Board(new TilesPool(3, 3), colors)
+            new Board(new Tiles(), 3, 3, colors)
         );
         this.setVisible(true);
     }
