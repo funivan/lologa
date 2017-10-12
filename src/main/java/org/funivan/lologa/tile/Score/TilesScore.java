@@ -17,4 +17,9 @@ public class TilesScore implements ScoreInterface {
         }
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "Score{" + this.value() + '}';
+    }
 }

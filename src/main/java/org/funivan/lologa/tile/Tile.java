@@ -52,4 +52,12 @@ public class Tile implements TileInterface {
             target.position().same(this.position())
         );
     }
+
+    @Override
+    public String toString() {
+        return "Tile: " +
+            "{Color{r" + this.color.getRed() + ",g" + this.color.getGreen() + ",b" + this.color.getBlue() + "}}"
+            + "," + this.score + ""
+            + "," + this.position;
+    }
 }

@@ -68,6 +68,7 @@ public class Board extends JPanel {
     }
 
     public void paint(TilesPoolInterface tiles) {
+        System.out.println("Start paint");
         this.tilesPool = tiles;
         this.repaint();
         System.out.println("Paint done");

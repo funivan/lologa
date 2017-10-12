@@ -11,4 +11,9 @@ public class Score implements ScoreInterface {
     public int value() {
         return this.value;
     }
+
+    @Override
+    public String toString() {
+        return "Score{" + this.value() + '}';
+    }
 }

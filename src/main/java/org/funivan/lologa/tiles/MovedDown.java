@@ -23,36 +23,38 @@ public class MovedDown implements TilesInterface {
         TilesInterface result = new Tiles(this.tiles);
         Iterable<TileInterface> moveItems = this.replaceable;
         boolean moved;
+        boolean last = true;
+
         do {
             moved = false;
-            for (TileInterface tile : result) {
+            Iterator<TileInterface> iter = result.iterator();
+            while (iter.hasNext()) {
+                TileInterface tile = iter.next();
                 PositionInterface position = new Bottom(tile).position();
                 TileInterface bottom = new AtPosition(position, result);
                 TileInterface replaced = new AtPosition(position, moveItems);
-                if (bottom.same(replaced) && !bottom.same(Tile.DUMMY)) {
-                    System.out.println("Should be swapped: " + tile.position() + " to " + position);
-                    result = new JoinedTiles(
-                        result,
-                        new ListOf<>(
-                            new Tile(bottom.color(), bottom.score(), tile.position()),
-                            new Tile(tile.color(), tile.score(), bottom.position())
-                        )
-                    );
+                boolean skipTile = new AtPosition(tile.position(), moveItems).same(tile);
+                if (!skipTile && bottom.same(replaced) && !bottom.same(Tile.DUMMY)) {
+                    Tile current = new Tile(bottom.color(), bottom.score(), tile.position());
+                    Tile bottomTile = new Tile(tile.color(), tile.score(), bottom.position());
+                    result = new JoinedTiles(result, new ListOf<>(current, bottomTile));
+                    iter = result.iterator();
                     // Remove bottom tile + Add top tile
                     moveItems = new JoinedTiles(
-                        new SkippedTiles(moveItems, new ListOf<>(bottom)),
-                        tile
+                        new SkippedTiles(moveItems, new ListOf<>(replaced)),
+                        current
                     );
                     moved = true;
                 }
             }
+
         } while (moved);
         return new SkippedTiles(result, moveItems).iterator();
     }
 
     public static void dump(String prefix, Iterable<TileInterface> tiles) {
         for (TileInterface tile : tiles) {
-            System.out.println(prefix + ":" + tile.position());
+            System.out.println(prefix + ":" + tile);
         }
     }
 }
