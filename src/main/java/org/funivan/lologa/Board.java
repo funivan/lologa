@@ -2,6 +2,7 @@ package org.funivan.lologa;
 
 import org.cactoos.iterable.LengthOf;
 import org.funivan.lologa.algo.find.multiple.AllConnectedFinder;
+import org.funivan.lologa.algo.find.multiple.PossibleMoves;
 import org.funivan.lologa.algo.find.multiple.SingleTiles;
 import org.funivan.lologa.algo.find.one.MaxBottom;
 import org.funivan.lologa.algo.modify.MoveDown;
@@ -24,6 +25,7 @@ import java.util.Iterator;
 
 public class Board extends JPanel {
 
+    public static final int CONNECTED_LIMIT = 3;
     private TilesInterface tiles;
     private final int rows;
     private final int cols;
@@ -78,6 +80,7 @@ public class Board extends JPanel {
 
         g.drawString("score:" + new ScoreMax(this.tiles.all()).value(), 500, 15);
         g.drawString("Single:" + new SingleTiles().perform(this.tiles).size(), 500, 40);
+        g.drawString("Possible:" + new PossibleMoves(this.CONNECTED_LIMIT).perform(this.tiles).size(), 500, 60);
     }
 
     public void paint(TilesInterface tiles) {
@@ -119,7 +122,7 @@ public class Board extends JPanel {
                     final TileInterface clicked = tiles.get(this.position);
                     final TilesInterface connected = new AllConnectedFinder(clicked).perform(tiles);
 
-                    if (new LengthOf(connected.all()).value() >= 3) {
+                    if (new LengthOf(connected.all()).value() >= this.board.CONNECTED_LIMIT) {
                         ScoreSum score = new ScoreSum(connected.all());
                         TileInterface bottom = new MaxBottom(clicked).find(tiles);
                         TilesInterface move = connected.without(bottom.position());
