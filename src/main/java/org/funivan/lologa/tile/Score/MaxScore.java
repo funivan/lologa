@@ -2,10 +2,10 @@ package org.funivan.lologa.tile.Score;
 
 import org.funivan.lologa.tile.TileInterface;
 
-public class ScoreMax implements ScoreInterface {
+public class MaxScore implements ScoreInterface {
     private final Iterable<TileInterface> tiles;
 
-    public ScoreMax(Iterable<TileInterface> tiles) {
+    public MaxScore(Iterable<TileInterface> tiles) {
         this.tiles = tiles;
     }
 

@@ -7,7 +7,7 @@ import org.funivan.lologa.algo.modify.MoveDown;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Score.Score;
-import org.funivan.lologa.tile.Score.ScoreMax;
+import org.funivan.lologa.tile.Score.MaxScore;
 import org.funivan.lologa.tile.Score.ScoreSum;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
@@ -76,7 +76,7 @@ public class Board extends JPanel {
         }
         g.setColor(Color.BLACK);
 
-        g.drawString("score:" + new ScoreMax(this.tiles.all()).value(), 700, 15);
+        g.drawString("score:" + new MaxScore(this.tiles.all()).value(), 700, 15);
         g.drawString("Clicks:" + new PossibleMoves(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 60);
         g.drawString("Groups:" + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 80);
         g.drawString("Single:" + new SingleTilesFinder().handle(this.tiles).size(), 700, 40);
