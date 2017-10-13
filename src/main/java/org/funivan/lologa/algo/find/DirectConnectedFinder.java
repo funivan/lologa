@@ -1,13 +1,13 @@
-package org.funivan.lologa.algo.multiple;
+package org.funivan.lologa.algo.find;
 
+import com.sun.istack.internal.NotNull;
 import org.cactoos.list.ListOf;
 import org.funivan.lologa.tile.Position.Next;
 import org.funivan.lologa.tile.TileInterface;
+import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
-import java.util.ArrayList;
-
-public class DirectConnectedFinder implements MultipleFinder {
+public class DirectConnectedFinder implements TilesAction {
 
     private final TileInterface start;
 
@@ -16,19 +16,20 @@ public class DirectConnectedFinder implements MultipleFinder {
     }
 
     @Override
-    public Iterable<TileInterface> find(TilesInterface tiles) {
+    @NotNull
+    public TilesInterface perform(TilesInterface tiles) {
         final ListOf<Next> positions = new ListOf<>(
             new Next.Top(this.start),
             new Next.Right(this.start),
             new Next.Bottom(this.start),
             new Next.Left(this.start)
         );
-        ArrayList<TileInterface> result = new ArrayList<>();
+        TilesInterface result = new Tiles();
         for (Next position : positions) {
             if (tiles.has(position)) {
                 TileInterface next = tiles.get(position);
                 if (next.color().equals(this.start.color())) {
-                    result.add(next);
+                    result = result.with(next);
                 }
             }
         }

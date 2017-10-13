@@ -28,7 +28,7 @@ public class Tiles implements TilesInterface {
     }
 
     @Override
-    public TilesInterface remove(PositionInterface position) {
+    public TilesInterface without(PositionInterface position) {
         HashMap<PositionInterface, TileInterface> result = this.tiles;
         result.remove(position);
         return new Tiles(result);

@@ -1,4 +1,4 @@
-package org.funivan.lologa.algo.multiple.one;
+package org.funivan.lologa.algo.find.one;
 
 import com.sun.istack.internal.NotNull;
 import org.funivan.lologa.tile.Position.Next;

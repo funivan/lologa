@@ -9,7 +9,7 @@ public interface TilesInterface {
 
     boolean has(PositionInterface position);
 
-    TilesInterface remove(PositionInterface position);
+    TilesInterface without(PositionInterface position);
 
     TilesInterface with(TileInterface tile);
 

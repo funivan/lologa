@@ -6,6 +6,7 @@ import org.funivan.lologa.tile.Score.Score;
 import org.funivan.lologa.tile.Score.ScoreInterface;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Tile implements TileInterface {
     public static Tile DUMMY;
@@ -41,6 +42,25 @@ public class Tile implements TileInterface {
     @Override
     public PositionInterface position() {
         return this.position;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean result = false;
+        if (this == o) {
+            result = true;
+        } else if (o instanceof TileInterface) {
+            TileInterface target = (TileInterface) o;
+            result = (
+                target.color().equals(this.color()) && target.position().equals(this.position())
+            );
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.color, this.score, this.position);
     }
 
     @Override

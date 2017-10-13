@@ -1,6 +1,5 @@
 package org.funivan.lologa.tiles.Filter;
 
-import org.cactoos.Func;
 import org.funivan.lologa.tile.TileInterface;
 
 import java.awt.*;

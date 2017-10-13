@@ -1,37 +1,33 @@
 package org.funivan.lologa.tiles;
 
-import org.cactoos.list.ListOf;
 import org.funivan.lologa.tile.TileInterface;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-public class TilesMatcher extends TypeSafeDiagnosingMatcher<Iterable<TileInterface>> {
+public class TilesMatcher extends TypeSafeDiagnosingMatcher<TilesInterface> {
 
-    private ListOf<TileInterface> original;
+    private TilesInterface original;
 
-    public TilesMatcher(Iterable<TileInterface> original) {
-        this.original = new ListOf<>(original);
+    public TilesMatcher(TilesInterface original) {
+        this.original = original;
     }
 
     @Override
-    protected boolean matchesSafely(Iterable<TileInterface> tiles, Description description) {
+    protected boolean matchesSafely(TilesInterface tiles, Description description) {
         boolean result = true;
-        final ListOf<TileInterface> compared = new ListOf<>(tiles);
-        if (compared.size() != this.original.size()) {
-            result = false;
-            description.appendText("size of tiles is different. Expect " + this.original.size() + " but current size is " + compared.size());
-        }
-        for (TileInterface originTile : this.original) {
-            boolean hasSameTile = false;
-            for (TileInterface tile : tiles) {
-                if (originTile.same(tile)) {
-                    hasSameTile = true;
-                    break;
-                }
-            }
-            if (!hasSameTile) {
+        for (TileInterface origin : this.original.all()) {
+            if (!tiles.has(origin.position())) {
                 result = false;
-                description.appendText(" does not match tile " + originTile.toString());
+                description.appendText(" does not contain tile in position " + origin.position());
+                break;
+            }
+            TileInterface target = tiles.get(origin.position());
+            if (!origin.equals(target)) {
+                result = false;
+                description.appendText(" tiles is different. \n"
+                    + "    Expect  " + origin + "\n"
+                    + "    Instead " + target
+                );
                 break;
             }
         }
@@ -40,6 +36,6 @@ public class TilesMatcher extends TypeSafeDiagnosingMatcher<Iterable<TileInterfa
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("TilesList should be same");
+        description.appendText("Tiles should be same");
     }
 }

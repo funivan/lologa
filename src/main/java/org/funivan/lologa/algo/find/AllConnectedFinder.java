@@ -1,5 +1,6 @@
-package org.funivan.lologa.algo.multiple;
+package org.funivan.lologa.algo.find;
 
+import com.sun.istack.internal.NotNull;
 import org.cactoos.iterable.Joined;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.TileInterface;
@@ -9,7 +10,7 @@ import org.funivan.lologa.tiles.TilesInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllConnectedFinder implements MultipleFinder {
+public class AllConnectedFinder implements TilesAction {
     private final TileInterface start;
 
     public AllConnectedFinder(TileInterface start) {
@@ -17,7 +18,8 @@ public class AllConnectedFinder implements MultipleFinder {
     }
 
     @Override
-    public Iterable<TileInterface> find(TilesInterface tiles) {
+    @NotNull
+    public TilesInterface perform(TilesInterface tiles) {
         TilesInterface result = new Tiles().with(this.start);
 
         List<PositionInterface> done = new ArrayList<>();
@@ -28,7 +30,10 @@ public class AllConnectedFinder implements MultipleFinder {
             for (TileInterface check : result.all()) {
                 if (!done.contains(check.position())) {
                     touched = true;
-                    found = new Joined<>(found, new DirectConnectedFinder(check).find(tiles));
+                    found = new Joined<>(
+                        found,
+                        new DirectConnectedFinder(check).perform(tiles).all()
+                    );
                     done.add(check.position());
                 }
             }
@@ -36,6 +41,6 @@ public class AllConnectedFinder implements MultipleFinder {
                 result = result.with(tileInterface);
             }
         } while (touched);
-        return result.all();
+        return result;
     }
 }

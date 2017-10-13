@@ -2,10 +2,10 @@ package org.funivan.lologa.tile.Score;
 
 import org.funivan.lologa.tile.TileInterface;
 
-public class TilesScore implements ScoreInterface {
+public class ScoreSum implements ScoreInterface {
     private Iterable<TileInterface> tiles;
 
-    public TilesScore(Iterable<TileInterface> tiles) {
+    public ScoreSum(Iterable<TileInterface> tiles) {
         this.tiles = tiles;
     }
 
