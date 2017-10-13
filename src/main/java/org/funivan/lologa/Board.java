@@ -47,9 +47,9 @@ public class Board extends JPanel {
         super.paintComponent(g);
         final int cols = this.cols;
         final int rows = this.rows;
-        final int size = 60;
+        final int size = 80;
         final int len = cols * rows;
-        Iterator<Color> iterator = this.colors.iterator();
+        final Iterator<Color> iterator = this.colors.iterator();
         int row = 0;
         for (int index = 0; index < len; index++) {
             int col = index % rows;
@@ -79,10 +79,10 @@ public class Board extends JPanel {
         }
         g.setColor(Color.BLACK);
 
-        g.drawString("score:" + new ScoreMax(this.tiles.all()).value(), 500, 15);
-        g.drawString("Single:" + new SingleTilesFinder().handle(this.tiles).size(), 500, 40);
-        g.drawString("Clicks:" + new PossibleMoves(this.CONNECTED_LIMIT).handle(this.tiles).size(), 500, 60);
-        g.drawString("Groups:" + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 500, 80);
+        g.drawString("score:" + new ScoreMax(this.tiles.all()).value(), 700, 15);
+        g.drawString("Single:" + new SingleTilesFinder().handle(this.tiles).size(), 700, 40);
+        g.drawString("Clicks:" + new PossibleMoves(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 60);
+        g.drawString("Groups:" + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 80);
     }
 
     public void paint(TilesInterface tiles) {

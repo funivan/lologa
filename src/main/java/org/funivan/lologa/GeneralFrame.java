@@ -6,7 +6,7 @@ import java.awt.*;
 public class GeneralFrame extends JFrame {
     public GeneralFrame(Board board) {
         this.setTitle("Game Lolo GA");
-        this.setSize(600, 600);
+        this.setSize(800, 800);
         this.setLayout(
             new BorderLayout(0, 0)
         );

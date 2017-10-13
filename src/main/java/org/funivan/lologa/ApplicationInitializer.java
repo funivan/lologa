@@ -13,7 +13,7 @@ public class ApplicationInitializer {
         new GeneralFrame(
             new Board(
                 new Tiles(),
-                8, 8,
+                7, 7,
                 new Cycled<>(
                     new Shuffled<>(
                         new ListOf<>(
