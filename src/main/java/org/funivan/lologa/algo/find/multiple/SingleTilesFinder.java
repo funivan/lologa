@@ -8,7 +8,7 @@ import org.funivan.lologa.tiles.TilesInterface;
 /**
  * Find tiles that are not connected with each other
  */
-public class SingleTiles implements TilesPerformer {
+public class SingleTilesFinder implements TilesPerformer {
 
     @Override
     public TilesInterface perform(TilesInterface tiles) {
