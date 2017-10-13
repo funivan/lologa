@@ -77,10 +77,10 @@ public class Board extends JPanel {
         g.setColor(Color.BLACK);
 
         g.drawString("score:" + new MaxScore(this.tiles.all()).value(), 700, 15);
-        g.drawString("Clicks:" + new PossibleMoves(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 60);
-        g.drawString("Groups:" + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 80);
-        g.drawString("Single:" + new SingleTilesFinder().handle(this.tiles).size(), 700, 40);
-        g.drawString("Locked:" + new LockedTilesFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 100);
+        g.drawString("Clicks : " + new PossibleMoves(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 50);
+        g.drawString("Groups : " + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 70);
+        g.drawString("Single : " + new SingleTilesFinder().handle(this.tiles).size(), 700, 90);
+        g.drawString("Locked : " + new LockedTilesFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 110);
     }
 
     public void paint(TilesInterface tiles) {
