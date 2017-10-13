@@ -80,9 +80,9 @@ public class Board extends JPanel {
         g.setColor(Color.BLACK);
 
         g.drawString("score:" + new ScoreMax(this.tiles.all()).value(), 500, 15);
-        g.drawString("Single:" + new SingleTilesFinder().perform(this.tiles).size(), 500, 40);
-        g.drawString("Clicks:" + new PossibleMoves(this.CONNECTED_LIMIT).perform(this.tiles).size(), 500, 60);
-        g.drawString("Groups:" + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).perform(this.tiles).size(), 500, 80);
+        g.drawString("Single:" + new SingleTilesFinder().handle(this.tiles).size(), 500, 40);
+        g.drawString("Clicks:" + new PossibleMoves(this.CONNECTED_LIMIT).handle(this.tiles).size(), 500, 60);
+        g.drawString("Groups:" + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 500, 80);
     }
 
     public void paint(TilesInterface tiles) {
@@ -122,13 +122,13 @@ public class Board extends JPanel {
 
                 if (tiles.has(this.position)) {
                     final TileInterface clicked = tiles.get(this.position);
-                    final TilesInterface connected = new AllConnectedFinder(clicked).perform(tiles);
+                    final TilesInterface connected = new AllConnectedFinder(clicked).handle(tiles);
 
                     if (new LengthOf(connected.all()).value() >= this.board.CONNECTED_LIMIT) {
                         ScoreSum score = new ScoreSum(connected.all());
                         TileInterface bottom = new MaxBottom(clicked).find(tiles);
                         TilesInterface move = connected.without(bottom.position());
-                        tiles = new MoveDown(move).perform(tiles);
+                        tiles = new MoveDown(move).handle(tiles);
                         tiles = tiles.with(new Tile(bottom.color(), score, bottom.position()));
                         this.board.paint(tiles);
                     }

@@ -17,7 +17,7 @@ public class MoveDownTest {
             "Single bottom tile will be removed",
             new MoveDown(
                 new Tiles().with(new Tile(Color.GREEN, new Position(1, 0)))
-            ).perform(
+            ).handle(
                 new Tiles()
                     .with(new Tile(Color.BLACK, new Position(0, 0))).with(new Tile(Color.GRAY, new Position(0, 1)))
                     .with(new Tile(Color.GREEN, new Position(1, 0))).with(new Tile(Color.RED, new Position(1, 1)))
@@ -37,7 +37,7 @@ public class MoveDownTest {
             new MoveDown(
                 new Tiles()
                     .with(new Tile(Color.BLACK, new Position(0, 0))).with(new Tile(Color.GRAY, new Position(0, 1)))
-            ).perform(
+            ).handle(
                 new Tiles()
                     .with(new Tile(Color.BLACK, new Position(0, 0))).with(new Tile(Color.GRAY, new Position(0, 1)))
                     .with(new Tile(Color.GREEN, new Position(1, 0))).with(new Tile(Color.RED, new Position(1, 1)))
@@ -58,7 +58,7 @@ public class MoveDownTest {
                 new Tiles()
                     .with(new Tile(Color.GREEN, new Score(2), new Position(1, 0))).with(new Tile(Color.RED, new Score(3), new Position(1, 1)))
             )
-                .perform(
+                .handle(
                     new Tiles()
                         .with(new Tile(Color.BLUE, new Score(0), new Position(0, 0))).with(new Tile(Color.BLACK, new Score(1), new Position(0, 1)))
                         .with(new Tile(Color.GREEN, new Score(2), new Position(1, 0))).with(new Tile(Color.RED, new Score(3), new Position(1, 1)))
@@ -77,7 +77,7 @@ public class MoveDownTest {
             new MoveDown(
                 new Tiles()
                     .with(new Tile(Color.BLUE, new Position(0, 0))).with(new Tile(Color.BLACK, new Position(0, 1)))
-            ).perform(
+            ).handle(
                 new Tiles()
                     .with(new Tile(Color.BLUE, new Position(0, 0))).with(new Tile(Color.BLACK, new Position(0, 1)))
                     .with(new Tile(Color.GREEN, new Position(1, 0))).with(new Tile(Color.RED, new Position(1, 1))
@@ -98,7 +98,7 @@ public class MoveDownTest {
                 new Tiles()
                     .with(new Tile(Color.BLUE, new Position(0, 0)))
                     .with(new Tile(Color.GREEN, new Position(1, 0)))
-            ).perform(
+            ).handle(
                 new Tiles()
                     .with(new Tile(Color.BLUE, new Position(0, 0))).with(new Tile(Color.BLACK, new Position(0, 1)))
                     .with(new Tile(Color.GREEN, new Position(1, 0))).with(new Tile(Color.RED, new Position(1, 1)))
@@ -119,7 +119,7 @@ public class MoveDownTest {
                 new Tiles()
                     .with(new Tile(Color.GREEN, new Position(1, 0)))
                     .with(new Tile(Color.GRAY, new Position(2, 0)))
-            ).perform(
+            ).handle(
                 new Tiles()
                     .with(new Tile(Color.BLUE, new Position(0, 0))).with(new Tile(Color.BLACK, new Position(0, 1)))
                     .with(new Tile(Color.GREEN, new Position(1, 0))).with(new Tile(Color.RED, new Position(1, 1)))

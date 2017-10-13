@@ -16,10 +16,10 @@ public class AllConnectedFinderTest {
 
 
         MatcherAssert.assertThat(
-            "Can not perform all same tiles",
+            "Can not handle all same tiles",
             new AllConnectedFinder(
                 new Tile(Color.RED, new Position(2, 0))
-            ).perform(
+            ).handle(
                 new Tiles()
                     .with(new Tile(Color.BLACK, new Position(0, 0))).with(new Tile(Color.RED, new Position(0, 1)))
                     .with(new Tile(Color.BLACK, new Position(1, 0))).with(new Tile(Color.RED, new Position(1, 1)))
@@ -38,10 +38,10 @@ public class AllConnectedFinderTest {
     @Test
     public void findNextConnected() {
         MatcherAssert.assertThat(
-            "Can not perform first connected tile",
+            "Can not handle first connected tile",
             new AllConnectedFinder(
                 new Tile(Color.BLACK, new Position(0, 1))
-            ).perform(
+            ).handle(
                 new Tiles()
                     .with(new Tile(Color.BLACK, new Position(0, 0))).with(new Tile(Color.BLACK, new Position(0, 1)))
             ),

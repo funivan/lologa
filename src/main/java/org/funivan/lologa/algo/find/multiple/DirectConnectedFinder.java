@@ -2,13 +2,13 @@ package org.funivan.lologa.algo.find.multiple;
 
 import com.sun.istack.internal.NotNull;
 import org.cactoos.list.ListOf;
-import org.funivan.lologa.algo.find.TilesPerformer;
+import org.funivan.lologa.algo.find.HandlerInterface;
 import org.funivan.lologa.tile.Position.Next;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
-public class DirectConnectedFinder implements TilesPerformer {
+public class DirectConnectedFinder implements HandlerInterface {
 
     private final TileInterface start;
 
@@ -18,7 +18,7 @@ public class DirectConnectedFinder implements TilesPerformer {
 
     @Override
     @NotNull
-    public TilesInterface perform(TilesInterface tiles) {
+    public TilesInterface handle(TilesInterface tiles) {
         final ListOf<Next> positions = new ListOf<>(
             new Next.Top(this.start),
             new Next.Right(this.start),
