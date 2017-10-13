@@ -1,6 +1,5 @@
 package org.funivan.lologa.tile;
 
-import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Score.Score;
 import org.funivan.lologa.tile.Score.ScoreInterface;
@@ -9,15 +8,10 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Tile implements TileInterface {
-    public static Tile DUMMY;
-
-    static {
-        DUMMY = new Tile(new Color(255, 255, 255), new Score(-100), new Position(-100, -100));
-    }
 
     private final Color color;
-    private ScoreInterface score;
-    private PositionInterface position;
+    private final ScoreInterface score;
+    private final PositionInterface position;
 
     public Tile(Color color, ScoreInterface score, PositionInterface position) {
         this.color = color;

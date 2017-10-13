@@ -10,7 +10,7 @@ import org.funivan.lologa.tiles.TilesInterface;
 
 public class MoveDown implements TilesPerformer {
 
-    private TilesInterface replace;
+    private final TilesInterface replace;
 
     public MoveDown(TilesInterface replace) {
         this.replace = replace;

@@ -6,7 +6,6 @@ import org.funivan.lologa.iterable.Shuffled;
 import org.funivan.lologa.tiles.Tiles;
 
 import java.awt.*;
-import java.io.IOException;
 
 public class ApplicationInitializer {
 

@@ -48,9 +48,6 @@ public class Next implements PositionInterface {
         public Top(TileInterface start) {
             super(start, -1, 0);
         }
-        public Top(PositionInterface start) {
-            super(start, -1, 0);
-        }
     }
 
     public static class Right extends Next {

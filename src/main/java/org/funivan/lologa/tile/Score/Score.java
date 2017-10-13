@@ -1,7 +1,7 @@
 package org.funivan.lologa.tile.Score;
 
 public class Score implements ScoreInterface {
-    private int value;
+    private final int value;
 
     public Score(int value) {
         this.value = value;

@@ -13,7 +13,6 @@ public class MaxBottom implements TileFinder {
         this.start = start;
     }
 
-    @Override
     @NotNull
     public TileInterface find(TilesInterface tiles) {
         PositionInterface position = this.start.position();

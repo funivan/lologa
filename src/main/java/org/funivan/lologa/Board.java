@@ -86,7 +86,7 @@ public class Board extends JPanel {
     }
 
     private static class TileClickListener implements MouseListener {
-        private Board board;
+        private final Board board;
         private final PositionInterface position;
         private final Point start;
         private final Point end;
