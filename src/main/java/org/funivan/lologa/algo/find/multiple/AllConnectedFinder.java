@@ -1,7 +1,8 @@
-package org.funivan.lologa.algo.find;
+package org.funivan.lologa.algo.find.multiple;
 
 import com.sun.istack.internal.NotNull;
 import org.cactoos.iterable.Joined;
+import org.funivan.lologa.algo.find.TilesPerformer;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.Tiles;
@@ -10,7 +11,7 @@ import org.funivan.lologa.tiles.TilesInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllConnectedFinder implements TilesAction {
+public class AllConnectedFinder implements TilesPerformer {
     private final TileInterface start;
 
     public AllConnectedFinder(TileInterface start) {

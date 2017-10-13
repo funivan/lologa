@@ -4,7 +4,7 @@ import com.sun.istack.internal.NotNull;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.TilesInterface;
 
-public interface TilesAction {
+public interface TilesPerformer {
     @NotNull
     TilesInterface perform(TilesInterface tiles);
 }

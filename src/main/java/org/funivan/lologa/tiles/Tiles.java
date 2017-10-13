@@ -46,4 +46,8 @@ public class Tiles implements TilesInterface {
         return this.tiles.values();
     }
 
+    @Override
+    public int size() {
+        return this.tiles.size();
+    }
 }

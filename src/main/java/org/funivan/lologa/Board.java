@@ -1,7 +1,8 @@
 package org.funivan.lologa;
 
 import org.cactoos.iterable.LengthOf;
-import org.funivan.lologa.algo.find.AllConnectedFinder;
+import org.funivan.lologa.algo.find.multiple.AllConnectedFinder;
+import org.funivan.lologa.algo.find.multiple.SingleTiles;
 import org.funivan.lologa.algo.find.one.MaxBottom;
 import org.funivan.lologa.algo.modify.MoveDown;
 import org.funivan.lologa.tile.Position.Position;
@@ -71,11 +72,12 @@ public class Board extends JPanel {
             g.setColor(Color.BLACK);
             g.drawRect(x, y, size, size);
             g.setColor(new Color(215, 215, 215));
-            g.drawString("" + String.valueOf(tile.score().value()), x + size/2, y + size/2);
+            g.drawString("" + String.valueOf(tile.score().value()), x + size / 2, y + size / 2);
         }
         g.setColor(Color.BLACK);
 
-        g.drawString("score:" + new ScoreMax(this.tiles.all()).value(), 500, 10);
+        g.drawString("score:" + new ScoreMax(this.tiles.all()).value(), 500, 15);
+        g.drawString("Single:" + new SingleTiles().perform(this.tiles).size(), 500, 40);
     }
 
     public void paint(TilesInterface tiles) {

@@ -15,5 +15,7 @@ public interface TilesInterface {
 
     Iterable<TileInterface> all();
 
+    int size();
+
 
 }

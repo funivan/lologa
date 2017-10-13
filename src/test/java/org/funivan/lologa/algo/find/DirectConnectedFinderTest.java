@@ -1,5 +1,6 @@
 package org.funivan.lologa.algo.find;
 
+import org.funivan.lologa.algo.find.multiple.DirectConnectedFinder;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tiles.Tiles;
