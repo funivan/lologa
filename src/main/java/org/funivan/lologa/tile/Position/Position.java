@@ -25,8 +25,19 @@ public class Position implements PositionInterface {
     }
 
     @Override
-    public boolean same(PositionInterface target) {
-        return (target.row() == this.row() && target.col() == this.col());
+    public boolean equals(Object o) {
+        boolean result = false;
+        if (this == o) {
+            result = true;
+        } else if (o instanceof PositionInterface) {
+            result = (((PositionInterface) o).row() == this.row() && ((PositionInterface) o).col() == this.col());
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * this.row + this.col;
     }
 
 }

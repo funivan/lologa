@@ -3,16 +3,16 @@ package org.funivan.lologa.tile;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Score.ScoreInterface;
 import org.funivan.lologa.tile.Visitor.Navigation.Direction.DirectionInterface;
-import org.funivan.lologa.tiles.TilesInterface;
+import org.funivan.lologa.tiles.TilesListInterface;
 
 import java.awt.*;
 
 public class Next implements TileInterface {
     private TileInterface found = null;
     private final DirectionInterface direction;
-    private final TilesInterface tiles;
+    private final TilesListInterface tiles;
 
-    public Next(DirectionInterface direction, TilesInterface tiles) {
+    public Next(DirectionInterface direction, TilesListInterface tiles) {
         this.direction = direction;
         this.tiles = tiles;
     }

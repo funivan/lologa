@@ -15,7 +15,7 @@ public class PositionMatcher extends TypeSafeDiagnosingMatcher<PositionInterface
     @Override
     protected boolean matchesSafely(PositionInterface target, Description description) {
         description.appendText("target position is different " + target.toString());
-        return this.expect.same(target);
+        return this.expect.equals(target);
     }
 
     @Override

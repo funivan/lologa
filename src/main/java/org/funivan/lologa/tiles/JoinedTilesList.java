@@ -7,13 +7,13 @@ import org.funivan.lologa.tiles.Filter.PositionExcluded;
 
 import java.util.Iterator;
 
-public class JoinedTiles implements TilesInterface {
+public class JoinedTilesList implements TilesListInterface {
 
     private Iterable<TileInterface> items;
 
-    public JoinedTiles(Iterable<TileInterface> tiles, Iterable<TileInterface> additional) {
+    public JoinedTilesList(Iterable<TileInterface> tiles, Iterable<TileInterface> additional) {
         this.items = new org.cactoos.iterable.Joined<>(
-            new FilteredTiles(
+            new FilteredTilesList(
                 tiles,
                 new PositionExcluded(new TilePositions(additional))
             ),
@@ -21,7 +21,7 @@ public class JoinedTiles implements TilesInterface {
         );
     }
 
-    public JoinedTiles(Iterable<TileInterface> tiles, TileInterface additional) {
+    public JoinedTilesList(Iterable<TileInterface> tiles, TileInterface additional) {
         this(tiles, new ListOf<>(additional));
     }
 

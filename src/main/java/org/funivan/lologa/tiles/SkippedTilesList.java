@@ -6,11 +6,11 @@ import org.funivan.lologa.tiles.Filter.PositionExcluded;
 
 import java.util.Iterator;
 
-public class SkippedTiles implements TilesInterface {
+public class SkippedTilesList implements TilesListInterface {
     private final Iterable<TileInterface> items;
 
-    public SkippedTiles(Iterable<TileInterface> tiles, Iterable<TileInterface> skipped) {
-        this.items = new FilteredTiles(tiles, new PositionExcluded(new TilePositions(skipped)));
+    public SkippedTilesList(Iterable<TileInterface> tiles, Iterable<TileInterface> skipped) {
+        this.items = new FilteredTilesList(tiles, new PositionExcluded(new TilePositions(skipped)));
     }
 
     @Override

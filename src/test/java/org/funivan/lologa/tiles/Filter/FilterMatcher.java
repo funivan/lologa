@@ -33,7 +33,7 @@ public class FilterMatcher extends TypeSafeDiagnosingMatcher<TileFilterInterface
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("Tiles should be "
+        description.appendText("TilesList should be "
             + (this.expect == TileFilterInterface.EXPECT.Positive ? "accepted" : "rejected")
         );
     }

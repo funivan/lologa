@@ -1,16 +1,15 @@
 package org.funivan.lologa;
 
 import org.cactoos.iterable.LengthOf;
-import org.cactoos.list.ListOf;
-import org.funivan.lologa.tile.AtPosition;
-import org.funivan.lologa.tile.MaxNextBottom;
+import org.funivan.lologa.algo.multiple.AllConnectedFinder;
+import org.funivan.lologa.algo.multiple.one.MaxBottom;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Score.Score;
 import org.funivan.lologa.tile.Score.TilesScore;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
-import org.funivan.lologa.tiles.*;
+import org.funivan.lologa.tiles.TilesInterface;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -50,13 +49,16 @@ public class Board extends JPanel {
             row = row + ((index > 0 && index % cols == 0) ? 1 : 0);
             int y = row * size;
             final Position position = new Position(row, col);
-            TileInterface tile = new AtPosition(position, this.tiles);
-            if (tile.same(Tile.DUMMY)) {
+
+            TileInterface tile;
+            if (!this.tiles.has(position)) {
                 tile = new Tile(iterator.next(), new Score(1), position);
-                this.tiles = new JoinedTiles(this.tiles, tile);
+                this.tiles = this.tiles.with(tile);
                 this.addMouseListener(
                     new TileClickListener(this, position, new Point(x, y), new Point(x + size, y + size))
                 );
+            } else {
+                tile = this.tiles.get(position);
             }
             g.setColor(tile.color());
             g.fillRect(x, y, size, size);
@@ -69,7 +71,7 @@ public class Board extends JPanel {
 
     public void paint(TilesInterface tiles) {
         System.out.println("Start paint");
-        this.tiles = new Tiles(new ListOf<TileInterface>(tiles));
+        this.tiles = tiles;
         this.repaint();
     }
 
@@ -103,16 +105,19 @@ public class Board extends JPanel {
             TilesInterface tiles = this.board.tiles;
             if (this.start.getX() < x && this.start.getY() < y && this.end.getX() > x && this.end.getY() > y) {
 
-                TileInterface tile = new AtPosition(this.position, tiles);
-                TilesInterface connected = new AllSameConnected(tile, tiles);
-                if (new LengthOf(connected).value() >= 2) {
-                    TileInterface bottom = new MaxNextBottom(tile, tiles);
-                    tiles = new SkippedTiles(tiles, connected);
-                    tiles = new MovedDown(tiles, connected);
-                    tiles = new JoinedTiles(tiles, new Tile(bottom.color(), new TilesScore(connected), bottom.position()));
-                    this.board.paint(tiles);
-                }
+                if (tiles.has(this.position)) {
+                    final TileInterface clicked = tiles.get(this.position);
+                    final Iterable<TileInterface> connected = new AllConnectedFinder(clicked).find(tiles);
 
+                    if (new LengthOf(connected).value() >= 2) {
+                        TilesScore score = new TilesScore(connected);
+                        TileInterface bottom = new MaxBottom(clicked).find(tiles);
+                        tiles = tiles.with(new Tile(bottom.color(), score, bottom.position()));
+                        this.board.paint(tiles);
+                    }
+
+
+                }
             }
         }
 

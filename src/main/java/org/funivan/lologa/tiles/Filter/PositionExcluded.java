@@ -12,7 +12,7 @@ public class PositionExcluded implements TileFilterInterface {
     }
 
     public PositionExcluded(PositionInterface position) {
-        this(new ListOf<PositionInterface>(position));
+        this(new ListOf<>(position));
     }
 
 
@@ -21,7 +21,7 @@ public class PositionExcluded implements TileFilterInterface {
         boolean result = true;
         final PositionInterface targetPosition = target.position();
         for (PositionInterface position : this.positions) {
-            if (position.same(targetPosition)) {
+            if (position.equals(targetPosition)) {
                 result = false;
                 break;
             }

@@ -6,6 +6,4 @@ public interface PositionInterface {
 
     int col();
 
-    boolean same(PositionInterface target);
-
 }

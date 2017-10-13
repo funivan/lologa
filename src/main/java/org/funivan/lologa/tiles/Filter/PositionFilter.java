@@ -21,7 +21,7 @@ public class PositionFilter implements TileFilterInterface {
     @Override
     final public Boolean apply(TileInterface target) throws Exception {
         final boolean expectResult = this.expect == EXPECT.Positive;
-        final boolean result = this.position.same(target.position());
+        final boolean result = this.position.equals(target.position());
         return expectResult == result;
     }
 }

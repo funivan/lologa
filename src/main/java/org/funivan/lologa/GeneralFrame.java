@@ -1,6 +1,7 @@
 package org.funivan.lologa;
 
 import org.funivan.lologa.tiles.Tiles;
+import org.funivan.lologa.tiles.TilesList;
 
 import javax.swing.*;
 import java.awt.*;

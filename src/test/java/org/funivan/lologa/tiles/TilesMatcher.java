@@ -5,16 +5,16 @@ import org.funivan.lologa.tile.TileInterface;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-public class TilesMatcher extends TypeSafeDiagnosingMatcher<TilesInterface> {
+public class TilesMatcher extends TypeSafeDiagnosingMatcher<Iterable<TileInterface>> {
 
     private ListOf<TileInterface> original;
 
-    public TilesMatcher(TilesInterface original) {
+    public TilesMatcher(Iterable<TileInterface> original) {
         this.original = new ListOf<>(original);
     }
 
     @Override
-    protected boolean matchesSafely(TilesInterface tiles, Description description) {
+    protected boolean matchesSafely(Iterable<TileInterface> tiles, Description description) {
         boolean result = true;
         final ListOf<TileInterface> compared = new ListOf<>(tiles);
         if (compared.size() != this.original.size()) {
@@ -40,6 +40,6 @@ public class TilesMatcher extends TypeSafeDiagnosingMatcher<TilesInterface> {
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("Tiles should be same");
+        description.appendText("TilesList should be same");
     }
 }

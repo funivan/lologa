@@ -1,9 +1,6 @@
 package org.funivan.lologa.tile.Position;
 
-import org.cactoos.iterable.Joined;
-import org.cactoos.list.ListOf;
 import org.funivan.lologa.tile.TileInterface;
-import org.funivan.lologa.tiles.TilesInterface;
 
 import java.util.ArrayList;
 import java.util.Iterator;

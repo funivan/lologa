@@ -42,7 +42,7 @@ public class AtPosition implements TileInterface {
         if (this.found == null) {
             this.found = this.fallback;
             for (TileInterface tile : this.tiles) {
-                if (tile.position().same(this.position)) {
+                if (tile.position().equals(this.position)) {
                     this.found = tile;
                     break;
                 }

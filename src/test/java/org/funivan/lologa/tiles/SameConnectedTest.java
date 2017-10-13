@@ -14,13 +14,13 @@ public final class SameConnectedTest {
             "Can not find same tile at the right",
             new SameConnected(
                 new Tile(Color.BLACK, new Position(0, 0)),
-                new Tiles(
+                new TilesList(
                     new Tile(Color.BLACK, new Position(0, 0)),
                     new Tile(Color.BLACK, new Position(0, 1))
                 )
             ),
             new TilesMatcher(
-                new Tiles(
+                new TilesList(
                     new Tile(Color.BLACK, new Position(0, 1))
                 )
             )
@@ -33,13 +33,13 @@ public final class SameConnectedTest {
             "Expect empty result",
             new SameConnected(
                 new Tile(Color.BLACK, new Position(0, 0)),
-                new Tiles(
+                new TilesList(
                     new Tile(Color.BLACK, new Position(0, 0)),
                     new Tile(Color.BLACK, new Position(0, 1))
                 )
             ),
             new TilesMatcher(
-                new Tiles(
+                new TilesList(
                     new Tile(Color.BLACK, new Position(0, 1))
                 )
             )

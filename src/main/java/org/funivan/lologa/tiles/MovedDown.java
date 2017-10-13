@@ -9,7 +9,7 @@ import org.funivan.lologa.tile.Visitor.Navigation.Direction.Bottom;
 
 import java.util.Iterator;
 
-public class MovedDown implements TilesInterface {
+public class MovedDown implements TilesListInterface {
     private Iterable<TileInterface> tiles;
     private final Iterable<TileInterface> replaceable;
 
@@ -20,7 +20,7 @@ public class MovedDown implements TilesInterface {
 
     @Override
     public Iterator<TileInterface> iterator() {
-        TilesInterface result = new Tiles(this.tiles);
+        TilesListInterface result = new TilesList(this.tiles);
         Iterable<TileInterface> moveItems = this.replaceable;
         boolean moved;
         boolean last = true;
@@ -37,11 +37,11 @@ public class MovedDown implements TilesInterface {
                 if (!skipTile && bottom.same(replaced) && !bottom.same(Tile.DUMMY)) {
                     Tile current = new Tile(bottom.color(), bottom.score(), tile.position());
                     Tile bottomTile = new Tile(tile.color(), tile.score(), bottom.position());
-                    result = new JoinedTiles(result, new ListOf<>(current, bottomTile));
+                    result = new JoinedTilesList(result, new ListOf<>(current, bottomTile));
                     iter = result.iterator();
                     // Remove bottom tile + Add top tile
-                    moveItems = new JoinedTiles(
-                        new SkippedTiles(moveItems, new ListOf<>(replaced)),
+                    moveItems = new JoinedTilesList(
+                        new SkippedTilesList(moveItems, new ListOf<>(replaced)),
                         current
                     );
                     moved = true;
@@ -49,7 +49,7 @@ public class MovedDown implements TilesInterface {
             }
 
         } while (moved);
-        return new SkippedTiles(result, moveItems).iterator();
+        return new SkippedTilesList(result, moveItems).iterator();
     }
 
     public static void dump(String prefix, Iterable<TileInterface> tiles) {

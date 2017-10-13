@@ -5,10 +5,10 @@ import org.funivan.lologa.tile.TileInterface;
 
 import java.util.Iterator;
 
-public class FilteredTiles implements TilesInterface {
+public class FilteredTilesList implements TilesListInterface {
     private final org.cactoos.iterable.Filtered<TileInterface> items;
 
-    public FilteredTiles(Iterable<TileInterface> tiles, Func<TileInterface, Boolean> filter) {
+    public FilteredTilesList(Iterable<TileInterface> tiles, Func<TileInterface, Boolean> filter) {
         this.items = new org.cactoos.iterable.Filtered<>(tiles, filter);
     }
 

@@ -49,7 +49,7 @@ public class Tile implements TileInterface {
             &&
             target.color().equals(this.color())
             &&
-            target.position().same(this.position())
+            target.position().equals(this.position())
         );
     }
 

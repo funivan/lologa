@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class AllSameConnected implements TilesInterface {
+public class AllSameConnected implements TilesListInterface {
 
     private TileInterface start;
-    private TilesInterface tiles;
+    private TilesListInterface tiles;
 
-    public AllSameConnected(TileInterface start, TilesInterface tiles) {
+    public AllSameConnected(TileInterface start, TilesListInterface tiles) {
         this.start = start;
         this.tiles = tiles;
     }
@@ -21,7 +21,7 @@ public class AllSameConnected implements TilesInterface {
 
     @Override
     public Iterator<TileInterface> iterator() {
-        TilesInterface result = new Tiles(new IterableOf<>(this.start));
+        TilesListInterface result = new TilesList(new IterableOf<>(this.start));
         List<PositionInterface> done = new ArrayList<>();
         boolean touched;
         do {
@@ -30,9 +30,9 @@ public class AllSameConnected implements TilesInterface {
                 if (!done.contains(check.position())) {
                     touched = true;
                     done.add(check.position());
-                    TilesInterface same = new SameConnected(check, this.tiles);
+                    TilesListInterface same = new SameConnected(check, this.tiles);
                     for (TileInterface found : same) {
-                        result = new JoinedTiles(result, found);
+                        result = new JoinedTilesList(result, found);
                     }
                 }
             }

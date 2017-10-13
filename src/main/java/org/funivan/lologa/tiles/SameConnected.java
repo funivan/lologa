@@ -10,12 +10,12 @@ import org.funivan.lologa.tiles.Filter.ColorFilter;
 
 import java.util.Iterator;
 
-public class SameConnected implements TilesInterface {
-    private final TilesInterface iterator;
+public class SameConnected implements TilesListInterface {
+    private final TilesListInterface iterator;
 
-    public SameConnected(TileInterface start, TilesInterface tiles) {
-        this.iterator = new FilteredTiles(
-            new Tiles(
+    public SameConnected(TileInterface start, TilesListInterface tiles) {
+        this.iterator = new FilteredTilesList(
+            new TilesList(
                 new Next(new Top(start), tiles),
                 new Next(new Right(start), tiles),
                 new Next(new Bottom(start), tiles),
