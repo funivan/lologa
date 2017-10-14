@@ -1,14 +1,11 @@
 package org.funivan.lologa;
 
-import org.cactoos.iterable.LengthOf;
-import org.funivan.lologa.algo.find.multiple.*;
-import org.funivan.lologa.algo.find.one.MaxBottom;
-import org.funivan.lologa.algo.modify.MoveDown;
+import org.funivan.lologa.algo.ga.genome.metric.MetricCollector;
+import org.funivan.lologa.algo.gameplay.ClassicGamePlay;
+import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Score.Score;
-import org.funivan.lologa.tile.Score.MaxScore;
-import org.funivan.lologa.tile.Score.ScoreSum;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.TilesInterface;
@@ -24,6 +21,7 @@ import java.util.Iterator;
 public class Board extends JPanel {
 
     public static final int CONNECTED_LIMIT = 3;
+    private final GameplayInterface gameplay;
     private TilesInterface tiles;
     private final int rows;
     private final int cols;
@@ -35,6 +33,7 @@ public class Board extends JPanel {
         this.rows = rows;
         this.cols = cols;
         this.colors = colors;
+        this.gameplay = new ClassicGamePlay();
         this.setBorder(new LineBorder(Color.black));
     }
 
@@ -76,11 +75,23 @@ public class Board extends JPanel {
         }
         g.setColor(Color.BLACK);
 
-        g.drawString("score:" + new MaxScore(this.tiles.all()).value(), 700, 15);
-        g.drawString("Clicks : " + new PossibleMoves(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 50);
-        g.drawString("Groups : " + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 70);
-        g.drawString("Single : " + new SingleTilesFinder().handle(this.tiles).size(), 700, 90);
-        g.drawString("Locked : " + new LockedTilesFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 110);
+        HashMap<String, Double> metric = new MetricCollector(this.gameplay).collect(this.tiles);
+        int metricYStart = 15;
+        for (String id : metric.keySet()) {
+            g.drawString(id + ":" + metric.get(id), 600, metricYStart);
+            metricYStart = metricYStart + 18;
+        }
+        //g.drawString("Groups : " + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 70);
+        //g.drawString("Single : " + new SingleTilesFinder().handle(this.tiles).size(), 700, 90);
+    }
+
+    public void interact(PositionInterface position) {
+        if (this.tiles.has(position)) {
+            final TileInterface clicked = this.tiles.get(position);
+            this.paint(
+                this.gameplay.interact(clicked, this.tiles)
+            );
+        }
     }
 
     public void paint(TilesInterface tiles) {
@@ -115,22 +126,9 @@ public class Board extends JPanel {
         public void mouseReleased(MouseEvent mouseEvent) {
             final int x = mouseEvent.getPoint().x;
             final int y = mouseEvent.getPoint().y;
-            TilesInterface tiles = this.board.tiles;
+
             if (this.start.getX() < x && this.start.getY() < y && this.end.getX() > x && this.end.getY() > y) {
-
-                if (tiles.has(this.position)) {
-                    final TileInterface clicked = tiles.get(this.position);
-                    final TilesInterface connected = new AllConnectedFinder(clicked).handle(tiles);
-
-                    if (new LengthOf(connected.all()).value() >= this.board.CONNECTED_LIMIT) {
-                        ScoreSum score = new ScoreSum(connected.all());
-                        TileInterface bottom = new MaxBottom(clicked).find(tiles);
-                        TilesInterface move = connected.without(bottom.position());
-                        tiles = new MoveDown(move).handle(tiles);
-                        tiles = tiles.with(new Tile(bottom.color(), score, bottom.position()));
-                        this.board.paint(tiles);
-                    }
-                }
+                this.board.interact(this.position);
             }
         }
 

@@ -21,7 +21,6 @@ public class LockedTilesFinder implements HandlerInterface {
         TilesInterface done = new Tiles();
         for (TileInterface tile : tiles.all()) {
             if (!done.has(tile.position())) {
-
                 final TilesInterface same = new AllConnectedFinder(tile).handle(tiles);
                 for (TileInterface alone : same.all()) {
                     done = done.with(alone);

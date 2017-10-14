@@ -6,7 +6,7 @@ import org.funivan.lologa.tile.TileInterface;
 import java.util.HashMap;
 
 public class Tiles implements TilesInterface {
-    final HashMap<PositionInterface, TileInterface> tiles;
+    private final HashMap<PositionInterface, TileInterface> tiles;
 
     public Tiles(HashMap<PositionInterface, TileInterface> tiles) {
         this.tiles = tiles;
@@ -29,14 +29,14 @@ public class Tiles implements TilesInterface {
 
     @Override
     public TilesInterface without(PositionInterface position) {
-        HashMap<PositionInterface, TileInterface> result = this.tiles;
+        HashMap<PositionInterface, TileInterface> result = new HashMap<>(this.tiles);
         result.remove(position);
         return new Tiles(result);
     }
 
     @Override
     public TilesInterface with(TileInterface tile) {
-        HashMap<PositionInterface, TileInterface> result = this.tiles;
+        HashMap<PositionInterface, TileInterface> result = new HashMap<>(this.tiles);
         result.put(tile.position(), tile);
         return new Tiles(result);
     }
