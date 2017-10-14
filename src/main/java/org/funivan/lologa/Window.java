@@ -6,7 +6,7 @@ import java.awt.*;
 public class Window extends JFrame {
     public Window(Board board) {
         this.setTitle("Game Lolo GA");
-        this.setSize(600, 500);
+        this.setSize(600, 600);
         this.setLayout(
             new BorderLayout(0, 0)
         );

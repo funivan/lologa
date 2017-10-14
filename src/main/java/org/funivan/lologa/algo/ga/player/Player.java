@@ -36,7 +36,6 @@ public class Player implements PlayerInterface {
             TilesInterface newTiles = this.gameplay.interact(tile, tiles);
             final HashMap<String, Double> stepMetric = this.metrics.collect(tiles, newTiles);
             Double score = this.scoreCalculator.calculate(stepMetric);
-            System.out.println("P:" + tile.position() + " score " + score);
             if (score > max) {
                 result = tile;
                 max = score;
