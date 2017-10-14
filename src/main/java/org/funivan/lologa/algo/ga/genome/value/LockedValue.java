@@ -19,7 +19,9 @@ public class LockedValue implements ValueInterface {
     }
 
     @Override
-    public Double value(TilesInterface tiles) {
-        return (double) this.finder.handle(tiles).size() / (double) tiles.size();
+    public Double value(TilesInterface original, TilesInterface tiles) {
+        final double oldLocked = (double) this.finder.handle(original).size() / (double) tiles.size();
+        final double newLocked = (double) this.finder.handle(tiles).size() / (double) tiles.size();
+        return oldLocked - newLocked;
     }
 }

@@ -18,13 +18,19 @@ public class LockedValueTest {
             new LockedValue(new ClassicGamePlay())
                 .value(
                     new Tiles()
-                        .with(new Tile(Color.BLACK, new Position(0, 0)))
-                        .with(new Tile(Color.BLACK, new Position(1, 0)))
-                        .with(new Tile(Color.BLACK, new Position(2, 0))).with(new Tile(Color.RED, new Position(2, 1)))
+                        .with(new Tile(Color.RED, new Position(0, 0))).with(new Tile(Color.RED, new Position(0, 1)))
+                        .with(new Tile(Color.BLACK, new Position(1, 0))).with(new Tile(Color.RED, new Position(1, 1)))
+                        .with(new Tile(Color.RED, new Position(2, 0))).with(new Tile(Color.BLACK, new Position(2, 1)))
+                    ,
+                    new Tiles()
+                        .with(new Tile(Color.RED, new Position(0, 0))).with(new Tile(Color.RED, new Position(0, 1)))
+                        .with(new Tile(Color.RED, new Position(1, 0))).with(new Tile(Color.BLACK, new Position(1, 1)))
+                        .with(new Tile(Color.BLACK, new Position(2, 0))).with(new Tile(Color.BLACK, new Position(2, 1)))
                 ),
-            Matchers.is(0.25)
+            Matchers.is(0.5)
         );
     }
+
     @Test
     public void checkAllLocked() {
         MatcherAssert.assertThat(
@@ -34,8 +40,12 @@ public class LockedValueTest {
                     new Tiles()
                         .with(new Tile(Color.BLACK, new Position(0, 0)))
                         .with(new Tile(Color.RED, new Position(1, 0)))
+                    ,
+                    new Tiles()
+                        .with(new Tile(Color.BLACK, new Position(0, 0)))
+                        .with(new Tile(Color.RED, new Position(1, 0)))
                 ),
-            Matchers.is(1.0)
+            Matchers.is(0.0)
         );
     }
 }

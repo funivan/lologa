@@ -18,7 +18,7 @@ public class PossibleMovesValue implements ValueInterface {
     }
 
     @Override
-    public Double value(TilesInterface tiles) {
+    public Double value(TilesInterface original, TilesInterface tiles) {
         return (double) this.possibleMoves.handle(tiles).size();
     }
 }

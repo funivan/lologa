@@ -19,13 +19,16 @@ public class ClassicGamePlay implements GameplayInterface {
 
     @Override
     public TilesInterface interact(TileInterface tile, TilesInterface tiles) {
-        final TilesInterface connected = new AllConnectedFinder(tile).handle(tiles);
+        TilesInterface connected = new AllConnectedFinder(tile).handle(tiles);
         if (new LengthOf(connected.all()).value() >= this.minimum()) {
             ScoreSum score = new ScoreSum(connected.all());
             TileInterface bottom = new MaxBottom(tile).find(tiles);
-            TilesInterface move = connected.without(bottom.position());
-            tiles = new MoveDown(move).handle(tiles);
+            connected = connected.without(bottom.position());
+            tiles = new MoveDown(connected).handle(tiles);
             tiles = tiles.with(new Tile(bottom.color(), score, bottom.position()));
+            for (TileInterface connectedTile : connected.all()) {
+                tiles = tiles.without(connectedTile.position());
+            }
         }
         return tiles;
     }

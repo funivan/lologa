@@ -1,7 +1,6 @@
 package org.funivan.lologa;
 
-import org.funivan.lologa.algo.ga.genome.metric.MetricCollector;
-import org.funivan.lologa.algo.gameplay.ClassicGamePlay;
+import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
 import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
@@ -20,21 +19,22 @@ import java.util.Iterator;
 
 public class Board extends JPanel {
 
-    public static final int CONNECTED_LIMIT = 3;
     private final GameplayInterface gameplay;
+    private final MetricsInterface metrics;
     private TilesInterface tiles;
     private final int rows;
     private final int cols;
     private final Iterable<Color> colors;
     private final HashMap<PositionInterface, MouseListener> mouseListener = new HashMap<>();
 
-    public Board(TilesInterface tiles, int rows, int cols, Iterable<Color> colors) {
+    public Board(GameplayInterface gameplay, MetricsInterface metrics, int rows, int cols, Iterable<Color> colors, TilesInterface tiles) {
         this.tiles = tiles;
         this.rows = rows;
         this.cols = cols;
         this.colors = colors;
-        this.gameplay = new ClassicGamePlay();
+        this.gameplay = gameplay;
         this.setBorder(new LineBorder(Color.black));
+        this.metrics = metrics;
     }
 
 
@@ -44,6 +44,7 @@ public class Board extends JPanel {
         final int cols = this.cols;
         final int rows = this.rows;
         final int size = 80;
+        final int width = cols * size;
         final int len = cols * rows;
         final Iterator<Color> iterator = this.colors.iterator();
         int row = 0;
@@ -75,14 +76,19 @@ public class Board extends JPanel {
         }
         g.setColor(Color.BLACK);
 
-        HashMap<String, Double> metric = new MetricCollector(this.gameplay).collect(this.tiles);
+        HashMap<String, Double> metric = this.metrics.collect(this.tiles, this.tiles);
         int metricYStart = 15;
         for (String id : metric.keySet()) {
-            g.drawString(id + ":" + metric.get(id), 600, metricYStart);
+            g.drawString(id + ":" + metric.get(id), width + 15, metricYStart);
             metricYStart = metricYStart + 18;
         }
+
         //g.drawString("Groups : " + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 70);
         //g.drawString("Single : " + new SingleTilesFinder().handle(this.tiles).size(), 700, 90);
+    }
+
+    public TilesInterface tiles() {
+        return this.tiles;
     }
 
     public void interact(PositionInterface position) {

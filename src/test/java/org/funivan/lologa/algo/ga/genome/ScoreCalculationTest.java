@@ -15,17 +15,17 @@ public class ScoreCalculationTest {
             new ScoreCalculation(
                 new Genome(
                     new HashMap<String, Double>() {{
-                        this.put("step", 0.1);
+                        this.put("max_score", 0.1);
                         this.put("groups", 0.9);
                     }}
                 )
             ).calculate(new HashMap<String, Double>() {{
-                this.put("step", 10.0);
+                this.put("max_score", 0.5); // always positive
                 this.put("groups", 12.0);
             }})
             ,
             Matchers.is(
-                0.1 * 10 + 0.9 * 12.0
+                0.1 * 0.5 + 0.9 * 12.0
             )
         );
     }

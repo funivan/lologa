@@ -4,8 +4,8 @@ import org.funivan.lologa.tiles.TilesInterface;
 
 import java.util.HashMap;
 
-public interface MetricCollectorInterface {
+public interface MetricsInterface {
 
-    HashMap<String, Double> collect(TilesInterface tiles);
+    HashMap<String, Double> collect(TilesInterface original, TilesInterface tiles);
 
 }

@@ -6,5 +6,6 @@ public interface ValueInterface {
 
     String type();
 
-    Double value(TilesInterface tiles);
+    Double value(TilesInterface original, TilesInterface tiles);
+
 }
