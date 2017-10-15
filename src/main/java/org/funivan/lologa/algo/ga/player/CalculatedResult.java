@@ -28,7 +28,10 @@ public class CalculatedResult implements ResultInterface {
     public int score() {
         if (this.score == null) {
             this.score = 0;
-            for (int round = 0; round < 10; round++) {
+            int sum = 0;
+            int max = 0;
+            final int rounds = 20;
+            for (int round = 0; round < rounds; round++) {
                 BoardInterface board = new Complicated8To8Board(this.gameplay);
                 int moves = 0;
                 do {
@@ -37,15 +40,20 @@ public class CalculatedResult implements ResultInterface {
                             board.tiles()
                         ).position()
                     );
-                    final int roundScore = new ScoreSum(board.tiles()).value();
-                    if (roundScore > this.score) {
-                        this.score = roundScore;
+                    final int current = new ScoreSum(board.tiles()).value();
+                    sum += current;
+                    if (current > max) {
+                        max = current;
                     } else {
                         break;
                     }
 
                 } while (moves < this.maxMoves);
             }
+            // max
+            // this.score = max;
+            // average
+            this.score = sum / rounds;
         }
         return this.score;
     }

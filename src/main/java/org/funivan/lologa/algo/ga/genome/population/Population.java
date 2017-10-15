@@ -1,26 +1,30 @@
 package org.funivan.lologa.algo.ga.genome.population;
 
+import org.funivan.lologa.algo.ga.genome.population.rand.FixedRandomize;
+import org.funivan.lologa.algo.ga.genome.population.rand.RandomizeInterface;
 import org.funivan.lologa.algo.ga.player.PlayerInterface;
 
 import java.util.HashMap;
 import java.util.Random;
 
 public class Population implements PopulationInterface {
-    private final Random rand;
-    private double randomize;
 
-    public Population(double mix) {
+    private final Random rand;
+    private final RandomizeInterface randomize;
+
+    public Population(RandomizeInterface randomize) {
+        this.randomize = randomize;
         this.rand = new Random();
-        this.randomize = mix;
+
     }
 
     public Population() {
-        this(0.0001);
+        this(new FixedRandomize(0.001));
     }
 
     @Override
     public PlayerInterface populate(PlayerInterface father, PlayerInterface mother) {
-        HashMap<String, Double> genome = (HashMap<String, Double>) father.genome().clone();
+        @SuppressWarnings("unchecked") HashMap<String, Double> genome = (HashMap<String, Double>) father.genome().clone();
         for (final String type : genome.keySet()) {
             if (mother.genome().containsKey(type) && this.rand.nextInt(100) > 50) {
                 genome.put(type, mother.genome().get(type));
@@ -30,7 +34,7 @@ public class Population implements PopulationInterface {
         for (final String type : genome.keySet()) {
             genome.put(
                 type,
-                genome.get(type) * this.randomize
+                genome.get(type) * this.randomize.next()
             );
         }
         return father.withGenome(genome);

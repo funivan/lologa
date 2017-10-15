@@ -5,7 +5,11 @@ import org.cactoos.list.ListOf;
 import org.funivan.lologa.algo.ga.genome.metric.Metrics;
 import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
 import org.funivan.lologa.algo.ga.genome.population.Population;
-import org.funivan.lologa.algo.ga.genome.value.*;
+import org.funivan.lologa.algo.ga.genome.population.rand.Randomize;
+import org.funivan.lologa.algo.ga.genome.value.AverageScoreValue;
+import org.funivan.lologa.algo.ga.genome.value.LockedValue;
+import org.funivan.lologa.algo.ga.genome.value.MaxScoreValue;
+import org.funivan.lologa.algo.ga.genome.value.RemovedTilesValue;
 import org.funivan.lologa.algo.ga.player.CalculatedResult;
 import org.funivan.lologa.algo.ga.player.Player;
 import org.funivan.lologa.algo.ga.player.PlayerInterface;
@@ -41,15 +45,15 @@ public class Cli {
 
         ArrayList<PlayerInterface> players = new ArrayList<>();
         final int playersNum = 8;
-        final Random rand = new Random();
+        final Random random = new Random();
         for (int i = 0; i < playersNum; i++) {
-            players.add(new Population(0.001 * rand.nextInt(100)).populate(startPlayer, startPlayer));
+            players.add(new Population(new Randomize(0.05)).populate(startPlayer, startPlayer));
         }
-        int maxGenerations = 10;
+        int maxGenerations = 50;
         Iterable<ResultInterface> generation = new IterableOf<>();
         for (int g = 1; g < maxGenerations; g++) {
             for (PlayerInterface player : players) {
-                final ResultInterface max = new CalculatedResult(player, gameplay, g * 1000);
+                final ResultInterface max = new CalculatedResult(player, gameplay, 1000);
                 generation = new Joined<>(generation, new IterableOf<>(max));
                 System.out.println("Player " + " Score " + max + " " + player.genome());
             }
@@ -58,9 +62,9 @@ public class Cli {
 
             // populate players
 
-            System.out.println("Generation " + g);
+            System.out.println("Generation " + g + " Results ");
             for (ResultInterface result : generation) {
-                System.out.println("R " + result.toString() + " P " + result.player().genome());
+                System.out.println("Result " + result.toString() + " P " + result.player().genome());
             }
             players = new ArrayList<>();
 
@@ -69,7 +73,7 @@ public class Cli {
             System.out.println("New generation");
 
             while (players.size() < playersNum) {
-                PlayerInterface newPlayer = new Population()
+                PlayerInterface newPlayer = new Population(new Randomize(0.005))
                     .populate(
                         fathers.next().player(),
                         mothers.next().player()
