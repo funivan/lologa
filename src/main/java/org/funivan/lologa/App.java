@@ -5,14 +5,11 @@ import org.cactoos.list.ListOf;
 import org.funivan.lologa.algo.ga.genome.Genome;
 import org.funivan.lologa.algo.ga.genome.metric.Metrics;
 import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
-import org.funivan.lologa.algo.ga.genome.value.AverageScoreValue;
-import org.funivan.lologa.algo.ga.genome.value.LockedValue;
-import org.funivan.lologa.algo.ga.genome.value.RemovedTilesValue;
-import org.funivan.lologa.algo.ga.genome.value.ValueInterface;
+import org.funivan.lologa.algo.ga.genome.value.*;
 import org.funivan.lologa.algo.ga.player.Player;
 import org.funivan.lologa.algo.ga.player.PlayerInterface;
 import org.funivan.lologa.algo.gameplay.ClassicGamePlay;
-import org.funivan.lologa.gui.Board;
+import org.funivan.lologa.gui.InteractiveBoard;
 import org.funivan.lologa.gui.Window;
 import org.funivan.lologa.iterable.Shuffled;
 import org.funivan.lologa.tile.TileInterface;
@@ -26,6 +23,7 @@ public class App {
     public static void main(String[] args) {
         final ClassicGamePlay gameplay = new ClassicGamePlay();
         final HashMap<ValueInterface, Double> ratio = new HashMap<ValueInterface, Double>() {{
+            this.put(new MaxScoreValue(), 0.01);
             this.put(new RemovedTilesValue(), 0.1);
             this.put(new LockedValue(gameplay), 0.02);
             this.put(new AverageScoreValue(), 0.01);
@@ -38,9 +36,9 @@ public class App {
         final Genome genome = new Genome(genomeData);
         final PlayerInterface player = new Player(genome, gameplay, metrics);
 
-        Board board = new Board(
+        InteractiveBoard board = new InteractiveBoard(
             gameplay,
-            3, 3,
+            3, 4,
             new Cycled<>(
                 new Shuffled<>(
                     new ListOf<>(
@@ -50,28 +48,27 @@ public class App {
 //                        new Color(255, 220, 40)
                     )
                 )
-            ),
-            new Tiles()
+            )
         );
 
         new Window(board);
 
-        while (true) {
-            try {
-                Thread.sleep(1000);
-                TileInterface tile = player.find(board.tiles());
-                if (board.tiles().has(tile.position())) {
-                    System.out.println("Click on tile : " + tile);
-                    board.interact(tile.position());
-                } else {
-                    System.out.println("Can not click on tile : " + tile);
-                    System.out.println("The End");
-                    break;
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        while (true) {
+//            try {
+//                Thread.sleep(1000);
+//                TileInterface tile = player.find(board.tiles());
+//                if (board.tiles().has(tile.position())) {
+//                    System.out.println("Click on tile : " + tile);
+//                    board.interact(tile.position());
+//                } else {
+//                    System.out.println("Can not click on tile : " + tile);
+//                    System.out.println("The End");
+//                    break;
+//                }
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
     }
 

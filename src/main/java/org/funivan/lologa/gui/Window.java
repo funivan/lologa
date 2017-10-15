@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Window extends JFrame {
-    public Window(Board board) {
+    public Window(InteractiveBoard board) {
         this.setTitle("Game Lolo GA");
         this.setSize(600, 600);
         this.setLayout(

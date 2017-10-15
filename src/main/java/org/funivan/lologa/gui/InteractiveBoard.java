@@ -1,14 +1,15 @@
 package org.funivan.lologa.gui;
 
 import org.funivan.lologa.algo.gameplay.GameplayInterface;
+import org.funivan.lologa.board.BoardInterface;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
-import org.funivan.lologa.tile.Score.MaxScore;
 import org.funivan.lologa.tile.Score.Score;
 import org.funivan.lologa.tile.Score.ScoreInterface;
 import org.funivan.lologa.tile.Score.ScoreSum;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
+import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Board extends JPanel {
+public class InteractiveBoard extends JPanel implements BoardInterface {
 
     private final GameplayInterface gameplay;
     private TilesInterface tiles;
@@ -28,8 +29,8 @@ public class Board extends JPanel {
     private final Iterable<Color> colors;
     private final HashMap<PositionInterface, MouseListener> mouseListener = new HashMap<>();
 
-    public Board(GameplayInterface gameplay, int rows, int cols, Iterable<Color> colors, TilesInterface tiles) {
-        this.tiles = tiles;
+    public InteractiveBoard(GameplayInterface gameplay, int rows, int cols, Iterable<Color> colors) {
+        this.tiles = new Tiles();
         this.rows = rows;
         this.cols = cols;
         this.colors = colors;
@@ -41,31 +42,20 @@ public class Board extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        final int cols = this.cols;
-        final int rows = this.rows;
         final int size = 80;
-        final int width = cols * size;
-        final int len = cols * rows;
-        final Iterator<Color> iterator = this.colors.iterator();
-        int row = 0;
-        for (int index = 0; index < len; index++) {
-            int col = index % rows;
-            int x = col * size;
-            row = row + ((index > 0 && index % cols == 0) ? 1 : 0);
-            int y = row * size;
-            final Position position = new Position(row, col);
-
+        int width = size;
+        final TilesInterface tiles = this.tiles();
+        for (TileInterface tile : tiles.all()) {
+            final PositionInterface position = tile.position();
+            int x = position.col() * size;
+            int y = position.row() * size;
+            if (x + size > width) {
+                width = x + size;
+            }
             if (!this.mouseListener.containsKey(position)) {
                 final TileClickListener listener = new TileClickListener(this, position, new Point(x, y), new Point(x + size, y + size));
                 this.addMouseListener(listener);
                 this.mouseListener.put(position, listener);
-            }
-            TileInterface tile;
-            if (!this.tiles.has(position)) {
-                tile = new Tile(iterator.next(), new Score(1), position);
-                this.tiles = this.tiles.with(tile);
-            } else {
-                tile = this.tiles.get(position);
             }
             g.setColor(tile.color());
             g.fillRect(x, y, size, size);
@@ -74,22 +64,30 @@ public class Board extends JPanel {
             g.setColor(new Color(215, 215, 215));
             g.drawString("" + String.valueOf(tile.score().value()), x + size / 2, y + size / 2);
         }
-        g.setColor(Color.BLACK);
 
+        g.setColor(Color.BLACK);
         HashMap<String, ScoreInterface> metrics = new HashMap<String, ScoreInterface>() {{
-            this.put("score", new ScoreSum(Board.this.tiles));
+            this.put("score", new ScoreSum(InteractiveBoard.this.tiles));
         }};
         int metricYStart = 15;
         for (final String id : metrics.keySet()) {
             g.drawString(id + ":" + metrics.get(id).value(), width + 15, metricYStart);
             metricYStart = metricYStart + 18;
         }
-
-        //g.drawString("Groups : " + new CoreTilesInGroupFinder(this.CONNECTED_LIMIT).handle(this.tiles).size(), 700, 70);
-        //g.drawString("Single : " + new SingleTilesFinder().handle(this.tiles).size(), 700, 90);
     }
 
     public TilesInterface tiles() {
+        final Iterator<Color> colors = this.colors.iterator();
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < this.cols; col++) {
+                final Position position = new Position(row, col);
+                if (!this.tiles.has(position)) {
+                    this.tiles = this.tiles.with(
+                        new Tile(colors.next(), new Score(1), position)
+                    );
+                }
+            }
+        }
         return this.tiles;
     }
 
@@ -108,12 +106,12 @@ public class Board extends JPanel {
     }
 
     private static class TileClickListener implements MouseListener {
-        private final Board board;
+        private final InteractiveBoard board;
         private final PositionInterface position;
         private final Point start;
         private final Point end;
 
-        public TileClickListener(Board board, PositionInterface position, Point start, Point end) {
+        public TileClickListener(InteractiveBoard board, PositionInterface position, Point start, Point end) {
             this.board = board;
             this.position = position;
             this.start = start;

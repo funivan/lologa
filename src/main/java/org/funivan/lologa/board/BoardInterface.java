@@ -1,0 +1,13 @@
+package org.funivan.lologa.board;
+
+import org.funivan.lologa.tile.Position.PositionInterface;
+import org.funivan.lologa.tiles.TilesInterface;
+
+public interface BoardInterface {
+
+
+    TilesInterface tiles();
+
+    void interact(PositionInterface position);
+
+}
