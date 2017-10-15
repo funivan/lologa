@@ -13,12 +13,10 @@ public class ScoreCalculationTest {
         MatcherAssert.assertThat(
             "Expect positive score depend on values",
             new ScoreCalculation(
-                new Genome(
-                    new HashMap<String, Double>() {{
-                        this.put("max_score", 0.1);
-                        this.put("removed_tiles", 0.9);
-                    }}
-                )
+                new HashMap<String, Double>() {{
+                    this.put("max_score", 0.1);
+                    this.put("removed_tiles", 0.9);
+                }}
             ).calculate(new HashMap<String, Double>() {{
                 this.put("max_score", 0.5); // always positive
                 this.put("removed_tiles", 12.0);

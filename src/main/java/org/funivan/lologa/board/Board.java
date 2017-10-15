@@ -19,11 +19,11 @@ public class Board implements BoardInterface {
     private final int cols;
     private final Iterable<Color> colors;
 
-    public Board(GameplayInterface gameplay, int rows, int cols, Iterable<Color> color, TilesInterface tiles) {
+    public Board(GameplayInterface gameplay, int rows, int cols, Iterable<Color> colors, TilesInterface tiles) {
         this.tiles = tiles;
         this.rows = rows;
         this.cols = cols;
-        this.colors = color;
+        this.colors = colors;
         this.gameplay = gameplay;
     }
 

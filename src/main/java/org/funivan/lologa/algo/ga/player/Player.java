@@ -2,10 +2,8 @@ package org.funivan.lologa.algo.ga.player;
 
 import org.funivan.lologa.algo.ga.fitness.Fitness;
 import org.funivan.lologa.algo.ga.fitness.FitnessInterface;
-import org.funivan.lologa.algo.ga.genome.GenomeInterface;
 import org.funivan.lologa.algo.ga.genome.ScoreCalculation;
 import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
-import org.funivan.lologa.algo.ga.genome.value.ValueInterface;
 import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.tile.Score.MaxScore;
 import org.funivan.lologa.tile.Tile;
@@ -16,12 +14,12 @@ import java.util.HashMap;
 
 public class Player implements PlayerInterface {
 
-    private final GenomeInterface genome;
+    private final HashMap<String, Double> genome;
     private final GameplayInterface gameplay;
     private final MetricsInterface metrics;
     private final ScoreCalculation scoreCalculator;
 
-    public Player(final GenomeInterface genome, final GameplayInterface gameplay, final MetricsInterface metrics) {
+    public Player(final HashMap<String, Double> genome, final GameplayInterface gameplay, final MetricsInterface metrics) {
         this.genome = genome;
         this.gameplay = gameplay;
         this.metrics = metrics;
@@ -46,9 +44,20 @@ public class Player implements PlayerInterface {
     }
 
     @Override
+    public HashMap<String, Double> genome() {
+        return this.genome;
+    }
+
+    @Override
     public FitnessInterface fitness(TilesInterface tiles) {
         return new Fitness(
             new MaxScore(tiles.all()).value()
         );
     }
+
+    @Override
+    public PlayerInterface withGenome(HashMap<String, Double> genome) {
+        return new Player(genome, this.gameplay, this.metrics);
+    }
+
 }

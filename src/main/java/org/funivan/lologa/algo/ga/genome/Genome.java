@@ -1,7 +1,5 @@
 package org.funivan.lologa.algo.ga.genome;
 
-import org.funivan.lologa.algo.ga.genome.value.ValueInterface;
-
 import java.util.HashMap;
 
 public class Genome implements GenomeInterface {
@@ -15,4 +13,14 @@ public class Genome implements GenomeInterface {
         return this.values;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder r = new StringBuilder("Genome");
+        r.append("{");
+        for (final String id : this.values.keySet()) {
+            r.append(id).append(" = ").append(this.values.get(id)).append(";");
+        }
+        r.append("}");
+        return r.toString();
+    }
 }
