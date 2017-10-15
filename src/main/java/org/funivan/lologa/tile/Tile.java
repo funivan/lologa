@@ -27,6 +27,10 @@ public class Tile implements TileInterface {
         this(color, new Score(1), position);
     }
 
+    public Tile(Score score, PositionInterface position) {
+        this(Color.WHITE, score, position);
+    }
+
     public Color color() {
         return this.color;
     }

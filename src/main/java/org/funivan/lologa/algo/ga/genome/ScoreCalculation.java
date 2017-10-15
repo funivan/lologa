@@ -1,5 +1,7 @@
 package org.funivan.lologa.algo.ga.genome;
 
+import org.funivan.lologa.algo.ga.genome.value.ValueInterface;
+
 import java.util.HashMap;
 
 public class ScoreCalculation {
@@ -12,9 +14,10 @@ public class ScoreCalculation {
 
     public Double calculate(final HashMap<String, Double> metric) {
         Double score = 0.0;
-        for (final String metricId : this.genome.data().keySet()) {
-            if (metric.containsKey(metricId)) {
-                score = score + metric.get(metricId) * this.genome.data().get(metricId);
+        final HashMap<String, Double> data = this.genome.data();
+        for (final String type : data.keySet()) {
+            if (metric.containsKey(type)) {
+                score = score + metric.get(type) * data.get(type);
             }
         }
         return score;

@@ -12,9 +12,9 @@ import java.awt.*;
 
 public class LockedValueTest {
     @Test
-    public void checkLocked() {
+    public void halfLocked() {
         MatcherAssert.assertThat(
-            "Can not calculate correct locked tiles %",
+            "Half of tiles should be unlocked 50% of profit",
             new LockedValue(new ClassicGamePlay())
                 .value(
                     new Tiles()
@@ -32,9 +32,9 @@ public class LockedValueTest {
     }
 
     @Test
-    public void checkAllLocked() {
+    public void allLocked() {
         MatcherAssert.assertThat(
-            "Can not calculate all locked tiles %",
+            "All tiles should be locked 0% of profit",
             new LockedValue(new ClassicGamePlay())
                 .value(
                     new Tiles()
@@ -46,6 +46,22 @@ public class LockedValueTest {
                         .with(new Tile(Color.RED, new Position(1, 0)))
                 ),
             Matchers.is(0.0)
+        );
+    }
+
+    @Test
+    public void allUnlocked() {
+        MatcherAssert.assertThat(
+            "All tiles should be unlocked 100% of profit",
+            new LockedValue(new ClassicGamePlay())
+                .value(
+                    new Tiles()
+                        .with(new Tile(Color.BLACK, new Position(0, 0)))
+                        .with(new Tile(Color.RED, new Position(1, 0)))
+                    ,
+                    new Tiles()
+                ),
+            Matchers.is(1.0)
         );
     }
 }

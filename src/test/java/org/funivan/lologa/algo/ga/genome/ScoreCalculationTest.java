@@ -11,17 +11,17 @@ public class ScoreCalculationTest {
     @Test
     public void calculate() {
         MatcherAssert.assertThat(
-            "All col will be removed",
+            "Expect positive score depend on values",
             new ScoreCalculation(
                 new Genome(
                     new HashMap<String, Double>() {{
                         this.put("max_score", 0.1);
-                        this.put("groups", 0.9);
+                        this.put("removed_tiles", 0.9);
                     }}
                 )
             ).calculate(new HashMap<String, Double>() {{
                 this.put("max_score", 0.5); // always positive
-                this.put("groups", 12.0);
+                this.put("removed_tiles", 12.0);
             }})
             ,
             Matchers.is(

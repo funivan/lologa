@@ -11,6 +11,6 @@ public class MaxScoreValue implements ValueInterface {
 
     @Override
     public Double value(TilesInterface original, TilesInterface tiles) {
-        return 1 - ((double) new MaxScore(original).value() / (double) new MaxScore(tiles).value());
+        return (double) 1 - ((double) new MaxScore(original).value() / (double) new MaxScore(tiles).value());
     }
 }

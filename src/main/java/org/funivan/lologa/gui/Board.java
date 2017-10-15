@@ -1,10 +1,12 @@
-package org.funivan.lologa;
+package org.funivan.lologa.gui;
 
-import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
 import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
+import org.funivan.lologa.tile.Score.MaxScore;
 import org.funivan.lologa.tile.Score.Score;
+import org.funivan.lologa.tile.Score.ScoreInterface;
+import org.funivan.lologa.tile.Score.ScoreSum;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.TilesInterface;
@@ -20,21 +22,19 @@ import java.util.Iterator;
 public class Board extends JPanel {
 
     private final GameplayInterface gameplay;
-    private final MetricsInterface metrics;
     private TilesInterface tiles;
     private final int rows;
     private final int cols;
     private final Iterable<Color> colors;
     private final HashMap<PositionInterface, MouseListener> mouseListener = new HashMap<>();
 
-    public Board(GameplayInterface gameplay, MetricsInterface metrics, int rows, int cols, Iterable<Color> colors, TilesInterface tiles) {
+    public Board(GameplayInterface gameplay, int rows, int cols, Iterable<Color> colors, TilesInterface tiles) {
         this.tiles = tiles;
         this.rows = rows;
         this.cols = cols;
         this.colors = colors;
         this.gameplay = gameplay;
         this.setBorder(new LineBorder(Color.black));
-        this.metrics = metrics;
     }
 
 
@@ -76,10 +76,12 @@ public class Board extends JPanel {
         }
         g.setColor(Color.BLACK);
 
-        HashMap<String, Double> metric = this.metrics.collect(this.tiles, this.tiles);
+        HashMap<String, ScoreInterface> metrics = new HashMap<String, ScoreInterface>() {{
+            this.put("score", new ScoreSum(Board.this.tiles));
+        }};
         int metricYStart = 15;
-        for (String id : metric.keySet()) {
-            g.drawString(id + ":" + metric.get(id), width + 15, metricYStart);
+        for (final String id : metrics.keySet()) {
+            g.drawString(id + ":" + metrics.get(id).value(), width + 15, metricYStart);
             metricYStart = metricYStart + 18;
         }
 

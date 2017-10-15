@@ -5,6 +5,7 @@ import org.funivan.lologa.algo.ga.fitness.FitnessInterface;
 import org.funivan.lologa.algo.ga.genome.GenomeInterface;
 import org.funivan.lologa.algo.ga.genome.ScoreCalculation;
 import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
+import org.funivan.lologa.algo.ga.genome.value.ValueInterface;
 import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.tile.Score.MaxScore;
 import org.funivan.lologa.tile.Tile;

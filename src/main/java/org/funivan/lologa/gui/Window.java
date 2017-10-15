@@ -1,4 +1,4 @@
-package org.funivan.lologa;
+package org.funivan.lologa.gui;
 
 import javax.swing.*;
 import java.awt.*;
