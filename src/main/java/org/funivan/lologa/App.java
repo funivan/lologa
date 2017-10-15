@@ -38,7 +38,7 @@ public class App {
 
         InteractiveBoard board = new InteractiveBoard(
             gameplay,
-            3, 4,
+            3, 3,
             new Cycled<>(
                 new Shuffled<>(
                     new ListOf<>(

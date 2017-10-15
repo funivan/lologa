@@ -67,7 +67,7 @@ public class InteractiveBoard extends JPanel implements BoardInterface {
 
         g.setColor(Color.BLACK);
         HashMap<String, ScoreInterface> metrics = new HashMap<String, ScoreInterface>() {{
-            this.put("score", new ScoreSum(InteractiveBoard.this.tiles));
+            this.put("score", new ScoreSum(InteractiveBoard.this.tiles()));
         }};
         int metricYStart = 15;
         for (final String id : metrics.keySet()) {
@@ -92,17 +92,12 @@ public class InteractiveBoard extends JPanel implements BoardInterface {
     }
 
     public void interact(PositionInterface position) {
-        if (this.tiles.has(position)) {
-            final TileInterface clicked = this.tiles.get(position);
-            this.paint(
-                this.gameplay.interact(clicked, this.tiles)
-            );
+        final TilesInterface tiles = this.tiles();
+        if (tiles.has(position)) {
+            final TileInterface clicked = tiles.get(position);
+            this.tiles = this.gameplay.interact(clicked, tiles);
+            this.repaint();
         }
-    }
-
-    public void paint(TilesInterface tiles) {
-        this.tiles = tiles;
-        this.repaint();
     }
 
     private static class TileClickListener implements MouseListener {

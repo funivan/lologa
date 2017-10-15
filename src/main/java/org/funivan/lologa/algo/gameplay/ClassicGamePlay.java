@@ -26,9 +26,6 @@ public class ClassicGamePlay implements GameplayInterface {
             connected = connected.without(bottom.position());
             tiles = new MoveDown(connected).handle(tiles);
             tiles = tiles.with(new Tile(bottom.color(), score, bottom.position()));
-            for (TileInterface connectedTile : connected.all()) {
-                tiles = tiles.without(connectedTile.position());
-            }
         }
         return tiles;
     }
