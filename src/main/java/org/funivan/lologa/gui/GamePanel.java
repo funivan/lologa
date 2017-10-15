@@ -1,13 +1,9 @@
 package org.funivan.lologa.gui;
 
-import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.board.BoardInterface;
-import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Position.PositionInterface;
-import org.funivan.lologa.tile.Score.Score;
 import org.funivan.lologa.tile.Score.ScoreInterface;
 import org.funivan.lologa.tile.Score.ScoreSum;
-import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tile.TileInterface;
 import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
@@ -18,23 +14,16 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
-import java.util.Iterator;
 
-public class InteractiveBoard extends JPanel implements BoardInterface {
+public class GamePanel extends JPanel {
 
-    private final GameplayInterface gameplay;
     private TilesInterface tiles;
-    private final int rows;
-    private final int cols;
-    private final Iterable<Color> colors;
     private final HashMap<PositionInterface, MouseListener> mouseListener = new HashMap<>();
+    private BoardInterface board;
 
-    public InteractiveBoard(GameplayInterface gameplay, int rows, int cols, Iterable<Color> colors) {
+    public GamePanel(BoardInterface board) {
+        this.board = board;
         this.tiles = new Tiles();
-        this.rows = rows;
-        this.cols = cols;
-        this.colors = colors;
-        this.gameplay = gameplay;
         this.setBorder(new LineBorder(Color.black));
     }
 
@@ -44,7 +33,7 @@ public class InteractiveBoard extends JPanel implements BoardInterface {
         super.paintComponent(g);
         final int size = 80;
         int width = size;
-        final TilesInterface tiles = this.tiles();
+        final TilesInterface tiles = this.board.tiles();
         for (TileInterface tile : tiles.all()) {
             final PositionInterface position = tile.position();
             int x = position.col() * size;
@@ -67,7 +56,7 @@ public class InteractiveBoard extends JPanel implements BoardInterface {
 
         g.setColor(Color.BLACK);
         HashMap<String, ScoreInterface> metrics = new HashMap<String, ScoreInterface>() {{
-            this.put("score", new ScoreSum(InteractiveBoard.this.tiles()));
+            this.put("score", new ScoreSum(GamePanel.this.board.tiles()));
         }};
         int metricYStart = 15;
         for (final String id : metrics.keySet()) {
@@ -77,37 +66,24 @@ public class InteractiveBoard extends JPanel implements BoardInterface {
     }
 
     public TilesInterface tiles() {
-        final Iterator<Color> colors = this.colors.iterator();
-        for (int row = 0; row < this.rows; row++) {
-            for (int col = 0; col < this.cols; col++) {
-                final Position position = new Position(row, col);
-                if (!this.tiles.has(position)) {
-                    this.tiles = this.tiles.with(
-                        new Tile(colors.next(), new Score(1), position)
-                    );
-                }
-            }
-        }
+
         return this.tiles;
     }
 
-    public void interact(PositionInterface position) {
-        final TilesInterface tiles = this.tiles();
-        if (tiles.has(position)) {
-            final TileInterface clicked = tiles.get(position);
-            this.tiles = this.gameplay.interact(clicked, tiles);
-            this.repaint();
-        }
+    public void setBoard(BoardInterface board) {
+        this.board = board;
+        this.repaint();
     }
 
+
     private static class TileClickListener implements MouseListener {
-        private final InteractiveBoard board;
+        private final GamePanel panel;
         private final PositionInterface position;
         private final Point start;
         private final Point end;
 
-        public TileClickListener(InteractiveBoard board, PositionInterface position, Point start, Point end) {
-            this.board = board;
+        public TileClickListener(GamePanel panel, PositionInterface position, Point start, Point end) {
+            this.panel = panel;
             this.position = position;
             this.start = start;
             this.end = end;
@@ -129,7 +105,9 @@ public class InteractiveBoard extends JPanel implements BoardInterface {
             final int y = mouseEvent.getPoint().y;
 
             if (this.start.getX() < x && this.start.getY() < y && this.end.getX() > x && this.end.getY() > y) {
-                this.board.interact(this.position);
+                this.panel.setBoard(
+                    this.panel.board.interact(this.position)
+                );
             }
         }
 

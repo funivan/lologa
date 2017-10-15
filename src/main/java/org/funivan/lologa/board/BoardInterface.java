@@ -8,6 +8,6 @@ public interface BoardInterface {
 
     TilesInterface tiles();
 
-    void interact(PositionInterface position);
+    BoardInterface interact(PositionInterface position);
 
 }
