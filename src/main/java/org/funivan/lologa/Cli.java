@@ -16,6 +16,7 @@ import org.funivan.lologa.algo.ga.genome.value.MaxScoreValue;
 import org.funivan.lologa.algo.ga.genome.value.RemovedTilesValue;
 import org.funivan.lologa.algo.ga.player.Player;
 import org.funivan.lologa.algo.ga.player.PlayerInterface;
+import org.funivan.lologa.algo.ga.player.fitness.AverageScoreFitness;
 import org.funivan.lologa.algo.ga.player.fitness.FitnessInterface;
 import org.funivan.lologa.algo.ga.player.fitness.MaxScoreFitness;
 import org.funivan.lologa.algo.gameplay.ClassicGamePlay;
@@ -30,27 +31,27 @@ public class Cli {
         final ClassicGamePlay gameplay = new ClassicGamePlay();
         final BoardInterface board = new Middle5To5Board(gameplay);
         final MetricsInterface metrics = new Metrics(new ListOf<>(
-            new MaxScoreValue(),
-            new RemovedTilesValue(),
             new AverageScoreValue(),
-            new LockedValue(gameplay)
+            new MaxScoreValue(),
+            new LockedValue(gameplay),
+            new RemovedTilesValue()
         ));
         final GenomeInterface zeroGenome = new Genome(
             new HashMap<String, Double>() {{
-                this.put(new MaxScoreValue().type(), 10.0);
-                this.put(new RemovedTilesValue().type(), 10.0);
-                this.put(new AverageScoreValue().type(), 10.0);
-                this.put(new LockedValue(gameplay).type(), 10.0);
+                this.put(new AverageScoreValue().type(), 0.1);
+                this.put(new MaxScoreValue().type(), 0.1);
+                this.put(new LockedValue(gameplay).type(), 0.1);
+                this.put(new RemovedTilesValue().type(), 0.1);
             }},
             gameplay,
             metrics
         );
 
-        final int playersNum = 8;
+        final int playersNum = 20;
         final int maxGenerations = 500;
         final Population initialPopulation = new Population(new Randomize(0.04), playersNum, new HalfCross());
         final Population nextPopulation = new Population(new Randomize(0.003), playersNum, new HalfCross());
-        final FitnessInterface fitness = new MaxScoreFitness();
+        final FitnessInterface fitness = new AverageScoreFitness();
 
         Iterable<GenomeInterface> genomes = initialPopulation.populate(new Repeated<>(zeroGenome, playersNum));
         for (int g = 1; g < maxGenerations; g++) {

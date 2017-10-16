@@ -33,7 +33,7 @@ public class Player implements PlayerInterface {
         if (this.score == null) {
             this.score = 0;
             ArrayList<Integer> scores = new ArrayList<>();
-            for (int round = 0; round < 2; round++) {
+            for (int round = 0; round < 4; round++) {
                 scores.add(
                     new Round().play(this.genome(), this.board)
                 );

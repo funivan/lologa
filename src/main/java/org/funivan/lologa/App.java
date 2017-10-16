@@ -29,13 +29,11 @@ public class App {
 //            this.put(new LockedValue(gameplay), 2.3416365059501685E-297);
 //            this.put(new RemovedTilesValue(), 4.8370809244881494E-297);
 //
-            this.put(new AverageScoreValue(), 7.981118990435994);
-            this.put(new MaxScoreValue(), 17.348301520296374);
-            this.put(new LockedValue(gameplay), 8.391660879765636);
-            this.put(new RemovedTilesValue(), 13.614258698412117);
+//            this.put(new AverageScoreValue(), 12.836554777293083);
+//            this.put(new MaxScoreValue(), 11.980323893992699);
+            this.put(new LockedValue(gameplay), 2.0);
+            this.put(new RemovedTilesValue(), 3.0);
         }};
-
-
 
         final MetricsInterface metrics = new Metrics(ratio.keySet());
         HashMap<String, Double> genomeData = new HashMap<>();
