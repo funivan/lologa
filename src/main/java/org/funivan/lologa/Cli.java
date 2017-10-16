@@ -50,7 +50,7 @@ public class Cli {
         final int playersNum = 10;
         final int maxGenerations = 500;
         final Population initialPopulation = new Population(new Randomize(0.5), playersNum, new HalfCross());
-        final Population nextPopulation = new Population(new Randomize(0.003), playersNum, new HalfCross());
+        final Population nextPopulation = new Population(new Randomize(0.03), playersNum, new HalfCross());
         final FitnessInterface fitness = new AverageScoreFitness();
 
         Iterable<GenomeInterface> genomes = initialPopulation.populate(new Repeated<>(zeroGenome, playersNum));
