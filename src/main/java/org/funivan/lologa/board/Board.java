@@ -13,6 +13,11 @@ import java.util.Iterator;
 
 public class Board implements BoardInterface {
 
+    public static final Color GREEN = new Color(100, 200, 100);
+    public static final Color RED = new Color(250, 50, 50);
+    public static final Color BLUE = new Color(1, 90, 250);
+    public static final Color YELLOW = new Color(255, 220, 40);
+
     private final GameplayInterface gameplay;
     private TilesInterface tiles;
     private final int rows;

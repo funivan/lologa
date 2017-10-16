@@ -1,42 +1,44 @@
 package org.funivan.lologa.algo.ga.genome.population;
 
-import org.funivan.lologa.algo.ga.genome.population.rand.FixedRandomize;
-import org.funivan.lologa.algo.ga.genome.population.rand.RandomizeInterface;
-import org.funivan.lologa.algo.ga.player.PlayerInterface;
+import org.cactoos.iterable.Cycled;
+import org.cactoos.iterable.Limited;
+import org.cactoos.iterable.Skipped;
+import org.funivan.lologa.algo.ga.genome.GenomeInterface;
+import org.funivan.lologa.algo.ga.genome.population.crossing.CrossingInterface;
+import org.funivan.lologa.algo.ga.genome.population.mutation.RandomizeInterface;
 
-import java.util.HashMap;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Population implements PopulationInterface {
 
-    private final Random rand;
     private final RandomizeInterface randomize;
+    private final int size;
+    private final CrossingInterface crossing;
 
-    public Population(RandomizeInterface randomize) {
+    public Population(RandomizeInterface randomize, int size, CrossingInterface crossing) {
         this.randomize = randomize;
-        this.rand = new Random();
-
+        this.size = size;
+        this.crossing = crossing;
     }
 
-    public Population() {
-        this(new FixedRandomize(0.001));
-    }
 
     @Override
-    public PlayerInterface populate(PlayerInterface father, PlayerInterface mother) {
-        @SuppressWarnings("unchecked") HashMap<String, Double> genome = (HashMap<String, Double>) father.genome().clone();
-        for (final String type : genome.keySet()) {
-            if (mother.genome().containsKey(type) && this.rand.nextInt(100) > 50) {
-                genome.put(type, mother.genome().get(type));
-            }
-        }
-        // mix data
-        for (final String type : genome.keySet()) {
-            genome.put(
-                type,
-                genome.get(type) * this.randomize.next()
+    public final Iterable<GenomeInterface> populate(final Iterable<GenomeInterface> genomes) {
+        Iterator<GenomeInterface> fathers = new Cycled<>(new Limited<>(genomes, this.size / 4)).iterator();
+        Iterator<GenomeInterface> mothers = new Cycled<>(new Skipped<>(genomes, this.size / 4)).iterator();
+        ArrayList<GenomeInterface> result = new ArrayList<>();
+        while (result.size() < this.size) {
+            final GenomeInterface father = fathers.next();
+            result.add(
+                father.withData(
+                    this.randomize.mix(
+                        this.crossing.cross(father, mothers.next())
+                    )
+                )
             );
         }
-        return father.withGenome(genome);
+        return result;
     }
+
 }

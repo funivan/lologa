@@ -1,63 +1,56 @@
 package org.funivan.lologa.algo.ga.player;
 
-import org.funivan.lologa.algo.ga.fitness.Fitness;
-import org.funivan.lologa.algo.ga.fitness.FitnessInterface;
-import org.funivan.lologa.algo.ga.genome.ScoreCalculation;
-import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
-import org.funivan.lologa.algo.gameplay.GameplayInterface;
-import org.funivan.lologa.tile.Score.MaxScore;
-import org.funivan.lologa.tile.Tile;
-import org.funivan.lologa.tile.TileInterface;
-import org.funivan.lologa.tiles.TilesInterface;
+import org.funivan.lologa.algo.ga.genome.GenomeInterface;
+import org.funivan.lologa.algo.ga.player.fitness.FitnessInterface;
+import org.funivan.lologa.algo.ga.player.round.Round;
+import org.funivan.lologa.board.BoardInterface;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Player implements PlayerInterface {
 
-    private final HashMap<String, Double> genome;
-    private final GameplayInterface gameplay;
-    private final MetricsInterface metrics;
-    private final ScoreCalculation scoreCalculator;
 
-    public Player(final HashMap<String, Double> genome, final GameplayInterface gameplay, final MetricsInterface metrics) {
+    private final BoardInterface board;
+    private final GenomeInterface genome;
+    private final FitnessInterface fitness;
+
+    private Integer score;
+
+    public Player(final GenomeInterface genome, final BoardInterface board, final FitnessInterface fitness) {
         this.genome = genome;
-        this.gameplay = gameplay;
-        this.metrics = metrics;
-        this.scoreCalculator = new ScoreCalculation(this.genome);
-    }
-
-
-    @Override
-    public TileInterface find(TilesInterface tiles) {
-        TileInterface result = Tile.DUMMY;
-        Double max = 0.0;
-        for (TileInterface tile : tiles.all()) {
-            TilesInterface newTiles = this.gameplay.interact(tile, tiles);
-            final HashMap<String, Double> stepMetric = this.metrics.collect(tiles, newTiles);
-            Double score = this.scoreCalculator.calculate(stepMetric);
-            if (score > max) {
-                result = tile;
-                max = score;
-            }
-        }
-        return result;
+        this.score = null;
+        this.board = board;
+        this.fitness = fitness;
     }
 
     @Override
-    public HashMap<String, Double> genome() {
+    public GenomeInterface genome() {
         return this.genome;
     }
 
     @Override
-    public FitnessInterface fitness(TilesInterface tiles) {
-        return new Fitness(
-            new MaxScore(tiles.all()).value()
-        );
+    public int score() {
+        if (this.score == null) {
+            this.score = 0;
+            ArrayList<Integer> scores = new ArrayList<>();
+            for (int round = 0; round < 4; round++) {
+                scores.add(
+                    new Round().play(this.genome(), this.board)
+                );
+            }
+            this.score = this.fitness.score(scores);
+        }
+        return this.score;
     }
 
     @Override
-    public PlayerInterface withGenome(HashMap<String, Double> genome) {
-        return new Player(genome, this.gameplay, this.metrics);
+    public int compareTo(PlayerInterface result) {
+        return Integer.compare(result.score(), this.score());
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" + this.score() + '}';
     }
 
 }

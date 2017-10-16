@@ -2,84 +2,71 @@ package org.funivan.lologa;
 
 import org.cactoos.iterable.*;
 import org.cactoos.list.ListOf;
+import org.funivan.lologa.algo.ga.genome.Genome;
+import org.funivan.lologa.algo.ga.genome.GenomeInterface;
+import org.funivan.lologa.algo.ga.genome.Genomes;
 import org.funivan.lologa.algo.ga.genome.metric.Metrics;
 import org.funivan.lologa.algo.ga.genome.metric.MetricsInterface;
 import org.funivan.lologa.algo.ga.genome.population.Population;
-import org.funivan.lologa.algo.ga.genome.population.rand.Randomize;
+import org.funivan.lologa.algo.ga.genome.population.crossing.HalfCross;
+import org.funivan.lologa.algo.ga.genome.population.crossing.RandomCross;
+import org.funivan.lologa.algo.ga.genome.population.mutation.Randomize;
 import org.funivan.lologa.algo.ga.genome.value.AverageScoreValue;
 import org.funivan.lologa.algo.ga.genome.value.LockedValue;
 import org.funivan.lologa.algo.ga.genome.value.MaxScoreValue;
 import org.funivan.lologa.algo.ga.genome.value.RemovedTilesValue;
-import org.funivan.lologa.algo.ga.player.CalculatedResult;
 import org.funivan.lologa.algo.ga.player.Player;
 import org.funivan.lologa.algo.ga.player.PlayerInterface;
-import org.funivan.lologa.algo.ga.player.ResultInterface;
+import org.funivan.lologa.algo.ga.player.fitness.FitnessInterface;
+import org.funivan.lologa.algo.ga.player.fitness.MaxScoreFitness;
+import org.funivan.lologa.algo.ga.player.fitness.MiddleScoreAverageFitness;
 import org.funivan.lologa.algo.gameplay.ClassicGamePlay;
+import org.funivan.lologa.board.BoardInterface;
+import org.funivan.lologa.board.boards.Middle5To5Board;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
 
 public class Cli {
 
     public static void main(String[] args) {
         final ClassicGamePlay gameplay = new ClassicGamePlay();
+        final BoardInterface board = new Middle5To5Board(gameplay);
         final MetricsInterface metrics = new Metrics(new ListOf<>(
-            new MaxScoreValue(),
             new RemovedTilesValue(),
-            new AverageScoreValue(),
             new LockedValue(gameplay)
         ));
-
-        final PlayerInterface startPlayer = new Player(
+        final GenomeInterface zeroGenome = new Genome(
             new HashMap<String, Double>() {{
-                this.put(new MaxScoreValue().type(), 1.0);
-                this.put(new RemovedTilesValue().type(), 1.0);
-                this.put(new AverageScoreValue().type(), 1.0);
-                this.put(new LockedValue(gameplay).type(), 1.0);
+                this.put(new MaxScoreValue().type(), 10.0);
+                this.put(new RemovedTilesValue().type(), 10.0);
+                this.put(new AverageScoreValue().type(), 10.0);
+                this.put(new LockedValue(gameplay).type(), 10.0);
             }},
             gameplay,
             metrics
         );
 
-        ArrayList<PlayerInterface> players = new ArrayList<>();
         final int playersNum = 8;
-        final Random random = new Random();
-        for (int i = 0; i < playersNum; i++) {
-            players.add(new Population(new Randomize(0.05)).populate(startPlayer, startPlayer));
-        }
-        int maxGenerations = 50;
-        Iterable<ResultInterface> generation = new IterableOf<>();
+        final int maxGenerations = 500;
+        final Population initialPopulation = new Population(new Randomize(0.05), playersNum, new HalfCross());
+        final Population nextPopulation = new Population(new Randomize(0.0003), playersNum, new HalfCross());
+        final FitnessInterface fitness = new MiddleScoreAverageFitness();
+
+        Iterable<GenomeInterface> genomes = initialPopulation.populate(new Repeated<>(zeroGenome, playersNum));
         for (int g = 1; g < maxGenerations; g++) {
-            for (PlayerInterface player : players) {
-                final ResultInterface max = new CalculatedResult(player, gameplay, 1000);
+            Iterable<PlayerInterface> generation = new IterableOf<>();
+            for (GenomeInterface genome : genomes) {
+                final PlayerInterface max = new Player(genome, board, fitness);
                 generation = new Joined<>(generation, new IterableOf<>(max));
-                System.out.println("Player " + " Score " + max + " " + player.genome());
             }
 
-            generation = new Limited<>(new Sorted<>(generation), playersNum / 2);
-
-            // populate players
-
-            System.out.println("Generation " + g + " Results ");
-            for (ResultInterface result : generation) {
-                System.out.println("Result " + result.toString() + " P " + result.player().genome());
+            final Sorted<PlayerInterface> players = new Sorted<>(generation);
+            System.out.println("Generation " + g + ". Top results");
+            for (PlayerInterface generationPlayer : new Limited<>(players, playersNum / 2)) {
+                System.out.println(generationPlayer.toString() + " P " + generationPlayer.genome().data());
             }
-            players = new ArrayList<>();
-
-            Iterator<ResultInterface> fathers = new Cycled<>(new Shuffled<>(new Limited<>(generation, playersNum / 4))).iterator();
-            Iterator<ResultInterface> mothers = new Cycled<>(new Shuffled<>(new Skipped<>(generation, playersNum / 4))).iterator();
-            System.out.println("New generation");
-
-            while (players.size() < playersNum) {
-                PlayerInterface newPlayer = new Population(new Randomize(0.005))
-                    .populate(
-                        fathers.next().player(),
-                        mothers.next().player()
-                    );
-                players.add(newPlayer);
-            }
+            // born new generation
+            genomes = nextPopulation.populate(new Genomes(players));
         }
 
     }

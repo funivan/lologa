@@ -1,17 +1,12 @@
 package org.funivan.lologa.algo.ga.player;
 
-import org.funivan.lologa.algo.find.one.TileFinder;
-import org.funivan.lologa.algo.ga.fitness.FitnessInterface;
-import org.funivan.lologa.tiles.TilesInterface;
+import org.funivan.lologa.algo.ga.genome.GenomeInterface;
 
-import java.util.HashMap;
+public interface PlayerInterface extends Comparable<PlayerInterface> {
 
-public interface PlayerInterface extends TileFinder {
+    GenomeInterface genome();
 
-    FitnessInterface fitness(TilesInterface tiles);
+    int score();
 
-    PlayerInterface withGenome(HashMap<String, Double> genome);
-
-    HashMap<String, Double> genome();
 
 }
