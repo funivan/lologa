@@ -29,10 +29,10 @@ public class App {
 //            this.put(new LockedValue(gameplay), 2.3416365059501685E-297);
 //            this.put(new RemovedTilesValue(), 4.8370809244881494E-297);
 //
-//            this.put(new AverageScoreValue(), 12.836554777293083);
-//            this.put(new MaxScoreValue(), 11.980323893992699);
-            this.put(new LockedValue(gameplay), 2.0);
-            this.put(new RemovedTilesValue(), 3.0);
+            this.put(new AverageScoreValue(), 0.9482049914789408);
+            this.put(new MaxScoreValue(), 0.9533320599468338);
+            this.put(new LockedValue(gameplay), 1.2537743790136286);
+            this.put(new RemovedTilesValue(), 1.1953305345211005);
         }};
 
         final MetricsInterface metrics = new Metrics(ratio.keySet());

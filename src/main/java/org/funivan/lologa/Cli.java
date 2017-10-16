@@ -38,7 +38,7 @@ public class Cli {
         ));
         final GenomeInterface zeroGenome = new Genome(
             new HashMap<String, Double>() {{
-//                this.put(new AverageScoreValue().type(), 1.0);
+                this.put(new AverageScoreValue().type(), 1.0);
                 this.put(new MaxScoreValue().type(), 1.0);
                 this.put(new LockedValue(gameplay).type(), 1.0);
                 this.put(new RemovedTilesValue().type(), 1.0);
@@ -49,15 +49,14 @@ public class Cli {
 
         final int playersNum = 10;
         final int maxGenerations = 500;
-        final Population initialPopulation = new Population(new Randomize(0.09), playersNum, new HalfCross());
-        final Population nextPopulation = new Population(new Randomize(0.0005), playersNum, new HalfCross());
-        final FitnessInterface fitness = new AverageScoreFitness();
+        final Population initialPopulation = new Population(new Randomize(0.009), playersNum, new HalfCross());
+        final Population nextPopulation = new Population(new Randomize(0.005), playersNum, new HalfCross());
 
         Iterable<GenomeInterface> genomes = initialPopulation.populate(new Repeated<>(zeroGenome, playersNum));
         for (int g = 1; g < maxGenerations; g++) {
             Iterable<PlayerInterface> generation = new IterableOf<>();
             for (GenomeInterface genome : genomes) {
-                final PlayerInterface max = new Player(genome, board, fitness);
+                final PlayerInterface max = new Player(genome, board);
                 generation = new Joined<>(generation, new IterableOf<>(max));
             }
 
