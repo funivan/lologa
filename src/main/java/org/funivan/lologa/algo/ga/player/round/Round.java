@@ -6,7 +6,7 @@ import org.funivan.lologa.tile.Score.ScoreSum;
 
 public class Round implements RoundInterface {
 
-    private final int maxMoves = 5000;
+    private final int maxMoves = 2000;
 
     @Override
     public int play(final GenomeInterface genome, BoardInterface board) {
