@@ -31,14 +31,14 @@ public class Cli {
         final ClassicGamePlay gameplay = new ClassicGamePlay();
         final BoardInterface board = new Middle5To5Board(gameplay);
         final MetricsInterface metrics = new Metrics(new ListOf<>(
-            new AverageScoreValue(),
-            new MaxScoreValue(),
+//            new AverageScoreValue(),
+//            new MaxScoreValue(),
             new LockedValue(gameplay),
             new RemovedTilesValue()
         ));
         final GenomeInterface zeroGenome = new Genome(
             new HashMap<String, Double>() {{
-                this.put(new AverageScoreValue().type(), 1.0);
+//                this.put(new AverageScoreValue().type(), 1.0);
                 this.put(new MaxScoreValue().type(), 1.0);
                 this.put(new LockedValue(gameplay).type(), 1.0);
                 this.put(new RemovedTilesValue().type(), 1.0);
@@ -49,8 +49,8 @@ public class Cli {
 
         final int playersNum = 10;
         final int maxGenerations = 500;
-        final Population initialPopulation = new Population(new Randomize(0.5), playersNum, new HalfCross());
-        final Population nextPopulation = new Population(new Randomize(0.03), playersNum, new HalfCross());
+        final Population initialPopulation = new Population(new Randomize(0.09), playersNum, new HalfCross());
+        final Population nextPopulation = new Population(new Randomize(0.0005), playersNum, new HalfCross());
         final FitnessInterface fitness = new AverageScoreFitness();
 
         Iterable<GenomeInterface> genomes = initialPopulation.populate(new Repeated<>(zeroGenome, playersNum));
