@@ -38,18 +38,18 @@ public class Cli {
         ));
         final GenomeInterface zeroGenome = new Genome(
             new HashMap<String, Double>() {{
-                this.put(new AverageScoreValue().type(), 0.1);
-                this.put(new MaxScoreValue().type(), 0.1);
-                this.put(new LockedValue(gameplay).type(), 0.1);
-                this.put(new RemovedTilesValue().type(), 0.1);
+                this.put(new AverageScoreValue().type(), 1.0);
+                this.put(new MaxScoreValue().type(), 1.0);
+                this.put(new LockedValue(gameplay).type(), 1.0);
+                this.put(new RemovedTilesValue().type(), 1.0);
             }},
             gameplay,
             metrics
         );
 
-        final int playersNum = 20;
+        final int playersNum = 10;
         final int maxGenerations = 500;
-        final Population initialPopulation = new Population(new Randomize(0.04), playersNum, new HalfCross());
+        final Population initialPopulation = new Population(new Randomize(0.5), playersNum, new HalfCross());
         final Population nextPopulation = new Population(new Randomize(0.003), playersNum, new HalfCross());
         final FitnessInterface fitness = new AverageScoreFitness();
 
