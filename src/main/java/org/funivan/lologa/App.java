@@ -24,15 +24,11 @@ public class App {
 
 
         HashMap<ValueInterface, Double> ratio = new HashMap<ValueInterface, Double>() {{
-//            this.put(new AverageScoreValue(), 1.605013907671868E-297);
-//            this.put(new MaxScoreValue(), 3.5567147381611746E-297);
-//            this.put(new LockedValue(gameplay), 2.3416365059501685E-297);
-//            this.put(new RemovedTilesValue(), 4.8370809244881494E-297);
-//
-            this.put(new AverageScoreValue(), 0.9482049914789408);
-            this.put(new MaxScoreValue(), 0.9533320599468338);
-            this.put(new LockedValue(gameplay), 1.2537743790136286);
-            this.put(new RemovedTilesValue(), 1.1953305345211005);
+            this.put(new AverageScoreValue(), 0.22679768211315168);
+            this.put(new MaxScoreValue(), 0.09360431752939613);
+            this.put(new LockedValue(gameplay), 0.4423825016731838);
+            this.put(new PossibleMovesValue(gameplay), 0.022750644246770865);
+            this.put(new RemovedTilesValue(), 0.45553055373708135);
         }};
 
         final MetricsInterface metrics = new Metrics(ratio.keySet());

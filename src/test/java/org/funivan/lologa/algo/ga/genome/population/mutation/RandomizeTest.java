@@ -11,7 +11,7 @@ public class RandomizeTest {
     public void checkMix() {
         MatcherAssert.assertThat(
             "Expect randomize should change genome",
-            new Randomize(0.01).mix(
+            new Randomize(0.25, 1).mix(
                 new HashMap<String, Double>() {{
                     this.put("max_score", 10.0);
                 }}

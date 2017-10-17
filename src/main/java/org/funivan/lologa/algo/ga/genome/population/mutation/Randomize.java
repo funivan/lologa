@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Randomize implements RandomizeInterface {
-    private final double mix;
+    private final double step;
+    private final double rate;
     private final Random random;
 
-    public Randomize(double mix) {
+    public Randomize(double rate, double step) {
+        this.rate = rate;
+        this.step = step;
         this.random = new Random();
-        this.mix = mix;
     }
 
 
@@ -19,12 +21,12 @@ public class Randomize implements RandomizeInterface {
 
         HashMap<String, Double> result = new HashMap<>();
         for (final String type : values.keySet()) {
-            double modifier = this.random.nextInt(10) * this.mix;
-            double diff = values.get(type) * modifier;
-            if (this.random.nextInt(10) > 5) {
-                diff = diff * -1.0;
+            Double value = values.get(type);
+            if (this.random.nextDouble()<this.rate) {
+                value = value + this.random.nextDouble() * this.step * 2 - this.step;
             }
-            result.put(type, values.get(type) + diff);
+
+            result.put(type, value);
         }
         return result;
     }
