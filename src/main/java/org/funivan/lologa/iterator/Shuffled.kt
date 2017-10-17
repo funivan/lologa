@@ -1,34 +1,29 @@
 package org.funivan.lologa.iterator
 
-import org.cactoos.scalar.StickyScalar
-import org.cactoos.scalar.SyncScalar
-import org.cactoos.scalar.UncheckedScalar
-import java.util.*
+import org.cactoos.list.ListOf
 
-class Shuffled<T>(iterator: Iterator<T>) : Iterator<T> {
-    private val scalar: UncheckedScalar<Iterator<T>>
+class Shuffled<T>(val origin: Iterator<T>) : Iterator<T> {
+    private var iter: Iterator<T> = ListOf<T>().iterator()
+    private var shuffled = false;
 
-    init {
-        this.scalar = UncheckedScalar(
-                SyncScalar(
-                        StickyScalar {
-                            val items = LinkedList()
-                            while (iterator.hasNext()) {
-                                items.add(iterator.next())
-                            }
-                            Collections.shuffle(items)
-                            items.iterator()
-                        }
-                )
-        )
+    private fun shuffledIterator(): Iterator<T> {
+        if (!this.shuffled) {
+            var a = mutableListOf<T>()
+            while (this.origin.hasNext()) {
+                a.add(this.origin.next())
+            }
+            this.iter = a.iterator();
+            this.shuffled = true;
+        }
+        return this.iter
     }
 
     override fun hasNext(): Boolean {
-        return this.scalar.value().hasNext()
+        return this.shuffledIterator().hasNext()
     }
 
     override fun next(): T {
-        return this.scalar.value().next()
+        return this.shuffledIterator().next()
     }
 }
 

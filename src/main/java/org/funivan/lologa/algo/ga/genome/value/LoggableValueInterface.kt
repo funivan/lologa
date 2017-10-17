@@ -8,7 +8,7 @@ class LoggableValueInterface(private val show: Boolean, private val origin: Valu
         return this.origin.type()
     }
 
-    override fun value(original: TilesInterface, tiles: TilesInterface): Double? {
+    override fun value(original: TilesInterface, tiles: TilesInterface): Double {
         val v = this.origin.value(original, tiles)
         if (this.show) {
             println(this.javaClass.toString() + " = " + v)

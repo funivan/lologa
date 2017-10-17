@@ -8,7 +8,7 @@ class MaxScoreValue : ValueInterface {
         return "max_score"
     }
 
-    override fun value(original: TilesInterface, tiles: TilesInterface): Double? {
+    override fun value(original: TilesInterface, tiles: TilesInterface): Double {
         return 1.toDouble() - MaxScore(original).value().toDouble() / MaxScore(tiles).value().toDouble()
     }
 }

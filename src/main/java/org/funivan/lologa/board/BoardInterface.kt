@@ -5,7 +5,6 @@ import org.funivan.lologa.tiles.TilesInterface
 
 interface BoardInterface {
 
-
     fun tiles(): TilesInterface
 
     fun interact(position: PositionInterface): BoardInterface

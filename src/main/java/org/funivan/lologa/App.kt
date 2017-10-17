@@ -19,22 +19,18 @@ object App {
         val gamePanel = GamePanel(board)
         Window(gamePanel)
 
-
-        val ratio = object : HashMap<ValueInterface, Double>() {
-            init {
-                this.put(AverageScoreValue(), 0.22679768211315168)
-                this.put(MaxScoreValue(), 0.09360431752939613)
-                this.put(LockedTilesValue(gameplay), 0.4423825016731838)
-                this.put(PossibleMovesValue(gameplay), 0.022750644246770865)
-                this.put(RemovedTilesValue(), 0.45553055373708135)
-                this.put(RemovedTilesValue(), 0.45553055373708135)
-            }
-        }
-
+        val ratio: HashMap<ValueInterface, Double> = hashMapOf(
+                AverageScoreValue() to 0.22679768211315168,
+                MaxScoreValue() to 0.09360431752939613,
+                LockedTilesValue(gameplay) to 0.4423825016731838,
+                PossibleMovesValue(gameplay) to 0.022750644246770865,
+                RemovedTilesValue() to 0.45553055373708135,
+                RemovedTilesValue() to 0.45553055373708135
+        )
         val metrics = Metrics(ratio.keys)
         val genomeData = HashMap<String, Double>()
-        for (ratioValue in ratio.keys) {
-            genomeData.put(ratioValue.type(), ratio[ratioValue])
+        for ((type, value) in ratio) {
+            genomeData.set(type.type(), value)
         }
 
         val player = Genome(genomeData, gameplay, metrics)

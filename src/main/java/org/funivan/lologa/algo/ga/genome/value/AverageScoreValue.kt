@@ -8,7 +8,7 @@ class AverageScoreValue : ValueInterface {
         return "average_score"
     }
 
-    override fun value(original: TilesInterface, tiles: TilesInterface): Double? {
+    override fun value(original: TilesInterface, tiles: TilesInterface): Double {
         val oldAverage = ScoreSum(original).value() / original.size().toDouble()
         val newAverage = ScoreSum(tiles).value() / tiles.size().toDouble()
         return newAverage - oldAverage

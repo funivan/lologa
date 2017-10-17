@@ -7,7 +7,7 @@ class RemovedTilesValue : ValueInterface {
         return "removed_tiles"
     }
 
-    override fun value(original: TilesInterface, tiles: TilesInterface): Double? {
+    override fun value(original: TilesInterface, tiles: TilesInterface): Double {
         return 1 - tiles.size().toDouble() / original.size().toDouble()
     }
 }

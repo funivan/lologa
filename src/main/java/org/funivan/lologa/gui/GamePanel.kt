@@ -13,7 +13,9 @@ import java.util.*
 import javax.swing.JPanel
 import javax.swing.border.LineBorder
 
-class GamePanel(private var board: BoardInterface?) : JPanel() {
+class GamePanel(
+        private var board: BoardInterface
+) : JPanel() {
 
     private val mouseListener = HashMap<PositionInterface, MouseListener>()
 
@@ -26,7 +28,7 @@ class GamePanel(private var board: BoardInterface?) : JPanel() {
         super.paintComponent(g)
         val size = 80
         var width = size
-        val tiles = this.board!!.tiles()
+        val tiles = this.board.tiles()
         for (tile in tiles.all()) {
             val position = tile.position()
             val x = position.col() * size
@@ -48,14 +50,12 @@ class GamePanel(private var board: BoardInterface?) : JPanel() {
         }
 
         g.color = Color.BLACK
-        val metrics = object : HashMap<String, ScoreInterface>() {
-            init {
-                this.put("score", ScoreSum(this@GamePanel.board!!.tiles()))
-            }
-        }
+        val metrics = hashMapOf<String, ScoreInterface>(
+                "score" to ScoreSum(this@GamePanel.board.tiles())
+        )
         var metricYStart = 15
-        for (id in metrics.keys) {
-            g.drawString(id + ":" + metrics[id].value(), width + 15, metricYStart)
+        for ((name, score) in metrics) {
+            g.drawString(name + ":" + score.value(), width + 15, metricYStart)
             metricYStart = metricYStart + 18
         }
     }
@@ -83,7 +83,7 @@ class GamePanel(private var board: BoardInterface?) : JPanel() {
 
             if (this.start.getX() < x && this.start.getY() < y && this.end.getX() > x && this.end.getY() > y) {
                 this.panel.setBoard(
-                        this.panel.board!!.interact(this.position)
+                        this.panel.board.interact(this.position)
                 )
             }
         }

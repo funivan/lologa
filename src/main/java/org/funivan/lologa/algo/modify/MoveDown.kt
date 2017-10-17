@@ -13,7 +13,7 @@ class MoveDown(private val replace: TilesInterface) : HandlerInterface {
     @NotNull
     public override fun handle(tiles: TilesInterface): TilesInterface {
         var tiles = tiles
-        val replaced: Boolean
+        var replaced: Boolean
         var replaceable = this.replace
         do {
             replaced = false

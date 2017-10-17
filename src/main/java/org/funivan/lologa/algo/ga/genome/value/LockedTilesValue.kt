@@ -17,7 +17,7 @@ class LockedTilesValue(gameplay: GameplayInterface) : ValueInterface {
         return "locked"
     }
 
-    override fun value(original: TilesInterface, tiles: TilesInterface): Double? {
+    override fun value(original: TilesInterface, tiles: TilesInterface): Double {
         val oldLocked = this.finder.handle(original).size().toDouble() / original.size().toDouble()
         val newLocked = this.finder.handle(tiles).size().toDouble() / tiles.size().toDouble()
         return oldLocked - newLocked

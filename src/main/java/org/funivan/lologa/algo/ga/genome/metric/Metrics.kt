@@ -4,7 +4,9 @@ import org.funivan.lologa.algo.ga.genome.value.ValueInterface
 import org.funivan.lologa.tiles.TilesInterface
 import java.util.*
 
-class Metrics(private val values: Iterable<ValueInterface>) : MetricsInterface {
+class Metrics(
+        private val values: Iterable<ValueInterface>
+) : MetricsInterface {
 
     override fun collect(original: TilesInterface, tiles: TilesInterface): HashMap<String, Double> {
         val result = HashMap<String, Double>()

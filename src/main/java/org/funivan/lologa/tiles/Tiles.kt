@@ -4,11 +4,11 @@ import org.funivan.lologa.tile.Position.PositionInterface
 import org.funivan.lologa.tile.TileInterface
 import java.util.*
 
-class Tiles @JvmOverloads constructor(private val tiles: HashMap<PositionInterface, TileInterface> = HashMap()) : TilesInterface {
-
+class Tiles(private val tiles: HashMap<PositionInterface, TileInterface> = HashMap()) : TilesInterface {
 
     override fun get(position: PositionInterface): TileInterface {
-        return this.tiles[position]
+        var tile = this.tiles.get(position);
+        return tile ?: throw Exception("Invalid tile position " + position.toString())
     }
 
     override fun has(position: PositionInterface): Boolean {

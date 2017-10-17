@@ -6,6 +6,6 @@ interface ValueInterface {
 
     fun type(): String
 
-    fun value(original: TilesInterface, tiles: TilesInterface): Double?
+    fun value(original: TilesInterface, tiles: TilesInterface): Double
 
 }

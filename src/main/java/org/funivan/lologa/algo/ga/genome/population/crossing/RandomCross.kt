@@ -14,7 +14,10 @@ class RandomCross : CrossingInterface {
         val result = HashMap<String, Double>()
         for (type in father.data().keys) {
             val target = if (this.rand.nextInt(100) > 50) father else mother
-            result.put(type, target.data()[type])
+            val value = target.data()[type];
+            if (value != null) {
+                result.put(type, value)
+            }
         }
         return result
     }

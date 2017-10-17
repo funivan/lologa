@@ -1,4 +1,4 @@
-package org.funivan.lologa.tiles.Filter;
+package org.funivan.lologa.tiles.filter;
 
 import org.funivan.lologa.tile.TileInterface;
 import org.hamcrest.Description;
