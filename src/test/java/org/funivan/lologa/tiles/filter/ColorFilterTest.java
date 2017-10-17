@@ -1,6 +1,6 @@
 package org.funivan.lologa.tiles.filter;
 
-import org.funivan.lologa.tile.Position.Position;
+import org.funivan.lologa.tile.position.Position;
 import org.funivan.lologa.tile.Tile;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

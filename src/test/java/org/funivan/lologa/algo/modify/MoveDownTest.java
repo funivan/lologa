@@ -1,6 +1,6 @@
 package org.funivan.lologa.algo.modify;
 
-import org.funivan.lologa.tile.Position.Position;
+import org.funivan.lologa.tile.position.Position;
 import org.funivan.lologa.tile.Score.Score;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tiles.Tiles;

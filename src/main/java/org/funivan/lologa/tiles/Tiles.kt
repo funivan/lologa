@@ -1,6 +1,6 @@
 package org.funivan.lologa.tiles
 
-import org.funivan.lologa.tile.Position.PositionInterface
+import org.funivan.lologa.tile.position.PositionInterface
 import org.funivan.lologa.tile.TileInterface
 import java.util.*
 

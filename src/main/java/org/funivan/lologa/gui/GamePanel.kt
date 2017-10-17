@@ -1,7 +1,7 @@
 package org.funivan.lologa.gui
 
 import org.funivan.lologa.board.BoardInterface
-import org.funivan.lologa.tile.Position.PositionInterface
+import org.funivan.lologa.tile.position.PositionInterface
 import org.funivan.lologa.tile.Score.ScoreInterface
 import org.funivan.lologa.tile.Score.ScoreSum
 import java.awt.Color

@@ -1,7 +1,7 @@
 package org.funivan.lologa.algo.find.one
 
 import com.sun.istack.internal.NotNull
-import org.funivan.lologa.tile.Position.Next
+import org.funivan.lologa.tile.position.Next
 import org.funivan.lologa.tile.TileInterface
 import org.funivan.lologa.tiles.TilesInterface
 

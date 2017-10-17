@@ -1,7 +1,7 @@
 package org.funivan.lologa.algo.ga.genome.value;
 
 import org.funivan.lologa.algo.gameplay.ClassicGamePlay;
-import org.funivan.lologa.tile.Position.Position;
+import org.funivan.lologa.tile.position.Position;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tiles.Tiles;
 import org.hamcrest.MatcherAssert;
