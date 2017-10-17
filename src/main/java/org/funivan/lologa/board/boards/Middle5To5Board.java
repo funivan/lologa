@@ -9,8 +9,6 @@ import org.funivan.lologa.tile.Position.Position;
 import org.funivan.lologa.tile.Tile;
 import org.funivan.lologa.tiles.Tiles;
 
-import java.awt.*;
-
 public class Middle5To5Board extends Board {
     public Middle5To5Board(GameplayInterface gameplay) {
         super(

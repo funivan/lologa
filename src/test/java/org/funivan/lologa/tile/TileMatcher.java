@@ -1,6 +1,5 @@
 package org.funivan.lologa.tile;
 
-import org.cactoos.Func;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 

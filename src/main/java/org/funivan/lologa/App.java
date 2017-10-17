@@ -29,6 +29,8 @@ public class App {
             this.put(new LockedValue(gameplay), 0.4423825016731838);
             this.put(new PossibleMovesValue(gameplay), 0.022750644246770865);
             this.put(new RemovedTilesValue(), 0.45553055373708135);
+            this.put(new RemovedTilesValue(), 0.45553055373708135);
+            this.put(new CoreTilesValue(gameplay), 0.45553055373708135);
         }};
 
         final MetricsInterface metrics = new Metrics(ratio.keySet());

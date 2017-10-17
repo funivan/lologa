@@ -7,7 +7,7 @@ import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
 public class PossibleMoves implements HandlerInterface {
-    private int num;
+    private final int num;
 
     public PossibleMoves(int num) {
         this.num = num;

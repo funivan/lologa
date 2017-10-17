@@ -9,7 +9,7 @@ import org.funivan.lologa.tiles.TilesInterface;
  * Core Tile - first single tile in group
  */
 public class CoreTilesInGroupFinder implements HandlerInterface {
-    private int minGroupLen;
+    private final int minGroupLen;
 
     public CoreTilesInGroupFinder(int minGroupLen) {
         this.minGroupLen = minGroupLen;

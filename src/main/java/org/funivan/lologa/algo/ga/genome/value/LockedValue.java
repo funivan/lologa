@@ -5,8 +5,6 @@ import org.funivan.lologa.algo.find.multiple.LockedTilesFinder;
 import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.tiles.TilesInterface;
 
-import java.util.Objects;
-
 public class LockedValue implements ValueInterface {
 
     private final HandlerInterface finder;

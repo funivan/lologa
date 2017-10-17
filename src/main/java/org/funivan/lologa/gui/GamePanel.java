@@ -5,7 +5,6 @@ import org.funivan.lologa.tile.Position.PositionInterface;
 import org.funivan.lologa.tile.Score.ScoreInterface;
 import org.funivan.lologa.tile.Score.ScoreSum;
 import org.funivan.lologa.tile.TileInterface;
-import org.funivan.lologa.tiles.Tiles;
 import org.funivan.lologa.tiles.TilesInterface;
 
 import javax.swing.*;
@@ -17,13 +16,11 @@ import java.util.HashMap;
 
 public class GamePanel extends JPanel {
 
-    private TilesInterface tiles;
     private final HashMap<PositionInterface, MouseListener> mouseListener = new HashMap<>();
     private BoardInterface board;
 
     public GamePanel(BoardInterface board) {
         this.board = board;
-        this.tiles = new Tiles();
         this.setBorder(new LineBorder(Color.black));
     }
 
@@ -65,10 +62,6 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public TilesInterface tiles() {
-
-        return this.tiles;
-    }
 
     public void setBoard(BoardInterface board) {
         this.board = board;

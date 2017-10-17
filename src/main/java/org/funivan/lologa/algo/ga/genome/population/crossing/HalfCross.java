@@ -4,6 +4,7 @@ import org.funivan.lologa.algo.ga.genome.GenomeInterface;
 
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public class HalfCross implements CrossingInterface {
 
     public HalfCross() {

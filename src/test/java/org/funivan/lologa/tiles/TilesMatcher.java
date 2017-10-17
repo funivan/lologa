@@ -6,7 +6,7 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 public class TilesMatcher extends TypeSafeDiagnosingMatcher<TilesInterface> {
 
-    private TilesInterface original;
+    private final TilesInterface original;
 
     public TilesMatcher(TilesInterface original) {
         this.original = original;

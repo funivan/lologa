@@ -33,7 +33,8 @@ public class Cli {
             new MaxScoreValue(),
             new LockedValue(gameplay),
             new PossibleMovesValue(gameplay),
-            new RemovedTilesValue()
+            new RemovedTilesValue(),
+            new CoreTilesValue(gameplay)
         ));
         final GenomeInterface zeroGenome = new Genome(
             new HashMap<String, Double>() {{
@@ -42,6 +43,7 @@ public class Cli {
                 this.put(new LockedValue(gameplay).type(), 0.0);
                 this.put(new PossibleMovesValue(gameplay).type(), 0.0);
                 this.put(new RemovedTilesValue().type(), 0.0);
+                this.put(new CoreTilesValue(gameplay).type(), 0.0);
             }},
             gameplay,
             metrics
