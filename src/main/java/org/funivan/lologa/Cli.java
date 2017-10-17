@@ -31,19 +31,17 @@ public class Cli {
         final MetricsInterface metrics = new Metrics(new ListOf<>(
             new AverageScoreValue(),
             new MaxScoreValue(),
-            new LockedValue(gameplay),
+            new LockedTilesValue(gameplay),
             new PossibleMovesValue(gameplay),
-            new RemovedTilesValue(),
-            new CoreTilesValue(gameplay)
+            new RemovedTilesValue()
         ));
         final GenomeInterface zeroGenome = new Genome(
             new HashMap<String, Double>() {{
                 this.put(new AverageScoreValue().type(), 0.0);
                 this.put(new MaxScoreValue().type(), 0.0);
-                this.put(new LockedValue(gameplay).type(), 0.0);
+                this.put(new LockedTilesValue(gameplay).type(), 0.0);
                 this.put(new PossibleMovesValue(gameplay).type(), 0.0);
                 this.put(new RemovedTilesValue().type(), 0.0);
-                this.put(new CoreTilesValue(gameplay).type(), 0.0);
             }},
             gameplay,
             metrics

@@ -5,11 +5,11 @@ import org.funivan.lologa.algo.find.multiple.LockedTilesFinder;
 import org.funivan.lologa.algo.gameplay.GameplayInterface;
 import org.funivan.lologa.tiles.TilesInterface;
 
-public class LockedValue implements ValueInterface {
+public class LockedTilesValue implements ValueInterface {
 
     private final HandlerInterface finder;
 
-    public LockedValue(GameplayInterface gameplay) {
+    public LockedTilesValue(GameplayInterface gameplay) {
         this.finder = new LockedTilesFinder(gameplay.minimum());
     }
 
@@ -21,7 +21,7 @@ public class LockedValue implements ValueInterface {
     @Override
     public Double value(TilesInterface original, TilesInterface tiles) {
         final double oldLocked = (double) this.finder.handle(original).size() / (double) original.size();
-        final double newLocked = (double) this.finder.handle(tiles).size() / (double) original.size();
+        final double newLocked = (double) this.finder.handle(tiles).size() / (double) tiles.size();
         return oldLocked - newLocked;
     }
 
