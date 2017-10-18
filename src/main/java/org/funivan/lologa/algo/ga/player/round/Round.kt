@@ -9,7 +9,7 @@ class Round : RoundInterface {
     override fun play(genome: GenomeInterface, board: BoardInterface): Int {
         var board = board
         var max = 0
-        var moves = 500
+        var moves = 50
         do {
             moves--
             board = board.interact(

@@ -45,10 +45,10 @@ object Cli {
                 metrics
         )
 
-        val playersNum = 50
+        val playersNum = 100
         val maxGenerations = 500
         val initialPopulation = Population(Initialization(), playersNum, RandomCross())
-        val nextPopulation = Population(Randomize(0.05, 0.2), playersNum, RandomCross())
+        val nextPopulation = Population(Randomize(0.08, 0.1), playersNum, RandomCross())
 
         val play = LoggablePlayGeneration(0.10, PlayGeneration(board))
         var genomes = initialPopulation.populate(Repeated<GenomeInterface>(zeroGenome, playersNum))
