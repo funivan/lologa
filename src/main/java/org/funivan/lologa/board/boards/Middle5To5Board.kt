@@ -5,8 +5,8 @@ import org.cactoos.list.ListOf
 import org.funivan.lologa.algo.gameplay.GameplayInterface
 import org.funivan.lologa.board.Board
 import org.funivan.lologa.iterable.Shuffled
-import org.funivan.lologa.tile.position.Position
 import org.funivan.lologa.tile.Tile
+import org.funivan.lologa.tile.position.Position
 import org.funivan.lologa.tiles.Tiles
 import java.awt.Color
 
@@ -25,6 +25,7 @@ class Middle5To5Board(gameplay: GameplayInterface)
         ),
         Tiles()
                 .with(Tile(Board.BLUE, Position(3, 1)))
-                .with(Tile(Board.BLUE, Position(3, 2)))
+                .with(Tile(Board.BLUE, Position(3, 1)))
+                .with(Tile(Board.BLUE, Position(3, 2))).with(Tile(Board.BLUE, Position(4, 2)))
                 .with(Tile(Board.BLUE, Position(3, 3)))
 )

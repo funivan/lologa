@@ -9,7 +9,7 @@ class Round : RoundInterface {
     override fun play(genome: GenomeInterface, board: BoardInterface): Int {
         var board = board
         var max = 0
-        var moves = 2000
+        var moves = 500
         do {
             moves--
             board = board.interact(
@@ -21,7 +21,7 @@ class Round : RoundInterface {
             if (current > max) {
                 max = current
             } else {
-                break
+                moves = 0
             }
         } while (moves > 0)
 

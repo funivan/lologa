@@ -1,6 +1,7 @@
 package org.funivan.lologa.iterator
 
 import org.cactoos.list.ListOf
+import java.util.*
 
 class Shuffled<T>(val origin: Iterator<T>) : Iterator<T> {
     private var iter: Iterator<T> = ListOf<T>().iterator()
@@ -12,6 +13,7 @@ class Shuffled<T>(val origin: Iterator<T>) : Iterator<T> {
             while (this.origin.hasNext()) {
                 a.add(this.origin.next())
             }
+            Collections.shuffle(a);
             this.iter = a.iterator();
             this.shuffled = true;
         }
@@ -19,7 +21,7 @@ class Shuffled<T>(val origin: Iterator<T>) : Iterator<T> {
     }
 
     override fun hasNext(): Boolean {
-        return this.shuffledIterator().hasNext()
+        return shuffledIterator().hasNext()
     }
 
     override fun next(): T {
