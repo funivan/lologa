@@ -20,20 +20,6 @@ object App {
         Window(gamePanel)
 
         val ratio: HashMap<ValueInterface, Double> = hashMapOf(
-//                AverageScoreValue() to 0.22679768211315168,
-//                MaxScoreValue() to 0.09360431752939613,
-//                LockedTilesValue(gameplay) to 0.4423825016731838,
-//                PossibleMovesValue(gameplay) to 0.022750644246770865,
-//                RemovedTilesValue() to 0.45553055373708135,
-
-//                new one
-//                RemovedTilesValue() to 0.45553055373708135
-//                AverageScoreValue() to 0.5976599461680736,
-//                MaxScoreValue() to -0.14147881895655245
-//                LockedTilesValue(gameplay) to -0.23111426390697515,
-//                PossibleMovesValue(gameplay) to 0.0314942748582725,
-//                RemovedTilesValue() to 0.26749163341778065
-//                new one two
                 AverageScoreValue() to 0.7475172379772614,
                 MaxScoreValue() to 0.2864582461582227,
                 LockedTilesValue(gameplay) to 0.38417682863787844,

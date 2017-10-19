@@ -16,7 +16,6 @@ import org.funivan.lologa.algo.ga.genome.population.mutation.Randomize
 import org.funivan.lologa.algo.ga.genome.value.*
 import org.funivan.lologa.algo.gameplay.ClassicGamePlay
 import org.funivan.lologa.board.boards.Middle5To5Board
-import java.util.*
 
 object Cli {
 
@@ -32,15 +31,13 @@ object Cli {
                 RemovedTilesValue()
         ))
         val zeroGenome = Genome(
-                object : HashMap<String, Double>() {
-                    init {
-                        this.put(AverageScoreValue().type(), 0.0)
-                        this.put(MaxScoreValue().type(), 0.0)
-                        this.put(LockedTilesValue(gameplay).type(), 0.0)
-                        this.put(PossibleMovesValue(gameplay).type(), 0.0)
-                        this.put(RemovedTilesValue().type(), 0.0)
-                    }
-                },
+                hashMapOf(
+                        AverageScoreValue().type() to 0.0,
+                        MaxScoreValue().type() to 0.0,
+                        LockedTilesValue(gameplay).type() to 0.0,
+                        PossibleMovesValue(gameplay).type() to 0.0,
+                        RemovedTilesValue().type() to 0.0
+                ),
                 gameplay,
                 metrics
         )
@@ -48,9 +45,9 @@ object Cli {
         val playersNum = 100
         val maxGenerations = 500
         val initialPopulation = Population(Initialization(), playersNum, RandomCross())
-        val nextPopulation = Population(Randomize(0.08, 0.1), playersNum, RandomCross())
+        val nextPopulation = Population(Randomize(0.05, 0.9), playersNum, RandomCross())
 
-        val play = LoggablePlayGeneration(0.10, PlayGeneration(board))
+        val play = LoggablePlayGeneration(0.05, PlayGeneration(board))
         var genomes = initialPopulation.populate(Repeated<GenomeInterface>(zeroGenome, playersNum))
         for (g in 1 until maxGenerations) {
             val generation = play.play(genomes)
