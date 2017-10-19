@@ -28,7 +28,8 @@ object Cli {
                 MaxScoreValue(),
                 LockedTilesValue(gameplay),
                 PossibleMovesValue(gameplay),
-                RemovedTilesValue()
+                RemovedTilesValue(),
+                CloseToTopValue()
         ))
         val zeroGenome = Genome(
                 hashMapOf(
@@ -36,7 +37,8 @@ object Cli {
                         MaxScoreValue().type() to 0.0,
                         LockedTilesValue(gameplay).type() to 0.0,
                         PossibleMovesValue(gameplay).type() to 0.0,
-                        RemovedTilesValue().type() to 0.0
+                        RemovedTilesValue().type() to 0.0,
+                        CloseToTopValue().type() to 0.0
                 ),
                 gameplay,
                 metrics
