@@ -25,7 +25,9 @@ class Shuffled<T>(val origin: Iterator<T>) : Iterator<T> {
     }
 
     override fun next(): T {
-        return this.shuffledIterator().next()
+        val next = this.shuffledIterator().next()
+        this.shuffled = false;
+        return next
     }
 }
 
