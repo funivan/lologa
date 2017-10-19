@@ -1,10 +1,10 @@
 package org.funivan.lologa.board
 
 import org.funivan.lologa.algo.gameplay.GameplayInterface
-import org.funivan.lologa.tile.position.Position
-import org.funivan.lologa.tile.position.PositionInterface
 import org.funivan.lologa.tile.Score.Score
 import org.funivan.lologa.tile.Tile
+import org.funivan.lologa.tile.position.Position
+import org.funivan.lologa.tile.position.PositionInterface
 import org.funivan.lologa.tiles.Tiles
 import org.funivan.lologa.tiles.TilesInterface
 import java.awt.Color
@@ -23,7 +23,9 @@ open class Board(
             for (col in 0 until this.cols) {
                 val position = Position(row, col)
                 if (!this.tiles.has(position)) {
-                    this.tiles = this.tiles.with(Tile(colors.next(), Score(1), position))
+                    val color = colors.next()
+                    println("next color: "+color)
+                    this.tiles = this.tiles.with(Tile(color, Score(1), position))
                 }
             }
         }
@@ -44,6 +46,7 @@ open class Board(
         val RED = Color(250, 50, 50)
         val BLUE = Color(1, 90, 250)
         val YELLOW = Color(255, 220, 40)
+        val VIOLET = Color(255, 220, 40)
     }
 
 }

@@ -21,7 +21,8 @@ class Complicated8To8Board(gameplay: GameplayInterface)
                                 Board.GREEN,
                                 Board.RED,
                                 Board.BLUE,
-                                Board.YELLOW
+                                Board.YELLOW,
+                                Board.VIOLET
                         )
                 )
         ),
