@@ -42,7 +42,7 @@ object Cli {
                 metrics
         )
 
-        val playersNum = 20
+        val playersNum = 50
         val maxGenerations = 500
         val initialPopulation = Population(Initialization(), playersNum, RandomCross())
         val nextPopulation = Population(Randomize(0.05, 0.3), playersNum, RandomCross())

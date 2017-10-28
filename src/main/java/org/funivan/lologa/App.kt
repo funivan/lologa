@@ -20,11 +20,11 @@ object App {
         Window(gamePanel)
 
         val ratio: HashMap<ValueInterface, Double> = hashMapOf(
-                AverageScoreValue() to 0.7475172379772614,
-                MaxScoreValue() to 0.2864582461582227,
-                LockedTilesValue(gameplay) to 0.38417682863787844,
-                PossibleMovesValue(gameplay) to 0.0016352215737979459,
-                RemovedTilesValue() to 0.7150867913184329
+                AverageScoreValue() to 0.4540566695683766,
+                MaxScoreValue() to 0.8678220533407088,
+                LockedTilesValue(gameplay) to 1.0633201054831722,
+                PossibleMovesValue(gameplay) to 0.0013195811496427012,
+                RemovedTilesValue() to 0.896611933783648
         )
 
         val metrics = Metrics(ratio.keys)
