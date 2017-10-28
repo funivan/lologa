@@ -14,7 +14,7 @@ class LoggablePlayGeneration(private val slice: Double, private val origin: Play
         println("Generation " + this.index + " Top " + (this.slice * 100).toInt() + "% results")
         this.index++
         val players = Sorted(
-                Limited(generation, (LengthOf(generation).value()!! * this.slice).toInt())
+                Limited((LengthOf(generation).value()!! * this.slice).toInt(), generation)
         )
         for (generationPlayer in players) {
             println(generationPlayer.toString() + " P " + generationPlayer.genome().data())

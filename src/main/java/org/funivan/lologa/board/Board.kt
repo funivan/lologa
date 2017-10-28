@@ -24,7 +24,6 @@ open class Board(
                 val position = Position(row, col)
                 if (!this.tiles.has(position)) {
                     val color = colors.next()
-                    println("next color: "+color)
                     this.tiles = this.tiles.with(Tile(color, Score(1), position))
                 }
             }
@@ -46,7 +45,7 @@ open class Board(
         val RED = Color(250, 50, 50)
         val BLUE = Color(1, 90, 250)
         val YELLOW = Color(255, 220, 40)
-        val VIOLET = Color(255, 220, 40)
+        val VIOLET = Color(255, 60, 220)
     }
 
 }

@@ -12,8 +12,8 @@ class Population(private val randomize: RandomizeInterface, private val size: In
 
 
     override fun populate(genomes: Iterable<GenomeInterface>): Iterable<GenomeInterface> {
-        val fathers = Cycled(Limited(genomes, this.size / 4)).iterator()
-        val mothers = Cycled(Skipped(genomes, this.size / 4)).iterator()
+        val fathers = Cycled(Limited(this.size / 4, genomes)).iterator()
+        val mothers = Cycled(Skipped(this.size / 4, genomes)).iterator()
         val result = ArrayList<GenomeInterface>()
         while (result.size < this.size) {
             val father = fathers.next()

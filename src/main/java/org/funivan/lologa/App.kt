@@ -5,7 +5,7 @@ import org.funivan.lologa.algo.ga.genome.metric.Metrics
 import org.funivan.lologa.algo.ga.genome.value.*
 import org.funivan.lologa.algo.gameplay.ClassicGamePlay
 import org.funivan.lologa.board.BoardInterface
-import org.funivan.lologa.board.boards.Middle5To5Board
+import org.funivan.lologa.board.boards.Complicated8To8Board
 import org.funivan.lologa.gui.GamePanel
 import org.funivan.lologa.gui.Window
 import java.util.*
@@ -15,7 +15,7 @@ object App {
     @JvmStatic
     fun main(args: Array<String>) {
         val gameplay = ClassicGamePlay()
-        var board: BoardInterface = Middle5To5Board(gameplay)
+        var board: BoardInterface = Complicated8To8Board(gameplay)
         val gamePanel = GamePanel(board)
         Window(gamePanel)
 
@@ -35,9 +35,9 @@ object App {
 
         val player = Genome(genomeData, gameplay, metrics)
 
-        while (true) {
+        while (args.any { it == "--auto" }) {
             try {
-                Thread.sleep(100)
+                Thread.sleep(500)
                 val tile = player.find(board.tiles())
                 if (board.tiles().has(tile.position())) {
                     println("Click on tile : " + tile)

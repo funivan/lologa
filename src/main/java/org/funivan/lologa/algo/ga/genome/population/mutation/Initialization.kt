@@ -3,12 +3,8 @@ package org.funivan.lologa.algo.ga.genome.population.mutation
 import java.util.*
 
 class Initialization : RandomizeInterface {
-    private val random: Random
 
-    init {
-        this.random = Random()
-    }
-
+    private val random: Random = Random()
 
     override fun mix(values: HashMap<String, Double>): HashMap<String, Double> {
         val result = HashMap<String, Double>()
