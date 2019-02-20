@@ -34,10 +34,10 @@ object App {
         }
 
         val player = Genome(genomeData, gameplay, metrics)
-
-        while (args.any { it == "--auto" }) {
+                Thread.sleep(15000)
+        while (args.isEmpty() || args.any { it == "--auto" }) {
             try {
-                Thread.sleep(500)
+                Thread.sleep(1500)
                 val tile = player.find(board.tiles())
                 if (board.tiles().has(tile.position())) {
                     println("Click on tile : " + tile)

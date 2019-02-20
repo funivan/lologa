@@ -1,6 +1,6 @@
 package org.funivan.lologa.algo.gameplay
 
-import org.cactoos.iterable.LengthOf
+import org.cactoos.scalar.LengthOf
 import org.funivan.lologa.algo.find.multiple.AllConnectedFinder
 import org.funivan.lologa.algo.find.one.MaxBottom
 import org.funivan.lologa.algo.modify.MoveDown
