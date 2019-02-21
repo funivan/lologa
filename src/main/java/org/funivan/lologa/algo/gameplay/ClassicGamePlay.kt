@@ -17,15 +17,15 @@ class ClassicGamePlay : GameplayInterface {
     }
 
     override fun interact(tile: TileInterface, tiles: TilesInterface): TilesInterface {
-        var tiles = tiles
-        var connected = AllConnectedFinder(tile).handle(tiles)
+        var result = tiles
+        var connected = AllConnectedFinder(tile).perform(result)
         if (LengthOf(connected.all()).value() >= this.minimum()) {
             val score = ScoreSum(connected.all())
-            val bottom = MaxBottom(tile).find(tiles)
+            val bottom = MaxBottom(tile).find(result)
             connected = connected.without(bottom.position())
-            tiles = MoveDown(connected).handle(tiles)
-            tiles = tiles.with(Tile(bottom.color(), score, bottom.position()))
+            result = MoveDown(connected).perform(result)
+            result = result.with(Tile(bottom.color(), score, bottom.position()))
         }
-        return tiles
+        return result
     }
 }

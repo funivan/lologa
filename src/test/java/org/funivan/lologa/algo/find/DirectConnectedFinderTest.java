@@ -14,10 +14,10 @@ public class DirectConnectedFinderTest {
     @Test
     public void findRight() {
         MatcherAssert.assertThat(
-            "Can not handle same tile at the right",
+            "Can not perform same tile at the right",
             new DirectConnectedFinder(
                 new Tile(Color.BLACK, new Position(0, 0))
-            ).handle(
+            ).perform(
                 new Tiles().with(new Tile(Color.BLACK, new Position(0, 1)))
             ),
             new TilesMatcher(
@@ -29,10 +29,10 @@ public class DirectConnectedFinderTest {
     @Test
     public void findAll() {
         MatcherAssert.assertThat(
-            "Can not handle same tiles at all positions",
+            "Can not perform same tiles at all positions",
             new DirectConnectedFinder(
                 new Tile(Color.BLACK, new Position(1, 1))
-            ).handle(
+            ).perform(
                 new Tiles()
                     .with(new Tile(Color.BLACK, new Position(0, 0))).with(new Tile(Color.BLACK, new Position(0, 1))).with(new Tile(Color.BLACK, new Position(0, 2)))
                     .with(new Tile(Color.BLACK, new Position(1, 0))).with(new Tile(Color.BLACK, new Position(1, 1))).with(new Tile(Color.BLACK, new Position(1, 2)))

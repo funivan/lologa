@@ -2,16 +2,16 @@ package org.funivan.lologa.algo.find.multiple
 
 import com.sun.istack.internal.NotNull
 import org.cactoos.list.ListOf
-import org.funivan.lologa.algo.find.HandlerInterface
+import org.funivan.lologa.algo.find.TilesAction
 import org.funivan.lologa.tile.position.Next
 import org.funivan.lologa.tile.TileInterface
 import org.funivan.lologa.tiles.Tiles
 import org.funivan.lologa.tiles.TilesInterface
 
-class DirectConnectedFinder(private val start: TileInterface) : HandlerInterface {
+class DirectConnectedFinder(private val start: TileInterface) : TilesAction {
 
     @NotNull
-    override fun handle(tiles: TilesInterface): TilesInterface {
+    override fun perform(tiles: TilesInterface): TilesInterface {
         val positions = ListOf(
                 Next.Top(this.start),
                 Next.Right(this.start),

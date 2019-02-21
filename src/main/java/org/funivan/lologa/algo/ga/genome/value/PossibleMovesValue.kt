@@ -17,6 +17,6 @@ class PossibleMovesValue(gameplay: GameplayInterface) : ValueInterface {
     }
 
     override fun value(original: TilesInterface, tiles: TilesInterface): Double {
-        return this.possibleMoves.handle(tiles).size().toDouble()
+        return this.possibleMoves.perform(tiles).size().toDouble()
     }
 }
