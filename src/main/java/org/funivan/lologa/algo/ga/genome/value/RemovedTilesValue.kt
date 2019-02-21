@@ -2,7 +2,7 @@ package org.funivan.lologa.algo.ga.genome.value
 
 import org.funivan.lologa.tiles.TilesInterface
 
-class RemovedTilesValue : ValueInterface {
+class RemovedTilesValue : ScoreInterface {
     override fun type(): String {
         return "removed_tiles"
     }

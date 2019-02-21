@@ -3,7 +3,7 @@ package org.funivan.lologa.algo.ga.genome.value
 import org.funivan.lologa.tile.Score.MaxScore
 import org.funivan.lologa.tiles.TilesInterface
 
-class MaxScoreValue : ValueInterface {
+class MaxScoreValue : ScoreInterface {
     override fun type(): String {
         return "max_score"
     }

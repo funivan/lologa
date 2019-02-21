@@ -5,7 +5,7 @@ import org.funivan.lologa.algo.find.multiple.LockedTilesFinder
 import org.funivan.lologa.algo.gameplay.GameplayInterface
 import org.funivan.lologa.tiles.TilesInterface
 
-class LockedTilesValue(gameplay: GameplayInterface) : ValueInterface {
+class LockedTiles(gameplay: GameplayInterface) : ScoreInterface {
 
     private val finder: TilesAction
 

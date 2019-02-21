@@ -19,10 +19,10 @@ object App {
         val gamePanel = GamePanel(board)
         Window(gamePanel)
 
-        val ratio: HashMap<ValueInterface, Double> = hashMapOf(
-                AverageScoreValue() to 0.4540566695683766,
+        val ratio: HashMap<ScoreInterface, Double> = hashMapOf(
+                AverageScore() to 0.4540566695683766,
                 MaxScoreValue() to 0.8678220533407088,
-                LockedTilesValue(gameplay) to 1.0633201054831722,
+                LockedTiles(gameplay) to 1.0633201054831722,
                 PossibleMovesValue(gameplay) to 0.0013195811496427012,
                 RemovedTilesValue() to 0.896611933783648
         )

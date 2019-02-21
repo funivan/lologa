@@ -13,7 +13,7 @@ public class AverageScoreValueTest {
     public void positiveScoreChange() {
         MatcherAssert.assertThat(
             "Half of tiles should be unlocked 50% of profit",
-            new AverageScoreValue()
+            new AverageScore()
                 .value(
                     new Tiles()
                         .with(new Tile(new Score(4), new Position(0, 0)))

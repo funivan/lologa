@@ -15,7 +15,7 @@ public class LockedValueTest {
     public void halfLocked() {
         MatcherAssert.assertThat(
             "Half of tiles should be unlocked 50% of profit",
-            new LockedTilesValue(new ClassicGamePlay())
+            new LockedTiles(new ClassicGamePlay())
                 .value(
                     new Tiles()
                         .with(new Tile(Color.RED, new Position(0, 0))).with(new Tile(Color.RED, new Position(0, 1)))
@@ -35,7 +35,7 @@ public class LockedValueTest {
     public void allLocked() {
         MatcherAssert.assertThat(
             "All tiles should be locked 0% of profit",
-            new LockedTilesValue(new ClassicGamePlay())
+            new LockedTiles(new ClassicGamePlay())
                 .value(
                     new Tiles()
                         .with(new Tile(Color.BLACK, new Position(0, 0)))
@@ -53,7 +53,7 @@ public class LockedValueTest {
     public void allUnlocked() {
         MatcherAssert.assertThat(
             "All tiles should be unlocked 100% of profit",
-            new LockedTilesValue(new ClassicGamePlay())
+            new LockedTiles(new ClassicGamePlay())
                 .value(
                     new Tiles()
                         .with(new Tile(Color.BLACK, new Position(0, 0)))

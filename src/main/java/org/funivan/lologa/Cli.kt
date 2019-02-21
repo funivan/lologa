@@ -24,17 +24,17 @@ object Cli {
         val gameplay = ClassicGamePlay()
         val board = Complicated8To8Board(gameplay)
         val metrics = Metrics(ListOf(
-                AverageScoreValue(),
+                AverageScore(),
                 MaxScoreValue(),
-                LockedTilesValue(gameplay),
+                LockedTiles(gameplay),
                 PossibleMovesValue(gameplay),
                 RemovedTilesValue()
         ))
         val zeroGenome = Genome(
                 hashMapOf(
-                        AverageScoreValue().type() to 0.0,
+                        AverageScore().type() to 0.0,
                         MaxScoreValue().type() to 0.0,
-                        LockedTilesValue(gameplay).type() to 0.0,
+                        LockedTiles(gameplay).type() to 0.0,
                         PossibleMovesValue(gameplay).type() to 0.0,
                         RemovedTilesValue().type() to 0.0
                 ),
